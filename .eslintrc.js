@@ -30,5 +30,7 @@ module.exports = {
     'eslint linebreak-style': [0, 'error', 'windows'],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'jsx-a11y/anchor-is-valid': 0,
+    'react/function-component-definition': 0,
+    camelcase: 0,
   },
 };

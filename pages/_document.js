@@ -8,6 +8,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <title>Composition Tools by Felipe Randolfi</title>
         </Head>
         <body>
           <Main />
