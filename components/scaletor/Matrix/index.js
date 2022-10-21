@@ -1,10 +1,10 @@
 import React from 'react';
 import classnames from 'classnames';
 
-import { allTemplates } from '../../../structures/client/pages/scaletor/templates';
-import getStringNotes from '../../../structures/client/pages/scaletor/utils/getStringNotes';
-import { getScale } from '../../../structures/client/pages/scaletor/scales';
-import { getLabelByNote } from '../../../structures/client/pages/scaletor/notes';
+import { allTemplates } from '../../../structures/scaletor/templates';
+import getStringNotes from '../../../structures/scaletor/utils/getStringNotes';
+import { getScale } from '../../../structures/scaletor/scales';
+import { getLabelByNote } from '../../../structures/scaletor/notes';
 
 const Matrix = ({
   templateId, tunning, scale, withoutScale,

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
-import { allTemplates, getTemplateList } from '../../../structures/client/pages/scaletor/templates';
-import { getTunning, getTunningList } from '../../../structures/client/pages/scaletor/tunnings';
-import { getNoteList } from '../../../structures/client/pages/scaletor/notes';
-import { getScaleList, getScaleModesList } from '../../../structures/client/pages/scaletor/scales';
+import { allTemplates, getTemplateList } from '../../../structures/scaletor/templates';
+import { getTunning, getTunningList } from '../../../structures/scaletor/tunnings';
+import { getNoteList } from '../../../structures/scaletor/notes';
+import { getScaleList, getScaleModesList } from '../../../structures/scaletor/scales';
 
 import Matrix from '../Matrix';
 import Template from '../Template';

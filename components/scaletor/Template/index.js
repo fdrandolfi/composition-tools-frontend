@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { allTemplates } from '../../../structures/client/pages/scaletor/templates';
+import { allTemplates } from '../../../structures/scaletor/templates';
 
 const Template = ({ id }) => {
   const baseUrl = '/images/scaletor/';
