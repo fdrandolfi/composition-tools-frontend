@@ -1,0 +1,26 @@
+@import "../../../styles/variables";
+
+.selector {
+  position: relative;
+  width: 90%;
+  max-width: 320px;
+  @include flex(center, flex-start, column);
+
+  &__title {
+    font-size: 24px;
+  }
+
+  &__select {
+    position: relative;
+    height: auto;
+    margin-top: 24px;
+    color: $color-dark-100;
+  }
+
+  &--tunning,
+  &--template {
+    .selector__select {
+      width: 100%;
+    }
+  }
+}

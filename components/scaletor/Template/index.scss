@@ -1,0 +1,12 @@
+@import "../../../styles/variables";
+
+.template {
+  width: 100%;
+  height: auto;
+  @include flex(center, center, row);
+
+  &__image {
+    width: 100%;
+    height: auto;
+  }
+}

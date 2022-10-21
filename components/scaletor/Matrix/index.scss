@@ -1,0 +1,231 @@
+@import "../../../styles/variables";
+@import "./_mixins";
+
+.matrix {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+
+  // Min.
+  height: 24%;
+  width: 82%;
+  padding-right: 10px;
+  margin-top: -1px;
+
+  @include flex(center, center, column);
+
+  &__string {
+    position: relative;
+    width: 100%;
+    @include flex(flex-start, center, row);
+
+    &-note {
+      height: 100%;
+      cursor: pointer;
+      @include flex(center, center, row);
+
+      span {
+        position: relative;
+        width: 26px;
+        height: 26px;
+        @include flex(center, center, row);
+        border-radius: 50%;
+        font-size: 12px;
+        font-weight: $font-weight-bold;
+        box-shadow: 0 0 0 2px rgba($color-dark-200, 0.5);
+        opacity: 0;
+        transition: $fast-transition;
+      }
+
+      &:hover {        
+        span {
+          background-color: $color-dark-400;
+          opacity: 1;
+          transition: $fast-transition;
+        }
+      }
+
+      &--available {
+        span {
+          background-color: $color-orange-dark;
+          opacity: 0.66;
+        }
+
+        &:nth-child(-n+4) {
+          span {
+            opacity: 1;
+          }
+        }
+
+        &:hover {
+          span {
+            background-color: $color-orange-light;
+            opacity: 1;
+          }
+        }
+      }
+
+      &--tonic {
+        span {
+          color: $color-dark;
+          background-color: $color-light-200;
+          opacity: 0.66;
+        }
+
+        &:hover {
+          span {
+            background-color: $color-light-100;
+            opacity: 1;
+          }
+        }
+      }
+
+      @include steps-childs;
+    }
+
+    // 1 string
+    &--one {
+      height: 100%;
+    }
+
+    // 5 string
+    &--five {
+      height: 20%;
+    }
+
+    // 6 string
+    &--six {
+      height: 16.6666%;
+    }
+
+    // 7 string
+    &--seven {
+      height: 14.2857%;
+    }
+  }
+
+  &__tunning {
+    position: absolute;
+    left: -1.2%;
+    height: 100%;
+
+    &-note {
+      cursor: pointer;
+      @include flex(center, center, row);
+
+      span {
+        position: relative;
+        width: 26px;
+        height: 26px;
+        @include flex(center, center, row);
+        border-radius: 50%;
+        font-size: 12px;
+        font-weight: $font-weight-bold;
+        color: $color-light-100;
+        background-color: $color-dark-400;
+        box-shadow: 0 0 0 2px rgba($color-dark-200, 0.5);
+      }
+
+      &--available {
+        span {
+          background-color: $color-orange-light;
+        }
+      }
+
+      &--tonic {
+        span {
+          color: $color-dark;
+          background-color: $color-light-200;
+        }
+      }
+    }
+
+    // 1 string
+    &--one {
+      height: 100%;
+    }
+
+    // 5 string
+    &--five {
+      height: 20%;
+    }
+
+    // 6 string
+    &--six {
+      height: 16.6666%;
+    }
+
+    // 7 string
+    &--seven {
+      height: 14.2857%;
+    }
+  }
+
+  // Templates
+  &__G-PRS-C24-6,
+  &__G-GIBSON-LP-STD-6 {
+    height: 24%;
+    width: 82%;
+    padding-right: 10px;
+    margin-top: -1px;
+  }
+
+  &__G-FENDER-STRATO-6,
+  &__G-FENDER-TELE-6 {
+    height: 20.6%;
+    width: 82%;
+    padding-right: 13px;
+    margin-top: -1px;
+  }
+
+  &__G-SB-BODEN-7,
+  &__G-SOLAR-TAB-7 {
+    height: 24.5%;
+    width: 82%;
+    padding-right: 10px;
+    margin-top: 0;
+  }
+
+  &__B-SQUIER-VM-JAZZ-5 {
+    height: 20.6%;
+    width: 82%;
+    padding-right: 13px;
+    margin-top: -2px;
+  }
+
+  &__M-ARTURIA-MINILAB-1 {
+    top: 57%;
+    left: 50%;
+    height: 10%;
+    width: 51%;
+    padding-right: 0;
+    margin-top: 0;
+
+    .matrix__string-note {
+      @include steps-controller-childs;
+    }
+  }
+
+  &__without-scale {
+    .matrix__string-note,
+    .matrix__tunning-note {
+      &--available,
+      &--tonic {
+        span {
+          color: $color-dark;
+          background-color: $color-light-300;
+          opacity: 1;
+        }
+
+        &:hover {
+          span {
+            background-color: $color-light-100;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
