@@ -1,0 +1,33 @@
+.tools {
+  position: relative;
+  width: 100%;
+  @include flex(center, center, column);
+
+  &__items {
+    position: relative;
+    width: 33.33%;
+    height: 200px;
+    border-radius: 20px;
+    overflow: hidden;
+    @include flex(center, center, row);
+    background-color: $color-dark-400;
+    transition: $transition;
+
+    img {
+      max-width: 60%;
+      height: auto;
+      transition: $transition;
+    }
+
+    &:hover {
+      img {
+        max-width: 65%;
+        height: auto;
+        transition: $transition;
+      }
+
+      background-color: $color-dark-300;
+      transition: $transition;
+    }
+  }
+}

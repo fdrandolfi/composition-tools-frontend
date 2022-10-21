@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Tools from '../../components/home/Tools';
 
 /**
  * Home Page
@@ -9,10 +10,8 @@ const HomePage = () => (
       <title>Composition Tools by Felipe Randolfi</title>
     </Head>
     <main className="home">
-      <span>
-        Tools:
-        <a href="/scaletor">Ir a Scaletor</a>
-      </span>
+      <h1>Composition Tools</h1>
+      <Tools />
     </main>
   </>
 );

@@ -1,2 +1,22 @@
 .home {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: $color-dark;
+  overflow: hidden;
+  @include flex(center, center, column);
+  box-sizing: border-box;
+  padding: $spacing-32;
+
+  h1 {
+    font-size: 24px;
+    color: $color-light-100;
+    text-align: center;
+    margin: 0 0 24px;
+  }
 }
+
+/**
+ * Components
+*/
+@import "../../components/home/Tools/index.scss";
