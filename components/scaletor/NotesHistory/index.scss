@@ -1,0 +1,45 @@
+@import "../../../styles/variables";
+
+.notes-history {
+  position: relative;
+  width: 90%;
+  max-width: 320px;
+  height: 100%;
+  @include flex(flex-start, flex-start, column);
+
+  &__item {
+    color: rgba(255, 255, 255, 0.75);
+    text-shadow: 1px 1px 1px  rgba(0, 0, 0, 0.75);
+
+    @include flex(flex-start, center, row);
+
+    span {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      @include flex(center, center, row);
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: $font-weight-bold;
+      margin-right: 12px;
+      box-shadow: 0 0 0 2px rgba($color-dark-100, 0.5);
+
+      &.item {
+        &--gray {
+          color: $color-dark;
+          background-color: $color-light-200;
+        }
+
+        &--orange {
+          color: $color-light-100;
+          background-color: $color-orange-light;
+        }
+        
+        &--black {
+          color: $color-light-100;
+          background-color: $color-dark;
+        }
+      }
+    }
+  }
+}

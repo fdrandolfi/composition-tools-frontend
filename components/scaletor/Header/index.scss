@@ -1,0 +1,16 @@
+@import "../../../styles/variables";
+
+.header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 20%;
+  @include flex(center, center, column);
+  z-index: 2;
+
+  &__logo {
+    max-width: 420px;
+    height: auto;
+    @include flex(center, center, row);
+  }
+}

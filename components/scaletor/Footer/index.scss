@@ -1,0 +1,35 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20%;
+  @include flex(center, center, column);
+  z-index: 2;
+
+  h3 {
+    font-size: 16px;
+    font-weight: $font-weight-bold;
+    color: $color-dark-100;
+    text-align: center;
+    margin: 0 0 12px;
+  }
+
+  p {
+    font-size: 12px;
+    font-weight: $font-weight-semibold;
+    color: $color-dark-100;
+    text-align: center;
+
+    a {
+      font-size: 12px;
+      font-weight: $font-weight-bold;
+      color: $color-light-200;
+      text-align: center;
+      padding: 0;
+
+      &:hover {
+        color: $color-light-100;
+      }
+    }
+  }
+}

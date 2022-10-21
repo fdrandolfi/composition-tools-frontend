@@ -1,6 +1,6 @@
 const home = {
   sections: {
-    title: 'NEXT Boilerplate',
+    title: 'Tools',
   },
 };
 

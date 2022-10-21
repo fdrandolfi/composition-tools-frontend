@@ -1,0 +1,21 @@
+@import "../../styles/commons";
+
+.scaletor {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: $color-dark;
+}
+
+/**
+ * Components
+*/
+@import "../../components/scaletor/Footer/index.scss";
+@import "../../components/scaletor/Header/index.scss";
+@import "../../components/scaletor/Layout/index.scss";
+@import "../../components/scaletor/Matrix/index.scss";
+@import "../../components/scaletor/NotesHistory/index.scss";
+@import "../../components/scaletor/Selector/index.scss";
+@import "../../components/scaletor/SelectorDouble/index.scss";
+@import "../../components/scaletor/Template/index.scss";
+@import "../../components/scaletor/Unsupported/index.scss";
