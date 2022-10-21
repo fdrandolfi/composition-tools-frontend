@@ -1,0 +1,14 @@
+{
+  "extends": "stylelint-config-sass-guidelines",
+  "syntax": "scss",
+  "defaultSeverity": "warning",
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "rules": {
+    "scss/at-extend-no-missing-placeholder": true,
+    "order/properties-alphabetical-order": null,
+    "max-nesting-depth": 4
+  },
+  "ignoreFiles": ["**/*.js"]
+}

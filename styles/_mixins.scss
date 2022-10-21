@@ -1,0 +1,35 @@
+@use 'sass:math' as *;
+
+@mixin flex($jc, $ai, $fd) {
+  display: flex;
+  justify-content: $jc;
+  align-items: $ai;
+  flex-direction: $fd;
+}
+
+@mixin media($width) {
+  @media only screen and (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin NoScrollbar {
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+  
+  ::-webkit-scrollbar-thumb,
+  ::-webkit-scrollbar-thumb:hover,
+  ::-webkit-scrollbar-thumb:active {
+    background: transparent;
+  }
+}
+
+@function divide($a, $b) {
+  @if function-exists('div') {
+    @return div($a, $b);
+  } @else {
+    @return $a / $b;
+  }
+}

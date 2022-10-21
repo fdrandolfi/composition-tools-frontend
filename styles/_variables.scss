@@ -1,0 +1,70 @@
+// Variables
+
+// Typography
+$typo-primary: 'Roboto', sans-serif;
+$typo-secondary: 'Lato', sans-serif;
+
+// Colors
+@import 'colors';
+
+// Fonts
+$font-size-10: 10px;
+$font-size-12: 12px;
+$font-size-14: 14px;
+$font-size-16: 16px;
+$font-size-18: 18px;
+$font-size-20: 20px;
+$font-size-24: 24px;
+$font-size-30: 30px;
+$font-size-36: 36px;
+$font-size-42: 42px;
+$font-size-48: 48px;
+$font-size-60: 60px;
+$font-size-72: 72px;
+$font-size-96: 96px;
+
+$font-weight-thin: 300;
+$font-weight-regular: 400;
+$font-weight-semibold: 700;
+$font-weight-bold: 900;
+
+// Spacing
+$spacing-4: 4px;
+$spacing-8: 8px;
+$spacing-12: 12px;
+$spacing-16: 16px;
+$spacing-20: 20px;
+$spacing-24: 24px;
+$spacing-28: 28px;
+$spacing-32: 32px;
+$spacing-36: 36px;
+$spacing-40: 40px;
+$spacing-44: 44px;
+$spacing-48: 48px;
+$spacing-52: 52px;
+$spacing-56: 56px;
+$spacing-60: 60px;
+$spacing-64: 64px;
+$spacing-68: 68px;
+$spacing-72: 72px;
+$spacing-76: 76px;
+$spacing-80: 80px;
+$spacing-120: 120px;
+$spacing-160: 160px;
+$spacing-200: 200px;
+$spacing-240: 240px;
+$spacing-280: 280px;
+
+// Extras
+$transition: all 0.25s ease-in-out;
+$slow-transition: all 0.45s ease-in-out;
+$fast-transition: all 0.15s ease;
+
+// Media Sizes
+$media-size-mobile: 1024px;
+$media-size-desktop-small: 1280px;
+$media-size-desktop-medium: 1440px;
+$media-size-desktop-large: 1680px;
+
+// Mixins
+@import 'mixins';

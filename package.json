@@ -1,0 +1,42 @@
+{
+  "name": "next-boilerplate",
+  "version": "1.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint:js": "eslint '**/*.js'",
+    "lint:sass": "stylelint '**/*.scss'; exit 0",
+    "lint": "npm run lint:js && npm run lint:sass"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fdrandolfi/next-boilerplate.git"
+  },
+  "author": "Felipe Randolfi (fdrandolfi@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fdrandolfi/next-boilerplate/issues"
+  },
+  "homepage": "https://github.com/fdrandolfi/next-boilerplate#readme",
+  "dependencies": {
+    "classnames": "^2.3.1",
+    "next": "^12.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.42.1"
+  },
+  "devDependencies": {
+    "@nextcss/reset": "^0.1.8-beta",
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "stylelint": "^14.3.0",
+    "stylelint-config-sass-guidelines": "^9.0.1"
+  }
+}
