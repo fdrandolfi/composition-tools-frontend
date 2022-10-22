@@ -1,9 +1,9 @@
 import React from 'react';
 
-import pkg from '../../../package.json';
+import project from '../../../structures/scaletor/index.json';
 
 const version = {
-  label: `Composition Tools v${JSON.stringify(pkg.version).replace('"', '').replace('"', '')} `,
+  label: `${project.name} v${JSON.stringify(project.version).replace('"', '').replace('"', '')} `,
   link: '/',
 };
 
