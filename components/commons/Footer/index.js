@@ -24,7 +24,7 @@ const Footer = ({ project, back }) => (
       >
         {project.label}
       </a>
-      {' | Copyright © '}
+      {' | © '}
       <a
         href="https://linktr.ee/fdrandolfi"
         alt="linktree"
