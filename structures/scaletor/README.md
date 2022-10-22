@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## Unchanged
+
+## [1.9.0] – 2022-10-22
+### Changes
 - Update template component positioning.
 - Update PRS Custom 24 template.
 - Update all UI Colors for more contrast.
