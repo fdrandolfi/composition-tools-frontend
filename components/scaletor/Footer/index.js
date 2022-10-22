@@ -2,9 +2,15 @@ import React from 'react';
 
 import project from '../../../structures/scaletor/index.json';
 
-const version = {
-  label: `${project.name} v${JSON.stringify(project.version).replace('"', '').replace('"', '')} `,
-  link: '/',
+const links = {
+  readme: {
+    label: `${project.name} v${JSON.stringify(project.version).replace('"', '').replace('"', '')} `,
+    url: 'https://github.com/fdrandolfi/composition-tools-frontend/blob/main/structures/scaletor/readme.md',
+  },
+  back: {
+    label: 'Back to Composition Tools',
+    url: '/',
+  },
 };
 
 const Footer = () => (
@@ -14,12 +20,20 @@ const Footer = () => (
     </h3>
     <p>
       <a
-        href={version.link}
+        href={links.readme.url}
         alt="changelog"
       >
-        {version.label}
+        {links.readme.label}
       </a>
       | © FELIPE RANDOLFI
+    </p>
+    <p>
+      <a
+        href={links.back.url}
+        alt="back"
+      >
+        {links.back.label}
+      </a>
     </p>
   </section>
 );

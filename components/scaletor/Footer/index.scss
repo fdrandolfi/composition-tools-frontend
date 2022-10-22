@@ -11,7 +11,6 @@
     font-weight: $font-weight-bold;
     color: $color-dark-100;
     text-align: center;
-    margin: 0 0 12px;
   }
 
   p {
@@ -19,6 +18,7 @@
     font-weight: $font-weight-semibold;
     color: $color-dark-100;
     text-align: center;
+    margin-top: 12px;
 
     a {
       font-size: 12px;
@@ -30,6 +30,10 @@
       &:hover {
         color: $color-light-100;
       }
+    }
+
+    &:last-child {
+      margin-top: 24px;
     }
   }
 }
