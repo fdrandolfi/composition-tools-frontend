@@ -1,7 +1,4 @@
-![preview](./preview.png)
-
-# NEXT boilerplate
-Template for Frontend with NextJS, ReactJS & SASS.
+# Composition Tools
 
 ## Usage
 Run `npm install` for Install all dependencies.
@@ -17,6 +14,12 @@ Run `npm run start` for wake up server on `localhost:3000`.
 
 ### Linter
 Run `npm run lint` for scan all project and get standards-based code review on javascript and sass tecnologies.
+
+---
+
+## This project includes
+### Scaletor
+This is a project of a generator of musical scales for guitar, bass and keys, you can use it on [this page](https://fdrandolfi-composition-tools.vercel.app/scaletor).
 
 ---
 
