@@ -10,7 +10,6 @@ const Home = () => (
   <>
     <Head>
       <title>Scaletor | Composition Tools by Felipe Randolfi</title>
-      <link rel="icon" type="image/x-icon" href="/favicons/scaletor.ico" />
     </Head>
     <main className="scaletor">
       <Header />
