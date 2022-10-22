@@ -1,8 +1,9 @@
 import React from 'react';
+import ScaletorLogotype from '../Logotype';
 
 const Header = () => (
   <header className="header">
-    <img className="header__logo" src="/images/scaletor/general/logotype.svg" alt="" />
+    <ScaletorLogotype className="header__logo" />
   </header>
 );
 

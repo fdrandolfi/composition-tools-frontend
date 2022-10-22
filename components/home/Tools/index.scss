@@ -13,14 +13,14 @@
     background-color: $color-dark-400;
     transition: $transition;
 
-    img {
+    &-image {
       max-width: 60%;
       height: auto;
       transition: $transition;
     }
 
     &:hover {
-      img {
+      &-image {
         max-width: 65%;
         height: auto;
         transition: $transition;

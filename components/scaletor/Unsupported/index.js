@@ -1,12 +1,9 @@
 import React from 'react';
+import ScaletorLogotype from '../Logotype';
 
 const Unsupported = () => (
   <div className="unsupported">
-    <img
-      className="unsupported__logotype"
-      src="/images/scaletor/general/logotype.svg"
-      alt="logotype"
-    />
+    <ScaletorLogotype className="unsupported__logotype" />
     <p className="unsupported__message">
       Unsupported resolution, so small...
     </p>
