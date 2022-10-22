@@ -1,6 +1,9 @@
 // Commons
 @import 'commons';
 
+// Global components
+@import "../components/commons/Footer/index.scss";
+
 // Pages
 @import '../pages/home/index';
 @import '../pages/scaletor/index';

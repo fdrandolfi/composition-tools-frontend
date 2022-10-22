@@ -1,7 +1,17 @@
 import Head from 'next/head';
 
+import pkg from '../../package.json';
+
 import Tools from '../../components/home/Tools';
-import Footer from '../../components/home/Footer';
+import Footer from '../../components/commons/Footer';
+
+const footer = {
+  project: {
+    label: `Composition Tools v${JSON.stringify(pkg.version).replace('"', '').replace('"', '')} `,
+    url: 'https://github.com/fdrandolfi/composition-tools-frontend/blob/main/readme.md',
+  },
+  back: null,
+};
 
 /**
  * Home Page
@@ -14,7 +24,10 @@ const HomePage = () => (
     <main className="home">
       <h1>Composition Tools</h1>
       <Tools />
-      <Footer />
+      <Footer
+        project={footer.project}
+        back={footer.back}
+      />
     </main>
   </>
 );
