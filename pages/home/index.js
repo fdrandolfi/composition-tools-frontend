@@ -4,11 +4,12 @@ import pkg from '../../package.json';
 
 import Tools from '../../components/home/Tools';
 import Footer from '../../components/commons/Footer';
+import Unsupported from '../../components/commons/Unsupported';
 
 const footer = {
   project: {
     label: `Composition Tools v${JSON.stringify(pkg.version).replace('"', '').replace('"', '')} `,
-    url: 'https://github.com/fdrandolfi/composition-tools-frontend/blob/main/readme.md',
+    url: 'https://github.com/fdrandolfi/composition-tools-frontend/blob/main/CHANGELOG.md',
   },
   back: null,
 };
@@ -28,6 +29,7 @@ const HomePage = () => (
         project={footer.project}
         back={footer.back}
       />
+      <Unsupported />
     </main>
   </>
 );
