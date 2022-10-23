@@ -11,7 +11,7 @@ import Unsupported from '../../components/scaletor/Unsupported';
 const footer = {
   project: {
     label: `${pkg.name} v${JSON.stringify(pkg.version).replace('"', '').replace('"', '')} `,
-    url: 'https://github.com/fdrandolfi/composition-tools-frontend/blob/main/readme.md',
+    url: 'https://github.com/fdrandolfi/composition-tools-frontend/blob/main/structures/scaletor/CHANGELOG.md',
   },
   back: {
     label: 'Back to Composition Tools',
