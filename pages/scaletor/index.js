@@ -6,7 +6,7 @@ import pkg from '../../structures/scaletor/index.json';
 import Header from '../../components/scaletor/Header';
 import Layout from '../../components/scaletor/Layout';
 import Footer from '../../components/commons/Footer';
-import Unsupported from '../../components/scaletor/Unsupported';
+import Unsupported from '../../components/commons/Unsupported';
 
 const footer = {
   project: {

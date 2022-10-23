@@ -4,6 +4,7 @@ import pkg from '../../package.json';
 
 import Tools from '../../components/home/Tools';
 import Footer from '../../components/commons/Footer';
+import Unsupported from '../../components/commons/Unsupported';
 
 const footer = {
   project: {
@@ -28,6 +29,7 @@ const HomePage = () => (
         project={footer.project}
         back={footer.back}
       />
+      <Unsupported />
     </main>
   </>
 );
