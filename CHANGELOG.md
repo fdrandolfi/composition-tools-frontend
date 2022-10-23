@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- General Updates [#6](https://github.com/fdrandolfi/composition-tools-frontend/pull/6)
 
 ## [1.1.0]
 ### Changes
