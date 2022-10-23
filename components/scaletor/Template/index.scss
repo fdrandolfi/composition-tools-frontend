@@ -4,6 +4,7 @@
   width: 100%;
   height: auto;
   @include flex(center, center, row);
+  z-index: 1;
 
   &__image {
     width: 100%;

@@ -6,12 +6,12 @@ import pkg from '../../structures/scaletor/index.json';
 import Header from '../../components/scaletor/Header';
 import Layout from '../../components/scaletor/Layout';
 import Footer from '../../components/commons/Footer';
-import Unsupported from '../../components/scaletor/Unsupported';
+import Unsupported from '../../components/commons/Unsupported';
 
 const footer = {
   project: {
     label: `${pkg.name} v${JSON.stringify(pkg.version).replace('"', '').replace('"', '')} `,
-    url: 'https://github.com/fdrandolfi/composition-tools-frontend/blob/main/readme.md',
+    url: 'https://github.com/fdrandolfi/composition-tools-frontend/blob/main/structures/scaletor/CHANGELOG.md',
   },
   back: {
     label: 'Back to Composition Tools',
