@@ -1,6 +1,6 @@
 import React from 'react';
 import ScaletorLogotype from '../../scaletor/Logotype';
-import QuintatorLogotype from '../../quintator/Logotype';
+import QuintorLogotype from '../../quintor/Logotype';
 
 const items = [
   {
@@ -12,12 +12,12 @@ const items = [
     image: <ScaletorLogotype className="tools__items-image" />,
   },
   {
-    id: 'item-quintator',
+    id: 'item-quintor',
     link: {
-      label: 'Quintator',
-      url: '/quintator',
+      label: 'Quintor',
+      url: '/quintor',
     },
-    image: <QuintatorLogotype className="tools__items-image" />,
+    image: <QuintorLogotype className="tools__items-image" />,
   },
 ];
 

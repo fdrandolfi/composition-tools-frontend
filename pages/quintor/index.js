@@ -1,18 +1,18 @@
 import React from 'react';
 import Head from 'next/head';
 
-import pkg from '../../structures/quintator/index.json';
+import pkg from '../../structures/quintor/index.json';
 
 import Header from '../../components/commons/Header';
-import QuintatorLogotype from '../../components/quintator/Logotype';
-import Layout from '../../components/quintator/Layout';
+import QuintorLogotype from '../../components/quintor/Logotype';
+import Layout from '../../components/quintor/Layout';
 import Footer from '../../components/commons/Footer';
 import Unsupported from '../../components/commons/Unsupported';
 
 const footer = {
   project: {
     label: `${pkg.name} v${JSON.stringify(pkg.version).replace('"', '').replace('"', '')} `,
-    url: 'https://github.com/fdrandolfi/composition-tools-frontend/blob/main/structures/quintator/CHANGELOG.md',
+    url: 'https://github.com/fdrandolfi/composition-tools-frontend/blob/main/structures/quintor/CHANGELOG.md',
   },
   back: {
     label: 'Back to Composition Tools',
@@ -20,16 +20,16 @@ const footer = {
   },
 };
 
-const Quintator = () => (
+const Quintor = () => (
   <>
     <Head>
       <title>
-        Quintator | Chromatic Scale Tones Relationship | Composition Tools by Felipe Randolfi
+        Quintor | Chromatic Scale Tones Relationship | Composition Tools by Felipe Randolfi
       </title>
     </Head>
-    <main className="quintator">
+    <main className="quintor">
       <Header>
-        <QuintatorLogotype className="header__logo" />
+        <QuintorLogotype className="header__logo" />
       </Header>
       <Layout />
       <Footer
@@ -41,4 +41,4 @@ const Quintator = () => (
   </>
 );
 
-export default Quintator;
+export default Quintor;
