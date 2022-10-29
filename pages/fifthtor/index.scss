@@ -1,0 +1,14 @@
+@import "../../styles/commons";
+
+.scaletor {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: $color-dark;
+  overflow: hidden;
+}
+
+/**
+ * Components
+*/
+@import "../../components/scaletor/Layout/index.scss";
