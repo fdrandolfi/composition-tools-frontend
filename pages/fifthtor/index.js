@@ -5,7 +5,7 @@ import pkg from '../../structures/fifthtor/index.json';
 
 import Header from '../../components/commons/Header';
 import FifthtorLogotype from '../../components/fifthtor/Logotype';
-import Layout from '../../components/commons/Layout';
+import Layout from '../../components/fifthtor/Layout';
 import Footer from '../../components/commons/Footer';
 import Unsupported from '../../components/commons/Unsupported';
 
