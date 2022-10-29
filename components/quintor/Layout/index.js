@@ -40,7 +40,6 @@ const Layout = () => {
 
   const notesOptions = getNoteList();
   const defaultFifth = getFifthById(notesOptions[0].value - 1);
-  
   const [fifthData, setFitfhData] = useState(defaultFifth);
 
   const handleNotesChange = (event) => {

@@ -9,6 +9,7 @@
   &__center {
     position: relative;
     width: 100%;
+    top: 4%;
     height: auto;
     @include flex(center, center, column);
     z-index: 1;
