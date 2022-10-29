@@ -2,9 +2,11 @@
 @import 'commons';
 
 // Global components
+@import "../components/commons/Header/index.scss";
 @import "../components/commons/Footer/index.scss";
 @import "../components/commons/Unsupported/index.scss";
 
 // Pages
 @import '../pages/home/index';
 @import '../pages/scaletor/index';
+@import '../pages/fifthtor/index';

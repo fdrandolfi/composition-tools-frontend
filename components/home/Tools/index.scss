@@ -9,9 +9,10 @@
     height: 200px;
     border-radius: 20px;
     overflow: hidden;
-    @include flex(center, center, row);
+    @include flex(center, center, column);
     background-color: $color-dark-400;
     transition: $transition;
+    margin: $spacing-20;
 
     &-image {
       max-width: 60%;

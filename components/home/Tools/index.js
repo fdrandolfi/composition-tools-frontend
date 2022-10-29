@@ -1,5 +1,6 @@
 import React from 'react';
 import ScaletorLogotype from '../../scaletor/Logotype';
+import FifthtorLogotype from '../../fifthtor/Logotype';
 
 const items = [
   {
@@ -9,6 +10,14 @@ const items = [
       url: '/scaletor',
     },
     image: <ScaletorLogotype className="tools__items-image" />,
+  },
+  {
+    id: 'item-fifthtor',
+    link: {
+      label: 'Fifthtor',
+      url: '/fifthtor',
+    },
+    image: <FifthtorLogotype className="tools__items-image" />,
   },
 ];
 

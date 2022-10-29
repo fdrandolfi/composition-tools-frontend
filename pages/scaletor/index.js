@@ -3,7 +3,8 @@ import Head from 'next/head';
 
 import pkg from '../../structures/scaletor/index.json';
 
-import Header from '../../components/scaletor/Header';
+import Header from '../../components/commons/Header';
+import ScaletorLogotype from '../../components/scaletor/Logotype';
 import Layout from '../../components/scaletor/Layout';
 import Footer from '../../components/commons/Footer';
 import Unsupported from '../../components/commons/Unsupported';
@@ -19,13 +20,17 @@ const footer = {
   },
 };
 
-const Home = () => (
+const Scaletor = () => (
   <>
     <Head>
-      <title>Scaletor | Composition Tools by Felipe Randolfi</title>
+      <title>
+        Scaletor | Guitar, Bass & Keyboard Scale Generator | Composition Tools by Felipe Randolfi
+      </title>
     </Head>
     <main className="scaletor">
-      <Header />
+      <Header>
+        <ScaletorLogotype className="header__logo" />
+      </Header>
       <Layout />
       <Footer
         project={footer.project}
@@ -36,4 +41,4 @@ const Home = () => (
   </>
 );
 
-export default Home;
+export default Scaletor;
