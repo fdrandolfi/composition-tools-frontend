@@ -1,0 +1,116 @@
+@import "../../../styles/variables";
+
+.layout-quintor {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  @include flex(center, center, row);
+
+  &__center {
+    position: relative;
+    width: 100%;
+    top: 4%;
+    height: auto;
+    @include flex(center, center, column);
+    z-index: 1;
+  }
+
+  &__with-opacity {
+    opacity: 0.5;
+    transition: $transition;
+  }
+}
+
+.fifth-matrix {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: $spacing-24 0;
+  border-radius: 10px;
+  overflow: hidden;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  grid-template-areas:
+    'note-4 note-1 note-5'
+    'note-2 note-6 note-3'
+    'note-7 note-7 note-7';
+
+  background-color: rgba(0, 0, 0, 0.25);
+
+  &__note {
+    position: relative;
+    min-width: 100px;
+    @include flex(center, center, column);
+    box-sizing: border-box;
+    padding: $spacing-16;
+    text-align: center;
+    background-color: $color-dark-100;
+    opacity: 1;
+    transition: $transition;
+    cursor: default;
+
+    &:hover {
+      opacity: 0.9;
+      transition: $transition;
+    }
+
+    &-type {
+      font-size: $font-size-14;
+      color: $color-light-200;
+      font-weight: $font-weight-regular;
+      width: 120px;
+    }
+
+    &-name {
+      font-size: $font-size-36;
+      color: $color-light;
+      margin: $spacing-24;
+      font-weight: $font-weight-bold;
+    }
+
+    &-mode {
+      font-size: $font-size-18;
+      color: $color-light-100;
+      font-weight: $font-weight-regular;
+      width: 120px;
+    }
+
+    @for $i from 1 through 7 {
+      &-#{$i} {
+        grid-area: note-#{$i};
+      }
+    }
+
+    &-1 {
+      background-color: $color-mood-1;
+    }
+
+    &-2 {
+      background-color: $color-mood-2;
+    }
+
+    &-3 {
+      background-color: $color-mood-3;
+    }
+
+    &-4 {
+      background-color: $color-mood-4;
+    }
+
+    &-5 {
+      background-color: $color-mood-5;
+    }
+
+    &-6 {
+      background-color: $color-mood-6;
+    }
+
+    &-7 {
+      height: 100px;
+      background-color: $color-mood-7;
+      @include flex(center, center, row);
+    }
+  }
+}

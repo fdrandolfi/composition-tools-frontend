@@ -19,7 +19,10 @@ Run `npm run lint` for scan all project and get standards-based code review on j
 
 ## This project includes
 ### Scaletor
-This is a project of a generator of musical scales for guitar, bass and keys, you can use it on [this page](https://fdrandolfi-composition-tools.vercel.app/scaletor).
+This page is a generator of musical scales for guitar, bass and keys, you can use it on [this page](https://fdrandolfi-composition-tools.vercel.app/scaletor).
+
+### Quintor
+This page is a visual support more comfortable of fifth's circle, you can use it on [this page](https://fdrandolfi-composition-tools.vercel.app/quintor).
 
 ---
 

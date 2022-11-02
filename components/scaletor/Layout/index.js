@@ -84,11 +84,11 @@ const Layout = () => {
 
   // Return
   return (
-    <section className="layout">
-      <div className="layout__top">
+    <section className="layout-scaletor">
+      <div className="layout-scaletor__top">
         <div className={classNames(
-          'layout__column-3',
-          tunningOptions.length <= 1 && 'layout__with-opacity',
+          'layout-scaletor__column-3',
+          tunningOptions.length <= 1 && 'layout-scaletor__with-opacity',
         )}
         >
           <Selector
@@ -99,7 +99,7 @@ const Layout = () => {
             defaultValue={tunningOptions[0]}
           />
         </div>
-        <div className="layout__column-3">
+        <div className="layout-scaletor__column-3">
           <SelectorDouble
             id="scale"
             title="Scales"
@@ -112,7 +112,7 @@ const Layout = () => {
             checkedScaleSwitch={scaleSwitch}
           />
         </div>
-        <div className="layout__column-3">
+        <div className="layout-scaletor__column-3">
           <Selector
             id="template"
             title="Template"
@@ -135,14 +135,14 @@ const Layout = () => {
           />
         </div>
       </div>
-      <div className="layout__bottom">
-        <div className="layout__column-3">
+      <div className="layout-scaletor__bottom">
+        <div className="layout-scaletor__column-3">
           <NotesHistory />
         </div>
-        <div className="layout__column-3" />
-        <div className="layout__column-3" />
+        <div className="layout-scaletor__column-3" />
+        <div className="layout-scaletor__column-3" />
       </div>
-      <div className="layout__center">
+      <div className="layout-scaletor__center">
         <Matrix
           templateId={template}
           tunning={tunning}
