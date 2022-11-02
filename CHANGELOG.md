@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-- General Updates [#6](https://github.com/fdrandolfi/composition-tools-frontend/pull/6)
+-  Add Quintor Page [#8](https://github.com/fdrandolfi/composition-tools-frontend/pull/8)
 
 ## [1.2.0] - 2022-10-23
 ### Changes
