@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
+## [1.3.1] - 2022-11-05
+### Changes
 - Update Fifth Value Selection [#10](https://github.com/fdrandolfi/composition-tools-frontend/pull/10)
 
 ## [1.3.0] - 2022-11-01
