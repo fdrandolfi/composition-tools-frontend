@@ -43,7 +43,7 @@ const Layout = () => {
   const [fifthData, setFitfhData] = useState(defaultFifth);
 
   const handleNotesChange = (event) => {
-    setFitfhData(getFifthById(event.value));
+    setFitfhData(getFifthById(event.value - 1));
   };
 
   return (
