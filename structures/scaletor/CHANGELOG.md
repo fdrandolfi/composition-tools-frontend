@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unchanged
+- Add new Sigma SE DME template.
 
 ## [1.9.0] – 2022-10-22
 ### Changes
