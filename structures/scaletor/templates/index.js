@@ -30,7 +30,7 @@ const templates = {
     'G-SIGMA-DME-6': {
       label: 'Sigma SE DME',
       strings: 6,
-      steps: 21,
+      steps: 20,
       imgSrc: 'templates/G-SIGMA-DME-6.png',
     },
     'G-SB-BODEN-7': {
