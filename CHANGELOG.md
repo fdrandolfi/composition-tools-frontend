@@ -2,7 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-- Update Fifth Value Selection [#10](https://github.com/fdrandolfi/composition-tools-frontend/pull/10)
+
+## [1.4.0] - 2023-08-12
+### Changes
+- Add new scaletor template [#12](https://github.com/fdrandolfi/composition-tools-frontend/pull/12)
 
 ## [1.3.1] - 2022-11-05
 ### Changes
