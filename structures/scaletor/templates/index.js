@@ -27,6 +27,12 @@ const templates = {
       steps: 22,
       imgSrc: 'templates/G-FENDER-STRATO-6.png',
     },
+    'G-SIGMA-DME-6': {
+      label: 'Sigma SE DME',
+      strings: 6,
+      steps: 20,
+      imgSrc: 'templates/G-SIGMA-DME-6.png',
+    },
     'G-SB-BODEN-7': {
       label: 'Strandberg Boden 7',
       strings: 7,
