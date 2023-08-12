@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unchanged
 
+## [1.10.0] – 2023-08-12
+### Changes
+- Add new Sigma SE DME template.
+
 ## [1.9.0] – 2022-10-22
 ### Changes
 - Update template component positioning.
