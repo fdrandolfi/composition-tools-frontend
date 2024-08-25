@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
 
-import { allTemplates, getTemplateList } from '../../../structures/scaletor/templates';
-import { getTunning, getTunningList } from '../../../structures/scaletor/tunnings';
-import { getNoteList } from '../../../structures/scaletor/notes';
-import { getScaleList, getScaleModesList } from '../../../structures/scaletor/scales';
+import { allTemplates, getTemplateLabelById, getTemplateList } from '../../../structures/scaletor/templates';
+import { getTunning, getTunningIdByPattern, getTunningLabelByPattern, getTunningList } from '../../../structures/scaletor/tunnings';
+import { getLabelByNote, getNoteList } from '../../../structures/scaletor/notes';
+import { getScaleLabel, getScaleList, getScaleModesList } from '../../../structures/scaletor/scales';
 
 import Matrix from '../Matrix';
 import Template from '../Template';
@@ -13,27 +14,17 @@ import SelectorDouble from '../SelectorDouble';
 import NotesHistory from '../NotesHistory';
 
 const Layout = () => {
+  const router = useRouter();
+  const { query } = router;
+
   // Lists
-  const noteList = getNoteList();
-  const scaleList = getScaleList();
-  const scaleModesList = getScaleModesList();
   const templateGuitarsList = getTemplateList('guitars');
   const templateBassesList = getTemplateList('basses');
   const templateMIDIList = getTemplateList('midi_controllers');
+  const noteList = getNoteList();
+  const scaleList = getScaleList();
+  const scaleModesList = getScaleModesList();
   const withoutScale = 'without';
-
-  // Scale & Note Hooks
-  const defaultNote = noteList[0].value;
-  const defaultScale = scaleList[0].value;
-  const [note, setNote] = useState(defaultNote);
-  const [scale, setScale] = useState(defaultScale);
-
-  const [lastScale, setLastScale] = useState();
-  const [lastNote, setLastNote] = useState();
-
-  // Switch Hooks
-  const defaultScaleSwitch = true;
-  const [scaleSwitch, setScaleSwitch] = useState(defaultScaleSwitch);
 
   // Template Hooks
   const defaultTemplate = templateGuitarsList[0].value;
@@ -45,27 +36,85 @@ const Layout = () => {
   const defaultTunning = getTunning(tunningOptions[0].value, templateStrings);
   const [tunning, setTunning] = useState(defaultTunning);
 
-  useEffect(() => {
-    // Update Tunning by Template
-    const updateTemplateStrings = allTemplates[template].strings;
-    const updateTunningOptions = getTunningList(updateTemplateStrings);
-    const updatedTunning = getTunning(updateTunningOptions[0].value, updateTemplateStrings);
-    setTunning(updatedTunning);
-  }, [template]);
+  // Note & scale Hooks
+  const defaultNote = noteList[0].value;
+  const defaultScale = scaleList[0].value;
+  const [note, setNote] = useState(defaultNote);
+  const [scale, setScale] = useState(defaultScale);
+  const [lastNote, setLastNote] = useState();
+  const [lastScale, setLastScale] = useState();
 
-  // Handles
+  // Switch Hooks
+  const defaultScaleSwitch = true;
+  const [scaleSwitch, setScaleSwitch] = useState(defaultScaleSwitch);
+
+  // Initial values from QueryParams
+  const [initialTemplate, setInitialTemplate] = useState(templateGuitarsList[0]);
+  const [initialTunning, setInitialTunning] = useState({
+    label: getTunningLabelByPattern(defaultTunning, templateStrings),
+    value: defaultTunning,
+  });
+  const [initialScaleNote, setInitialScaleNote] = useState(noteList[0]);
+  const [initialScaleName, setInitialScaleName] = useState(scaleList[0]);
+
+  /**
+   * Handle Value Changes
+   */
+  const handleTemplateChange = (event) => {
+    router.replace({
+      pathname: router.pathname,
+      query: {
+        ...query,
+        template: event.value,
+        tunning: 'standard',
+      },
+    }, undefined, { shallow: true });
+    setTemplate(event.value);
+  };
+
+  const handleTunningChange = (event) => {
+    router.replace({
+      pathname: router.pathname,
+      query: {
+        ...query,
+        template,
+        tunning: event.value
+      },
+    }, undefined, { shallow: true });
+    const updateTemplateStrings = allTemplates[template].strings;
+    const updatedTunning = getTunning(event.value, updateTemplateStrings);
+    setTunning(updatedTunning);
+  };
+
   const handleNoteChange = (event) => {
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...query,
+        scale_note: event.value
+      },
+    }, undefined, { shallow: true });
     setNote(event.value);
   };
 
   const handleScaleChange = (event) => {
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...query,
+        scale_name: event.value
+      },
+    }, undefined, { shallow: true });
     setScale(event.value);
   };
 
   const handleSwitchChange = (check) => {
     setScaleSwitch(check);
+
     setLastScale(scale);
+
     setLastNote(note);
+
     if (!check) {
       setScale(withoutScale);
     } else {
@@ -74,15 +123,64 @@ const Layout = () => {
     }
   };
 
-  const handleTemplateChange = (event) => {
-    setTemplate(event.value);
-  };
+  /**
+   * Update Values by Query Params
+   */
+  useEffect(() => {
+    if (query.template) setTemplate(query.template);
 
-  const handleTunningChange = (event) => {
-    setTunning(getTunning(event.value, templateStrings));
-  };
+    if (query.tunning) {
+      if (query.template) {
+        const updateTemplateStrings = allTemplates[query.template].strings;
+        const updatedTunning = getTunning(query.tunning, updateTemplateStrings);
+        setTunning(updatedTunning);
+      } else {
+        const updateTemplateStrings = allTemplates[template].strings;
+        const updatedTunning = getTunning(query.tunning, updateTemplateStrings);
+        setTunning(updatedTunning);
+      }
+    }
 
-  // Return
+    if (query.scale_note) setNote(Number(query.scale_note));
+
+    if (query.scale_name) setScale(query.scale_name);
+  }, [query]);
+
+  /**
+   * Update Select Values by Query Params
+  */
+  useEffect(() => {
+    setInitialTemplate({
+      label: getTemplateLabelById(template),
+      value: template,
+    });
+  }, [template]);
+
+  useEffect(() => {
+    const updateTemplateStrings = allTemplates[template].strings;
+    setInitialTunning({
+      label: getTunningLabelByPattern(tunning, updateTemplateStrings),
+      value: getTunningIdByPattern(tunning, updateTemplateStrings),
+    });
+  }, [template, tunning]);
+
+  useEffect(() => {
+    setInitialScaleNote({
+      label: getLabelByNote(note),
+      value: note,
+    });
+  }, [note]);
+
+  useEffect(() => {
+    setInitialScaleName({
+      label: getScaleLabel(scale),
+      value: scale,
+    });
+  }, [scale]);
+
+  /**
+   * Return
+   */
   return (
     <section className="layout-scaletor">
       <div className="layout-scaletor__top">
@@ -96,7 +194,7 @@ const Layout = () => {
             title="Tunning"
             options={tunningOptions}
             onChange={handleTunningChange}
-            defaultValue={tunningOptions[0]}
+            value={initialTunning}
           />
         </div>
         <div className="layout-scaletor__column-3">
@@ -110,6 +208,8 @@ const Layout = () => {
             onChangeScale={handleScaleChange}
             onChangeScaleSwitch={handleSwitchChange}
             checkedScaleSwitch={scaleSwitch}
+            valueNote={initialScaleNote}
+            valueScale={initialScaleName}
           />
         </div>
         <div className="layout-scaletor__column-3">
@@ -131,7 +231,7 @@ const Layout = () => {
               },
             ]}
             onChange={handleTemplateChange}
-            defaultValue={templateGuitarsList[0]}
+            value={initialTemplate}
           />
         </div>
       </div>

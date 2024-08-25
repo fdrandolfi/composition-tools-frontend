@@ -104,4 +104,20 @@ const getScaleModesList = () => {
   return resultList;
 };
 
-export { getScale, getScaleList, getScaleModesList };
+/**
+ * Returns a scale label
+ *
+ * @param {String} - The scale id
+ * @returns {Array} The scale pattern
+ */
+const getScaleLabel = (scale) => {
+  const resultLabel = scale.replace('_', ' ').toUpperCase();
+  return resultLabel;
+};
+
+export {
+  getScale,
+  getScaleList,
+  getScaleModesList,
+  getScaleLabel,
+};

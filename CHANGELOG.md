@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-- Update Fifth Value Selection [#10](https://github.com/fdrandolfi/composition-tools-frontend/pull/10)
+- Add query params selection from urls [#14](https://github.com/fdrandolfi/composition-tools-frontend/pull/14)
 
 ## [1.4.0] - 2023-08-12
 ### Changes

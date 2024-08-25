@@ -31,6 +31,7 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'jsx-a11y/anchor-is-valid': 0,
     'react/function-component-definition': 0,
+    'max-len': ['warning', { code: 180, tabWidth: 2, ignoreComments: true }],
     camelcase: 0,
   },
 };
