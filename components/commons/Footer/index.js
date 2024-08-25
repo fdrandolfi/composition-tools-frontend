@@ -26,8 +26,8 @@ const Footer = ({ project, back }) => (
       </a>
       {' | © '}
       <a
-        href="https://linktr.ee/fdrandolfi"
-        alt="linktree"
+        href="https://feliperandolfi.com/"
+        alt="website"
       >
         Felipe Randolfi
       </a>
