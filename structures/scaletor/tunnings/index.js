@@ -95,6 +95,7 @@ const getTunningList = (strings) => {
 
 /**
  * Returns a label of pattern
+ *
  * @param {Array} pattern - The array pattern
  * @param {Number} strings - The strings value by template
  * @returns {String} The label of pattern
@@ -115,23 +116,26 @@ const getTunningLabelByPattern = (pattern, strings) => {
 };
 
 /**
- * Returns a pattern of label
+ * Returns a tunning id of pattern
+ *
  * @param {Array} pattern - The array pattern
  * @param {Number} strings - The strings value by template
- * @returns {String} The label of pattern
+ * @returns {String} The label of tunning id
  */
-const getPatternByLabel = (label, string) => {
-  const tuning = tunnings[string];
-
-  if (tuning) {
-    // eslint-disable-next-line no-unused-vars
-    const entry = Object.entries(tuning).find(([key, values]) => key === label);
-    return entry ? entry[1].replace('_', ' ').toUpperCase() : null;
+const getTunningIdByPattern = (pattern, strings) => {
+  for (const id in tunnings) {
+    if (parseInt(id) === strings) {
+      for (const label in tunnings[id]) {
+        if (JSON.stringify(tunnings[id][label]) === JSON.stringify(pattern)) {
+          return label;
+        }
+      }
+    }
   }
 
   return null;
 };
 
 export {
-  getTunning, getTunningList, getTunningLabelByPattern, getPatternByLabel,
+  getTunning, getTunningList, getTunningLabelByPattern, getTunningIdByPattern,
 };
