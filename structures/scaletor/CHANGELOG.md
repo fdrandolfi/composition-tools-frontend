@@ -2,7 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## Unchanged
-- Add new Sigma SE DME template.
+
+## [1.11.0] – 2024-08-24
+### Changes
+- Add query params selection from urls.
 
 ## [1.10.0] – 2023-08-12
 ### Changes
