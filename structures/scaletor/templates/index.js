@@ -3,6 +3,12 @@
  */
 const templates = {
   guitars: {
+    'G-PRS-SE-C24-6': {
+      label: 'PRS SE Custom 24',
+      strings: 6,
+      steps: 24,
+      imgSrc: 'templates/G-PRS-SE-C24-6.png',
+    },
     'G-PRS-C24-6': {
       label: 'PRS Custom 24',
       strings: 6,
