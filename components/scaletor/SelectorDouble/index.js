@@ -13,6 +13,8 @@ const SelectorDouble = ({
   onChangeScale,
   onChangeScaleSwitch,
   checkedScaleSwitch,
+  valueNote,
+  valueScale,
 }) => (
   <div className={classnames(
     'selector-double',
@@ -37,7 +39,6 @@ const SelectorDouble = ({
     </div>
     <div className="selector-double__content">
       <Select
-        defaultValue={optionsNote[0]}
         className={classnames(
           'selector-double__select',
           'selector-double__select--note',
@@ -49,10 +50,10 @@ const SelectorDouble = ({
           },
         ]}
         onChange={onChangeNote}
+        value={valueNote}
         isDisabled={!checkedScaleSwitch}
       />
       <Select
-        defaultValue={optionsScale[0]}
         className={classnames(
           'selector-double__select',
           'selector-double__select--scale',
@@ -68,6 +69,7 @@ const SelectorDouble = ({
           },
         ]}
         onChange={onChangeScale}
+        value={valueScale}
         isDisabled={!checkedScaleSwitch}
       />
     </div>

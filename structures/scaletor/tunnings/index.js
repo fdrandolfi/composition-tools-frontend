@@ -51,13 +51,28 @@ const tunnings = {
 };
 
 /**
- * Returns an Array with notes
+ * Returns an normalized label of tunning id
+ *
+ * @param {String} tunningLabel  - The tunning label
+ * @returns {string} The label string
+ */
+const normalizeTunningLabel = (tunningLabel) => {
+  return tunningLabel
+    .replace('_', ' ')
+    .replace('_', ' ')
+    .replace('_', ' ')
+    .replace('_', ' ')
+    .toUpperCase();
+}
+
+/**
+ * Returns an array with notes
  *
  * @param {Number} tunningId - The tunning note id
- * @param {scaleId} strings - The strings number from template
+ * @param {Number} strings - The strings number from template
  * @returns {Array} The array of scale notes
  */
-const getTunning = (tunningId, strings) => tunnings[strings][tunningId] || tunnings[6].e_standard;
+const getTunning = (tunningId, strings) => tunnings[strings][tunningId] || tunnings[6].standard;
 
 /**
  * Returns a list of tunnings
@@ -67,17 +82,60 @@ const getTunning = (tunningId, strings) => tunnings[strings][tunningId] || tunni
  */
 const getTunningList = (strings) => {
   const resultList = [];
+
   Object.keys(tunnings[strings]).forEach((tune) => {
     resultList.push({
-      label: tune.replace('_', ' ')
-        .replace('_', ' ')
-        .replace('_', ' ')
-        .replace('_', ' ')
-        .toUpperCase(),
+      label: normalizeTunningLabel(tune),
       value: tune,
     });
   });
+
   return resultList;
 };
 
-export { getTunning, getTunningList };
+/**
+ * Returns a label of pattern
+ *
+ * @param {Array} pattern - The array pattern
+ * @param {Number} strings - The strings value by template
+ * @returns {String} The label of pattern
+ */
+const getTunningLabelByPattern = (pattern, strings) => {
+  const tuning = tunnings[strings];
+
+  if (tuning) {
+    // eslint-disable-next-line no-unused-vars
+    const entry = Object.entries(tuning).find(([label, values]) => Array.isArray(values)
+          && values.length === pattern.length
+          && values.every((value, index) => value === pattern[index]));
+
+    return entry ? normalizeTunningLabel(entry[0]) : null;
+  }
+
+  return null;
+};
+
+/**
+ * Returns a tunning id of pattern
+ *
+ * @param {Array} pattern - The array pattern
+ * @param {Number} strings - The strings value by template
+ * @returns {String} The label of tunning id
+ */
+const getTunningIdByPattern = (pattern, strings) => {
+  for (const id in tunnings) {
+    if (parseInt(id) === strings) {
+      for (const label in tunnings[id]) {
+        if (JSON.stringify(tunnings[id][label]) === JSON.stringify(pattern)) {
+          return label;
+        }
+      }
+    }
+  }
+
+  return null;
+};
+
+export {
+  getTunning, getTunningList, getTunningLabelByPattern, getTunningIdByPattern,
+};

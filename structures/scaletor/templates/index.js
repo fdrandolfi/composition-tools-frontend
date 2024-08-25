@@ -90,4 +90,17 @@ const getTemplateList = (category) => {
   return resultList;
 };
 
-export { templates, allTemplates, getTemplateList };
+/**
+ * Returns the label of a template by ID
+ *
+ * @param {String} id - The template ID
+ * @returns {String} The label of the template
+ */
+const getTemplateLabelById = (id) => {
+  if (allTemplates[id]) return allTemplates[id].label;
+  return null;
+};
+
+export {
+  templates, allTemplates, getTemplateList, getTemplateLabelById,
+};
