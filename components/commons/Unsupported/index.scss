@@ -11,8 +11,8 @@
   box-sizing: border-box;
   padding: 20px;
   z-index: 100;
-
   @include flex(center, center, column);
+  display: none;
 
   &__logotype {
     position: relative;
@@ -24,12 +24,12 @@
   &__message {
     position: relative;
     font-size: 14px;
-    font-weight: $font-weight-regular;
+    font-weight: $font-weight-bold;
   }
 }
 
-@include media(1024px) {
+@include media($media-size-mobile) {
   .unsupported {
-    display: none;
+    display: flex;
   }  
 }

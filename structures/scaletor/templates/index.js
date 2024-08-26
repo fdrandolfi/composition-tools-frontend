@@ -3,11 +3,29 @@
  */
 const templates = {
   guitars: {
+    'G-PRS-SE-C24-6': {
+      label: 'PRS SE Custom 24',
+      strings: 6,
+      steps: 24,
+      imgSrc: 'templates/G-PRS-SE-C24-6.png',
+    },
     'G-PRS-C24-6': {
-      label: 'PRS Custom 24',
+      label: 'PRS Custom 24 Core',
       strings: 6,
       steps: 24,
       imgSrc: 'templates/G-PRS-C24-6.png',
+    },
+    'G-PRS-C24-10T-6': {
+      label: 'PRS Custom 24 10-Top',
+      strings: 6,
+      steps: 24,
+      imgSrc: 'templates/G-PRS-C24-10T-6.png',
+    },
+    'G-DEAN-CADILLAC-1980-6': {
+      label: 'Dean Cadillac 1980',
+      strings: 6,
+      steps: 22,
+      imgSrc: 'templates/G-DEAN-CADILLAC-1980-6.png',
     },
     'G-GIBSON-LP-STD-6': {
       label: 'Gibson Les Paul Standard',
