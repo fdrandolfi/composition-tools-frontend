@@ -24,12 +24,12 @@ const Footer = ({ project, back }) => (
       >
         {project.label}
       </a>
-      {' | © '}
+      {', '}
       <a
         href="https://feliperandolfi.com/"
         alt="website"
       >
-        Felipe Randolfi
+        Copyright © Felipe Randolfi
       </a>
     </p>
   </section>
