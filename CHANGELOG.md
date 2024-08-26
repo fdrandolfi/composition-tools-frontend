@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] - 2024-08-25
+### Changes
+- Add new templates for PRS and Dean guitars, update responsive styles and add general changes [#16](https://github.com/fdrandolfi/composition-tools-frontend/pull/16)
+
 ## [1.5.0] - 2024-08-24
 ### Changes
 - Add query params selection from urls on scaletor [#14](https://github.com/fdrandolfi/composition-tools-frontend/pull/14)
