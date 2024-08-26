@@ -21,6 +21,12 @@ const templates = {
       steps: 24,
       imgSrc: 'templates/G-PRS-C24-10T-6.png',
     },
+    'G-DEAN-CADILLAC-1980-6': {
+      label: 'Dean Cadillac 1980',
+      strings: 6,
+      steps: 22,
+      imgSrc: 'templates/G-DEAN-CADILLAC-1980-6.png',
+    },
     'G-GIBSON-LP-STD-6': {
       label: 'Gibson Les Paul Standard',
       strings: 6,
