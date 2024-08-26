@@ -50,7 +50,7 @@
 
       &--available {
         span {
-          background-color: $color-orange-dark;
+          background-color: $color-violet-dark;
           opacity: 0.66;
         }
 
@@ -62,7 +62,7 @@
 
         &:hover {
           span {
-            background-color: $color-orange-light;
+            background-color: $color-violet-light;
             opacity: 1;
           }
         }
@@ -131,7 +131,7 @@
 
       &--available {
         span {
-          background-color: $color-orange-light;
+          background-color: $color-violet-light;
         }
       }
 
