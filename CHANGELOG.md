@@ -1,9 +1,6 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
-- Add query params selection from urls [#14](https://github.com/fdrandolfi/composition-tools-frontend/pull/14)
-
 ## [1.5.0] - 2024-08-24
 ### Changes
 - Add query params selection from urls on scaletor [#14](https://github.com/fdrandolfi/composition-tools-frontend/pull/14)

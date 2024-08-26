@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unchanged
-- Add new Sigma SE DME template.
+- Add new templates for PRS and Dean guitars, update responsive styles and add general changes.
 
 ## [1.11.0] – 2024-08-24
 ### Changes
