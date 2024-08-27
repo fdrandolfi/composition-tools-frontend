@@ -5,6 +5,7 @@
   width: 90%;
   max-width: 320px;
   @include flex(space-between, center, row);
+  z-index: 999;
 
   &__title {
     font-size: $font-size-24;
@@ -19,11 +20,18 @@
 
 @include media($media-size-mobile) {
   .fifth-selector {
+    position: fixed;
+    bottom: 80px;
     width: 100%;
     max-width: none;
+    box-sizing: border-box;
+    padding: $spacing-20;
+    border-top: $border-line;
+    border-bottom: $border-line;
+    background-color: $color-dark;
 
     &__title {
-      font-size: $font-size-18;
+      font-size: $font-size-16;
     }
   }
 }

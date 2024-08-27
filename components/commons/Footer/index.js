@@ -1,37 +1,45 @@
 import React from 'react';
+import LeftArrow from './icons/LeftArrow';
 
 const Footer = ({ project, back }) => (
   <section className="footer">
     {
       back && (
-        <p>
+        <div className="footer__left">
           <a
             href={back.url}
             alt="back"
           >
-            {back.label}
+            <LeftArrow />
+            {
+              back.label && (
+                <h3>
+                  {back.label.toUpperCase()}
+                </h3>
+              )
+            }
           </a>
-        </p>
+        </div>
       )
     }
-    <h3>
-      Dedicated to all of us who learn through passion.
-    </h3>
-    <p>
-      <a
-        href={project.url}
-        alt="changelog"
-      >
-        {project.label}
-      </a>
-      {', '}
-      <a
-        href="https://feliperandolfi.com/"
-        alt="website"
-      >
-        Copyright © Felipe Randolfi
-      </a>
-    </p>
+    <div className="footer__center" />
+    <div className="footer__right">
+      <p>
+        <a
+          href={project.url}
+          alt="changelog"
+        >
+          {project.label.toUpperCase()}
+        </a>
+        {', '}
+        <a
+          href="https://feliperandolfi.com/"
+          alt="website"
+        >
+          FELIPERANDOLFI.COM
+        </a>
+      </p>
+    </div>
   </section>
 );
 

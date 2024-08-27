@@ -52,6 +52,8 @@ const SelectorDouble = ({
         onChange={onChangeNote}
         value={valueNote}
         isDisabled={!checkedScaleSwitch}
+        isSearchable={false}
+        menuPlacement="top"
       />
       <Select
         className={classnames(
@@ -71,6 +73,8 @@ const SelectorDouble = ({
         onChange={onChangeScale}
         value={valueScale}
         isDisabled={!checkedScaleSwitch}
+        isSearchable={false}
+        menuPlacement="top"
       />
     </div>
   </div>

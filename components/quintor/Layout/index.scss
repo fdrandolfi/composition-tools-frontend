@@ -64,7 +64,7 @@
     }
 
     &-name {
-      font-size: $font-size-36;
+      font-size: $font-size-30;
       color: $color-light;
       margin: $spacing-24;
       font-weight: $font-weight-bold;
@@ -119,5 +119,19 @@
   .layout-quintor {
     height: auto;
     padding: $spacing-120 $spacing-20 $spacing-40;
+
+    &__center {
+      top: auto;
+      height: auto;
+      @include flex(center, center, column-reverse);
+    }
+  }
+
+  .fifth-matrix {
+    &__note {
+      &-name {
+        font-size: $font-size-24;
+      }
+    }
   }
 }

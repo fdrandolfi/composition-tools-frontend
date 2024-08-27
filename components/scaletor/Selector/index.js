@@ -19,6 +19,8 @@ const Selector = ({
       onChange={onChange}
       value={value}
       isDisabled={options.length === 1}
+      isSearchable={false}
+      menuPlacement="top"
     />
   </div>
 );

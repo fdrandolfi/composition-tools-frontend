@@ -51,3 +51,43 @@
     transition: $transition;
   }
 }
+
+@include media($media-size-mobile) {
+  .layout-scaletor {
+    top: 100px;
+    height: auto;
+    @include flex(flex-start, center, column);
+
+    &__bottom {
+      position: relative;
+      height: auto;
+      @include flex(center, center, row);
+    }
+
+    &__top {
+      position: fixed;
+      top: auto;
+      bottom: 80px;
+      height: auto;
+      transform: none;
+      @include flex(center, center, column);
+      border-top: $border-line;
+      border-bottom: $border-line;
+      box-sizing: border-box;
+      padding: $spacing-20;
+      background-color: $color-dark;
+    }
+  
+    &__bottom {
+      bottom: auto;
+      transform: none;
+    }
+
+    &__column-3 {
+      position: relative;
+      width: 100%;
+      height: auto;
+      padding: 0;
+    }
+  }
+}

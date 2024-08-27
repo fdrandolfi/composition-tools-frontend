@@ -19,6 +19,8 @@ const FifthSelector = ({
       onChange={onChange}
       defaultValue={defaultValue || options[0]}
       isDisabled={options.length === 1}
+      isSearchable={false}
+      menuPlacement="top"
     />
   </div>
 );

@@ -242,4 +242,32 @@
   }
 }
 
-@import './responsive.scss';
+// Between 1024px and 1440px
+@include media-between($media-size-mobile, $media-size-desktop-medium) {
+  .matrix {
+    &__tunning,
+    &__string {
+      &-note {
+        span {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+}
+
+// Between 1440px and 1680px
+@include media-between($media-size-desktop-medium, $media-size-desktop-large) {
+  .matrix {
+    &__tunning,
+    &__string {
+      &-note {
+        span {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}
