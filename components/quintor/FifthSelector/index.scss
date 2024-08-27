@@ -7,12 +7,23 @@
   @include flex(space-between, center, row);
 
   &__title {
-    font-size: 24px;
+    font-size: $font-size-24;
   }
 
   &__select {
     position: relative;
     height: auto;
     color: $color-dark-100;
+  }
+}
+
+@include media($media-size-mobile) {
+  .fifth-selector {
+    width: 100%;
+    max-width: none;
+
+    &__title {
+      font-size: $font-size-18;
+    }
   }
 }

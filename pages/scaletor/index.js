@@ -7,7 +7,6 @@ import Header from '../../components/commons/Header';
 import ScaletorLogotype from '../../components/scaletor/Logotype';
 import Layout from '../../components/scaletor/Layout';
 import Footer from '../../components/commons/Footer';
-import Unsupported from '../../components/commons/Unsupported';
 
 const footer = {
   project: {
@@ -36,7 +35,6 @@ const Scaletor = () => (
         project={footer.project}
         back={footer.back}
       />
-      <Unsupported />
     </main>
   </>
 );

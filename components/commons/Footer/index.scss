@@ -6,24 +6,24 @@
   @include flex(flex-end, center, column);
   z-index: 2;
   box-sizing: border-box;
-  padding: 48px 0;
+  padding: $spacing-48 0;
 
   h3 {
-    font-size: 16px;
+    font-size: $font-size-16;
     font-weight: $font-weight-bold;
     color: $color-dark-100;
     text-align: center;
   }
 
   p {
-    font-size: 12px;
+    font-size: $font-size-12;
     font-weight: $font-weight-bold;
     color: $color-dark-100;
     text-align: center;
-    margin-top: 12px;
+    margin-top: $spacing-12;
 
     a {
-      font-size: 12px;
+      font-size: $font-size-12;
       font-weight: $font-weight-bold;
       color: $color-light;
       text-align: center;
@@ -35,7 +35,17 @@
     }
 
     &:first-child {
-      margin-bottom: 24px;
+      margin-bottom: $spacing-24;
+    }
+  }
+}
+
+@include media($media-size-mobile) {
+  .footer {
+    padding: $spacing-20;
+
+    h3 {
+      font-size: $font-size-14;
     }
   }
 }

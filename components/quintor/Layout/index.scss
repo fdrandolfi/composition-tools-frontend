@@ -114,3 +114,10 @@
     }
   }
 }
+
+@include media($media-size-mobile) {
+  .layout-quintor {
+    height: auto;
+    padding: $spacing-120 $spacing-20 $spacing-40;
+  }
+}

@@ -7,7 +7,6 @@ import Header from '../../components/commons/Header';
 import QuintorLogotype from '../../components/quintor/Logotype';
 import Layout from '../../components/quintor/Layout';
 import Footer from '../../components/commons/Footer';
-import Unsupported from '../../components/commons/Unsupported';
 
 const footer = {
   project: {
@@ -36,7 +35,6 @@ const Quintor = () => (
         project={footer.project}
         back={footer.back}
       />
-      <Unsupported />
     </main>
   </>
 );

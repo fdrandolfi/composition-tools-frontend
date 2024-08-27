@@ -17,7 +17,6 @@ const Selector = ({
       className="selector__select"
       options={options}
       onChange={onChange}
-      // defaultValue={defaultValue}
       value={value}
       isDisabled={options.length === 1}
     />
