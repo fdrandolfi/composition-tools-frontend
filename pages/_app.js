@@ -84,7 +84,7 @@ const App = ({ Component, pageProps }) => {
     <>
       { GTMScript }
       { SEO }
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </>
   );
 };
