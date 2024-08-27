@@ -3,7 +3,7 @@ import Select from 'react-select';
 import classnames from 'classnames';
 
 const FifthSelector = ({
-  id, title, options, onChange, defaultValue,
+  id, title, options, onChange, defaultValue, isMobile
 }) => (
   <div className={classnames(
     'fifth-selector',
@@ -20,7 +20,7 @@ const FifthSelector = ({
       defaultValue={defaultValue || options[0]}
       isDisabled={options.length === 1}
       isSearchable={false}
-      menuPlacement="top"
+      menuPlacement={isMobile ? 'top' : 'bottom'}
     />
   </div>
 );

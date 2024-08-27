@@ -15,6 +15,7 @@ const SelectorDouble = ({
   checkedScaleSwitch,
   valueNote,
   valueScale,
+  isMobile,
 }) => (
   <div className={classnames(
     'selector-double',
@@ -53,7 +54,7 @@ const SelectorDouble = ({
         value={valueNote}
         isDisabled={!checkedScaleSwitch}
         isSearchable={false}
-        menuPlacement="top"
+        menuPlacement={isMobile ? 'top' : 'bottom'}
       />
       <Select
         className={classnames(
@@ -74,7 +75,7 @@ const SelectorDouble = ({
         value={valueScale}
         isDisabled={!checkedScaleSwitch}
         isSearchable={false}
-        menuPlacement="top"
+        menuPlacement={isMobile ? 'top' : 'bottom'}
       />
     </div>
   </div>

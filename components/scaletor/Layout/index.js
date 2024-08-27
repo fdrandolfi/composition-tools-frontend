@@ -14,6 +14,7 @@ import SelectorDouble from '../SelectorDouble';
 import NotesHistory from '../NotesHistory';
 
 const Layout = () => {
+  const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
   const { query } = router;
 
@@ -178,6 +179,22 @@ const Layout = () => {
     });
   }, [scale]);
 
+  // Resize
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 1024);
+      };
+
+      handleResize(); // Set the initial value
+
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, []);
+
   /**
    * Return
    */
@@ -195,6 +212,7 @@ const Layout = () => {
             options={tunningOptions}
             onChange={handleTunningChange}
             value={initialTunning}
+            isMobile={isMobile}
           />
         </div>
         <div className="layout-scaletor__column-3">
@@ -210,6 +228,7 @@ const Layout = () => {
             checkedScaleSwitch={scaleSwitch}
             valueNote={initialScaleNote}
             valueScale={initialScaleName}
+            isMobile={isMobile}
           />
         </div>
         <div className="layout-scaletor__column-3">
@@ -233,6 +252,7 @@ const Layout = () => {
             onChange={handleTemplateChange}
             value={initialTemplate}
             isSearchable={false}
+            isMobile={isMobile}
           />
         </div>
       </div>
