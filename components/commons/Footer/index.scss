@@ -44,6 +44,10 @@
       }
     }
   }
+
+  svg {
+    transform: rotate(180deg);
+  }
 }
 
 @include media($media-size-mobile) {

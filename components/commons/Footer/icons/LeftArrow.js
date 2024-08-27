@@ -5,7 +5,6 @@ const Icon = () => (
     height="32"
     fill="none"
     viewBox="0 0 32 32"
-    transform="rotate(180)"
   >
     <g>
       <path
