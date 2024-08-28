@@ -57,6 +57,7 @@
     top: 100px;
     height: auto;
     @include flex(flex-start, center, column);
+    overflow-x: scroll;
 
     &__top {
       position: fixed;
@@ -70,6 +71,13 @@
       box-sizing: border-box;
       padding: $spacing-20;
       background-color: $color-dark;
+    }
+
+    &__center {
+      height: calc(100% - 240px);
+      width: 300%;
+      margin-left: 180%;
+      margin-top: calc(-50% + 100px);
     }
 
     &__bottom {
