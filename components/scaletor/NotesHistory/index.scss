@@ -3,15 +3,14 @@
 .notes-history {
   position: relative;
   width: 90%;
-  max-width: 320px;
   height: 100%;
-  @include flex(flex-start, flex-start, column);
+  @include flex(center, center, row);
 
   &__item {
     color: rgba(255, 255, 255, 0.75);
     text-shadow: 1px 1px 1px  rgba(0, 0, 0, 0.75);
-
     @include flex(flex-start, center, row);
+    margin: 0 $spacing-20;
 
     span {
       position: relative;
@@ -39,6 +38,28 @@
           color: $color-light-100;
           background-color: $color-dark;
         }
+      }
+    }
+  }
+}
+
+@include media($media-size-mobile) {
+  .notes-history {
+    width: 100%;
+    @include flex(center, center, row);
+
+    &__item {
+      font-size: $font-size-10;
+      margin: 0;
+      margin-right: $spacing-12;
+
+      span {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:nth-child(3) {
+        margin-right: 0;
       }
     }
   }

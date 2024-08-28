@@ -58,12 +58,6 @@
     height: auto;
     @include flex(flex-start, center, column);
 
-    &__bottom {
-      position: relative;
-      height: auto;
-      @include flex(center, center, row);
-    }
-
     &__top {
       position: fixed;
       top: auto;
@@ -77,9 +71,13 @@
       padding: $spacing-20;
       background-color: $color-dark;
     }
-  
+
     &__bottom {
-      bottom: auto;
+      position: fixed;
+      height: auto;
+      bottom: 240px;
+      width: 100%;
+      padding: $spacing-20;
       transform: none;
     }
 

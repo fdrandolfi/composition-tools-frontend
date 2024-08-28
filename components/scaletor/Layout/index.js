@@ -269,11 +269,7 @@ const Layout = () => {
         <Template id={template} />
       </div>
       <div className="layout-scaletor__bottom">
-        <div className="layout-scaletor__column-3">
-          <NotesHistory />
-        </div>
-        <div className="layout-scaletor__column-3" />
-        <div className="layout-scaletor__column-3" />
+        <NotesHistory />
       </div>
     </section>
   );

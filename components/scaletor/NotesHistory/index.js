@@ -3,15 +3,15 @@ import React from 'react';
 const data = [
   {
     id: 'gray',
-    label: 'First note enabled',
+    label: 'First Note',
   },
   {
     id: 'orange',
-    label: 'Note enabled',
+    label: 'Enabled Note',
   },
   {
     id: 'black',
-    label: 'Note disabled',
+    label: 'Disabled Note',
   },
 ];
 
