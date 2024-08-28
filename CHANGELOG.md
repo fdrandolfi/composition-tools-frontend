@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.8.0] - 2024-08-28
+### Changes
+- Add new tunnings for guitars [#20](https://github.com/fdrandolfi/composition-tools-frontend/pull/20)
+
 ## [1.7.0] - 2024-08-28
 ### Changes
 - Add responsive to all pages and components [#18](https://github.com/fdrandolfi/composition-tools-frontend/pull/18)
