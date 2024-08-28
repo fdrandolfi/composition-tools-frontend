@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unchanged
-- Add responsive to all pages and components.
+- Add new tunnings for guitars.
 
 ## [1.13.0] – 2024-08-28
 ### Changes
