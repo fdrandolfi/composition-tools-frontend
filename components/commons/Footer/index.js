@@ -1,5 +1,7 @@
 import React from 'react';
+import { Tooltip } from 'react-tooltip'
 import LeftArrow from './icons/LeftArrow';
+import InfoSymbol from './icons/InfoSymbol';
 
 const Footer = ({ project, back }) => (
   <section className="footer">
@@ -24,21 +26,32 @@ const Footer = ({ project, back }) => (
     }
     <div className="footer__center" />
     <div className="footer__right">
-      <p>
+      <a
+        id="clickable"
+        className='footer__info'
+      >
+        <InfoSymbol />
+      </a>
+      <Tooltip
+        className='footer__tooltip'
+        anchorSelect="#clickable"
+        clickable
+      >
         <a
           href={project.url}
           alt="changelog"
+          className='footer__links'
         >
           {project.label.toUpperCase()}
         </a>
-        {', '}
         <a
           href="https://feliperandolfi.com/"
           alt="website"
+          className='footer__links'
         >
           FELIPERANDOLFI.COM
         </a>
-      </p>
+      </Tooltip>
     </div>
   </section>
 );

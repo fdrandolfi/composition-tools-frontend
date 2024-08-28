@@ -28,6 +28,7 @@
     "react-dom": "^18.2.0",
     "react-select": "^5.5.4",
     "react-switch": "^7.0.0",
+    "react-tooltip": "^5.28.0",
     "sass": "^1.42.1"
   },
   "devDependencies": {

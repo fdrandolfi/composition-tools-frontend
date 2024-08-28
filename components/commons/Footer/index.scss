@@ -4,8 +4,6 @@
   width: 100%;
   height: 120px;
   @include flex(space-between, center, row);
-  box-sizing: border-box;
-  padding: $spacing-40;
   z-index: 999;
 
   &__left,
@@ -17,51 +15,64 @@
   &__left {
     a {
       @include flex(flex-start, center, row);
+      box-sizing: border-box;
+      padding: $spacing-40;
 
       h3 {
         margin-left: $spacing-24;
         margin-top: -2px;
       }
     }
-  }
 
-  p {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+  
+  &__links {
     font-size: $font-size-12;
     font-weight: $font-weight-bold;
-    color: $color-dark-100;
+    color: $color-light-200;
     text-align: center;
+    padding: 0;
 
-    a {
-      font-size: $font-size-12;
-      font-weight: $font-weight-bold;
-      color: $color-light-200;
-      text-align: center;
-      padding: 0;
-
-      &:hover {
-        color: $color-light;
-      }
+    &:hover {
+      color: $color-light;
     }
   }
 
-  svg {
-    transform: rotate(180deg);
+  &__info {
+    @include flex(center, center, row);
+    box-sizing: border-box;
+    padding: $spacing-40;
+  }
+
+  &__tooltip {
+    @include flex(center, flex-end, column);
   }
 }
 
 @include media($media-size-mobile) {
   .footer {
     height: 60px;
-    padding: $spacing-20;
     background-color: $color-dark;
 
-    &__center,
-    &__right{
+    &__center {
       display: none;
     }
 
-    h3 {
-      display: none;
+    &__left {
+      a {
+        padding: $spacing-16 $spacing-20;
+
+        h3 {
+          display: none;
+        }
+      }
+    }
+
+    &__info {
+      padding: $spacing-16 $spacing-20;
     }
 
     svg {
