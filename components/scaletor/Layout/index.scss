@@ -55,9 +55,10 @@
 @include media($media-size-mobile) {
   .layout-scaletor {
     top: 100px;
-    height: auto;
-    @include flex(flex-start, center, column);
+    height: calc(100% - 340px);
+    @include flex(center, center, column);
     overflow-x: scroll;
+    overflow-y: hidden;
 
     &__top {
       position: fixed;
@@ -74,10 +75,8 @@
     }
 
     &__center {
-      height: calc(100% - 240px);
       width: 300%;
       margin-left: 180%;
-      margin-top: calc(-50% + 100px);
     }
 
     &__bottom {
