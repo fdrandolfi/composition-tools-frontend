@@ -242,7 +242,7 @@
   }
 }
 
-@include media($media-size-mobile) {
+@include media($media-size-mobile-large) {
   .matrix {
     &__tunning,
     &__string {
@@ -257,7 +257,21 @@
   }
 }
 
-// Between 1024px and 1440px
+@include media-between($media-size-mobile-large, $media-size-mobile) {
+  .matrix {
+    &__tunning,
+    &__string {
+      &-note {
+        span {
+          font-size: $font-size-12;
+          width: 28px;
+          height: 28px;
+        }
+      }
+    }
+  }
+}
+
 @include media-between($media-size-mobile, $media-size-desktop-medium) {
   .matrix {
     &__tunning,
@@ -273,7 +287,6 @@
   }
 }
 
-// Between 1440px and 1680px
 @include media-between($media-size-desktop-medium, $media-size-desktop-large) {
   .matrix {
     &__tunning,

@@ -63,10 +63,13 @@ $fast-transition: all 0.15s ease;
 $border-line: 1px solid rgba(255, 255, 255, 0.15);
 
 // Media Sizes
+$media-size-mobile-medium: 425px;
+$media-size-mobile-large: 768px;
 $media-size-mobile: 1024px;
 $media-size-desktop-small: 1280px;
 $media-size-desktop-medium: 1440px;
 $media-size-desktop-large: 1680px;
+$media-size-desktop: 1920px;
 
 // Mixins
 @import 'mixins';

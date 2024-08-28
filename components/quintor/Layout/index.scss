@@ -117,20 +117,29 @@
 
 @include media($media-size-mobile) {
   .layout-quintor {
-    height: auto;
-    padding: $spacing-120 $spacing-20 $spacing-40;
+    height: calc(100% - 240px);
+    top: 100px;
 
     &__center {
       top: auto;
-      height: auto;
-      @include flex(center, center, column-reverse);
+      height: 100%;
     }
   }
 
   .fifth-matrix {
+    height: 100%;
+    max-width: none;
+    margin: 0;
+    border-radius: 0;
+    overflow: hidden;
+
     &__note {
       &-name {
         font-size: $font-size-24;
+      }
+
+      &-7 {
+        height: auto;
       }
     }
   }
