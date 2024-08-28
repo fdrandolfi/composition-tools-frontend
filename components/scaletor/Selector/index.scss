@@ -30,15 +30,17 @@
   .selector {  position: relative;
     width: 100%;
     max-width: none;
-    @include flex(center, flex-start, column);
+    @include flex(flex-start, center, row);
   
     &__title {
       font-size: $font-size-16;
+      width: 35% !important;
     }
   
     &__select {
-      margin-top: $spacing-8;
+      margin-top: 0;
       color: $color-dark-100;
+      width: 65% !important;
     }
   }
 }

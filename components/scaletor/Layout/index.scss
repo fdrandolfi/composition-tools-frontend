@@ -67,8 +67,8 @@
     &__top {
       position: fixed;
       top: auto;
-      bottom: 80px;
-      height: auto;
+      bottom: 60px; // footer height
+      height: 180px;
       transform: none;
       @include flex(center, center, column);
       border-top: $border-line;

@@ -21,7 +21,7 @@
 @include media($media-size-mobile) {
   .fifth-selector {
     position: fixed;
-    bottom: 80px;
+    bottom: 60px; // footer height
     width: 100%;
     max-width: none;
     box-sizing: border-box;

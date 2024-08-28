@@ -48,16 +48,30 @@
     width: 100%;
     max-width: none;
     padding: $spacing-12 0;
-
+    @include flex(space-between, center, row);
+    
     &__title {
       font-size: $font-size-16;
     }
 
     &__select {
-      margin-top: $spacing-8;
+      margin-top: 0;
 
       &--note {
-        width: 25%;
+        width: 35%;
+        margin-right: 5%;
+      }
+
+      &--scale {
+        width: 60%;
+      }
+    }
+
+    &__content {
+      width: 65%;
+
+      &--switch {
+        width: 30%;
         margin-right: 5%;
       }
     }
