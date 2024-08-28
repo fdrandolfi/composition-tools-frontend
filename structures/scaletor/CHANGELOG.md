@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## Unchanged
+
+## [1.13.0] – 2024-08-28
+### Changes
 - Add responsive to all pages and components.
 
 ## [1.12.0] – 2024-08-25
