@@ -1,41 +1,79 @@
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
-  height: 15%;
-  @include flex(flex-end, center, column);
-  z-index: 2;
-  box-sizing: border-box;
-  padding: 48px 0;
+  height: 120px;
+  @include flex(space-between, center, row);
+  z-index: 999;
 
-  h3 {
-    font-size: 16px;
-    font-weight: $font-weight-bold;
-    color: $color-dark-100;
-    text-align: center;
+  &__left,
+  &__center,
+  &__right {
+    position: relative;
   }
 
-  p {
-    font-size: 12px;
-    font-weight: $font-weight-bold;
-    color: $color-dark-100;
-    text-align: center;
-    margin-top: 12px;
-
+  &__left {
     a {
-      font-size: 12px;
-      font-weight: $font-weight-bold;
-      color: $color-light;
-      text-align: center;
-      padding: 0;
+      @include flex(flex-start, center, row);
+      box-sizing: border-box;
+      padding: $spacing-40;
 
-      &:hover {
-        color: $color-light-100;
+      h3 {
+        margin-left: $spacing-24;
+        margin-top: -2px;
       }
     }
 
-    &:first-child {
-      margin-bottom: 24px;
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+  
+  &__links {
+    font-size: $font-size-12;
+    font-weight: $font-weight-bold;
+    color: $color-light-200;
+    text-align: center;
+    padding: 0;
+
+    &:hover {
+      color: $color-light;
+    }
+  }
+
+  &__info {
+    @include flex(center, center, row);
+    box-sizing: border-box;
+    padding: $spacing-40;
+  }
+
+  &__tooltip {
+    @include flex(center, flex-end, column);
+  }
+}
+
+@include media($media-size-mobile) {
+  .footer {
+    height: 60px;
+    background-color: $color-dark;
+
+    &__left {
+      a {
+        padding: $spacing-16 $spacing-20;
+
+        h3 {
+          display: none;
+        }
+      }
+    }
+
+    &__info {
+      padding: $spacing-16 $spacing-20;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
     }
   }
 }

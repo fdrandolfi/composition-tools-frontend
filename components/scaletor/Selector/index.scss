@@ -5,15 +5,16 @@
   width: 90%;
   max-width: 320px;
   @include flex(center, flex-start, column);
+  z-index: 999;
 
   &__title {
-    font-size: 24px;
+    font-size: $font-size-24;
   }
 
   &__select {
     position: relative;
     height: auto;
-    margin-top: 24px;
+    margin-top: $spacing-24;
     color: $color-dark-100;
   }
 
@@ -21,6 +22,25 @@
   &--template {
     .selector__select {
       width: 100%;
+    }
+  }
+}
+
+@include media($media-size-mobile) {
+  .selector {  position: relative;
+    width: 100%;
+    max-width: none;
+    @include flex(flex-start, center, row);
+  
+    &__title {
+      font-size: $font-size-16;
+      width: 35% !important;
+    }
+  
+    &__select {
+      margin-top: 0;
+      color: $color-dark-100;
+      width: 65% !important;
     }
   }
 }

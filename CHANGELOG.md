@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.7.0] - 2024-08-28
+### Changes
+- Add responsive to all pages and components [#18](https://github.com/fdrandolfi/composition-tools-frontend/pull/18)
+
 ## [1.6.0] - 2024-08-25
 ### Changes
 - Add new templates for PRS and Dean guitars, update responsive styles and add general changes [#16](https://github.com/fdrandolfi/composition-tools-frontend/pull/16)

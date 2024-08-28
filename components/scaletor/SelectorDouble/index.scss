@@ -5,20 +5,21 @@
   width: 90%;
   max-width: 320px;
   @include flex(center, flex-start, column);
+  z-index: 999;
 
   &__title {
-    font-size: 24px;
+    font-size: $font-size-24;
   }
 
   &__switch {
-    margin-left: 10px;
+    margin-left: $spacing-12;
     margin-bottom: -3px;
   }
 
   &__select {
     position: relative;
     height: auto;
-    margin-top: 24px;
+    margin-top: $spacing-24;
     color: $color-dark-100;
 
     &--note {
@@ -38,6 +39,41 @@
     &--switch {
       width: 100%;
       @include flex(space-between, center, row);
+    }
+  }
+}
+
+@include media($media-size-mobile) {
+  .selector-double {
+    width: 100%;
+    max-width: none;
+    padding: $spacing-12 0;
+    @include flex(space-between, center, row);
+    
+    &__title {
+      font-size: $font-size-16;
+    }
+
+    &__select {
+      margin-top: 0;
+
+      &--note {
+        width: 35%;
+        margin-right: 5%;
+      }
+
+      &--scale {
+        width: 60%;
+      }
+    }
+
+    &__content {
+      width: 65%;
+
+      &--switch {
+        width: 30%;
+        margin-right: 5%;
+      }
     }
   }
 }
