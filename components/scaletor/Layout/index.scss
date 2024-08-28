@@ -51,3 +51,50 @@
     transition: $transition;
   }
 }
+
+@include media($media-size-mobile) {
+  .layout-scaletor {
+    top: 100px;
+    height: calc(100% - 340px);
+    display: block;
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    &__top {
+      position: fixed;
+      top: auto;
+      bottom: 60px; // footer height
+      height: 180px;
+      transform: none;
+      @include flex(center, center, column);
+      border-top: $border-line;
+      border-bottom: $border-line;
+      box-sizing: border-box;
+      padding: $spacing-20;
+      background-color: $color-dark;
+    }
+
+    &__center {
+      width: 350%;
+      top: 50%;
+      transform: translateY(-50%);
+      margin-left: -90px;
+    }
+
+    &__bottom {
+      position: fixed;
+      height: auto;
+      bottom: 240px;
+      width: 100%;
+      padding: $spacing-20;
+      transform: none;
+    }
+
+    &__column-3 {
+      position: relative;
+      width: 100%;
+      height: auto;
+      padding: 0;
+    }
+  }
+}

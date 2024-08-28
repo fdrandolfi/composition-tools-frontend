@@ -242,4 +242,62 @@
   }
 }
 
-@import './responsive.scss';
+@include media($media-size-mobile-large) {
+  .matrix {
+    &__tunning,
+    &__string {
+      &-note {
+        span {
+          font-size: $font-size-10;
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+}
+
+@include media-between($media-size-mobile-large, $media-size-mobile) {
+  .matrix {
+    &__tunning,
+    &__string {
+      &-note {
+        span {
+          font-size: $font-size-12;
+          width: 28px;
+          height: 28px;
+        }
+      }
+    }
+  }
+}
+
+@include media-between($media-size-mobile, $media-size-desktop-medium) {
+  .matrix {
+    &__tunning,
+    &__string {
+      &-note {
+        span {
+          font-size: $font-size-10;
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+}
+
+@include media-between($media-size-desktop-medium, $media-size-desktop-large) {
+  .matrix {
+    &__tunning,
+    &__string {
+      &-note {
+        span {
+          font-size: $font-size-12;
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}

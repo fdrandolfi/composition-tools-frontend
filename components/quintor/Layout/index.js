@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { getFifthById } from '../../../structures/quintor/fifths';
 import { getNoteList } from '../../../structures/quintor/notes';
@@ -7,6 +7,8 @@ import { getNoteList } from '../../../structures/quintor/notes';
 import FifthSelector from '../FifthSelector';
 
 const Layout = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
   const tonalityAndModeById = {
     1: {
       type: 'Tonic',
@@ -46,6 +48,21 @@ const Layout = () => {
     setFitfhData(getFifthById(event.value - 1));
   };
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 1024);
+      };
+
+      handleResize(); // Set the initial value
+
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, []);
+
   return (
     <section className="layout-quintor">
       <div className="layout-quintor__center">
@@ -55,6 +72,7 @@ const Layout = () => {
           options={notesOptions}
           onChange={handleNotesChange}
           defaultValue={notesOptions[0]}
+          isMobile={isMobile}
         />
         <div className="fifth-matrix">
           {

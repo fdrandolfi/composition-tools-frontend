@@ -5,14 +5,33 @@
   width: 90%;
   max-width: 320px;
   @include flex(space-between, center, row);
+  z-index: 999;
 
   &__title {
-    font-size: 24px;
+    font-size: $font-size-24;
   }
 
   &__select {
     position: relative;
     height: auto;
     color: $color-dark-100;
+  }
+}
+
+@include media($media-size-mobile) {
+  .fifth-selector {
+    position: fixed;
+    bottom: 60px; // footer height
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    padding: $spacing-20;
+    border-top: $border-line;
+    border-bottom: $border-line;
+    background-color: $color-dark;
+
+    &__title {
+      font-size: $font-size-16;
+    }
   }
 }

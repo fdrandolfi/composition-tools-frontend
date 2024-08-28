@@ -1,37 +1,58 @@
 import React from 'react';
+import { Tooltip } from 'react-tooltip'
+import LeftArrow from './icons/LeftArrow';
+import InfoSymbol from './icons/InfoSymbol';
 
 const Footer = ({ project, back }) => (
   <section className="footer">
     {
       back && (
-        <p>
+        <div className="footer__left">
           <a
             href={back.url}
             alt="back"
           >
-            {back.label}
+            <LeftArrow />
+            {
+              back.label && (
+                <h3>
+                  {back.label.toUpperCase()}
+                </h3>
+              )
+            }
           </a>
-        </p>
+        </div>
       )
     }
-    <h3>
-      Dedicated to all of us who learn through passion.
-    </h3>
-    <p>
+    <div className="footer__center" />
+    <div className="footer__right">
       <a
-        href={project.url}
-        alt="changelog"
+        id="clickable"
+        className='footer__info'
       >
-        {project.label}
+        <InfoSymbol />
       </a>
-      {', '}
-      <a
-        href="https://feliperandolfi.com/"
-        alt="website"
+      <Tooltip
+        className='footer__tooltip'
+        anchorSelect="#clickable"
+        clickable
       >
-        Copyright © Felipe Randolfi
-      </a>
-    </p>
+        <a
+          href={project.url}
+          alt="changelog"
+          className='footer__links'
+        >
+          {project.label.toUpperCase()}
+        </a>
+        <a
+          href="https://feliperandolfi.com/"
+          alt="website"
+          className='footer__links'
+        >
+          FELIPERANDOLFI.COM
+        </a>
+      </Tooltip>
+    </div>
   </section>
 );
 

@@ -64,7 +64,7 @@
     }
 
     &-name {
-      font-size: $font-size-36;
+      font-size: $font-size-30;
       color: $color-light;
       margin: $spacing-24;
       font-weight: $font-weight-bold;
@@ -111,6 +111,36 @@
       height: 100px;
       background-color: $color-mood-7;
       @include flex(center, center, row);
+    }
+  }
+}
+
+@include media($media-size-mobile) {
+  .layout-quintor {
+    height: calc(100% - 240px);
+    top: 100px;
+
+    &__center {
+      top: auto;
+      height: 100%;
+    }
+  }
+
+  .fifth-matrix {
+    height: 100%;
+    max-width: none;
+    margin: 0;
+    border-radius: 0;
+    overflow: hidden;
+
+    &__note {
+      &-name {
+        font-size: $font-size-24;
+      }
+
+      &-7 {
+        height: auto;
+      }
     }
   }
 }
