@@ -56,7 +56,7 @@
   .layout-scaletor {
     top: 100px;
     height: calc(100% - 340px);
-    @include flex(center, center, column);
+    display: block;
     overflow-x: scroll;
     overflow-y: hidden;
 
@@ -76,7 +76,8 @@
 
     &__center {
       width: 350%;
-      margin-left: 220%;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     &__bottom {
