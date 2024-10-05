@@ -12,6 +12,7 @@
     max-width: 480px;
     height: auto;
     @include flex(center, center, row);
+    z-index: 1;
   }
 }
 

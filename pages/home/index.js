@@ -6,11 +6,12 @@ import Tools from '../../components/home/Tools';
 import Footer from '../../components/commons/Footer';
 
 const footer = {
+  back: null,
+  like: null,
   project: {
     label: `Composition Tools v${JSON.stringify(pkg.version).replace('"', '').replace('"', '')} `,
     url: 'https://github.com/fdrandolfi/composition-tools-frontend/blob/main/CHANGELOG.md',
   },
-  back: null,
 };
 
 /**
@@ -25,8 +26,9 @@ const HomePage = () => (
       <h1>Composition Tools</h1>
       <Tools />
       <Footer
-        project={footer.project}
         back={footer.back}
+        like={footer.like}
+        project={footer.project}
       />
     </main>
   </>
