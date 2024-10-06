@@ -6,7 +6,23 @@ import InfoSymbol from './icons/InfoSymbol';
 import classNames from 'classnames';
 import formatVisitCount from './utils/formatVisitCount';
 
-const Footer = ({ back, like, project }) => {
+import pkg from '../../../package.json';
+
+const footer = {
+  back: {
+    label: 'Back to Composition Tools',
+    url: '/',
+  },
+  like: {
+    label: `Like Us! ${String.fromCodePoint(0x1F389)}${String.fromCodePoint(0x1F389)}${String.fromCodePoint(0x1F389)}`,
+  },
+  project: {
+    label: `Composition Tools v${JSON.stringify(pkg.version).replace('"', '').replace('"', '')} `,
+    url: 'https://github.com/fdrandolfi/composition-tools-frontend/blob/main/CHANGELOG.md',
+  },
+};
+
+const Footer = ({ back = false, like = false, project }) => {
   const [ visitCount, setVisitCount ] = useState(0);
 
   const getAllCounters = async () => {
@@ -37,14 +53,14 @@ const Footer = ({ back, like, project }) => {
         back && (
           <div className="footer__left">
             <a
-              href={back.url}
+              href={footer.back.url}
               alt="back"
             >
               <LeftArrow />
               {
-                back.label && (
+                footer.back.label && (
                   <h3>
-                    {back.label.toUpperCase()}
+                    {footer.back.label.toUpperCase()}
                   </h3>
                 )
               }
@@ -83,7 +99,7 @@ const Footer = ({ back, like, project }) => {
                 <span
                   className='footer__links'
                 >
-                  {like.label.toUpperCase()}
+                  {footer.like.label.toUpperCase()}
                 </span>
               </Tooltip>
             </>
@@ -102,11 +118,11 @@ const Footer = ({ back, like, project }) => {
           clickable
         >
           <a
-            href={project.url}
+            href={footer.project.url}
             alt="changelog"
             className='footer__links'
           >
-            {project.label.toUpperCase()}
+            {footer.project.label.toUpperCase()}
           </a>
           <a
             href="https://feliperandolfi.com/"
