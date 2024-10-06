@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 This file documents all notable changes made up to version 2.0.0 for each project.
 
+## Unreleased
+### Changes
+#### General
+- Update env vars prefixes to enable firebase connections on vercel infrastructure.
+
 ## [2.0.0] - 2024-10-05
 ### Changes
 #### General
