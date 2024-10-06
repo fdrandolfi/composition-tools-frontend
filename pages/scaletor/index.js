@@ -1,23 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
 
-import pkg from '../../structures/scaletor/index.json';
-
 import Header from '../../components/commons/Header';
 import ScaletorLogotype from '../../components/scaletor/Logotype';
 import Layout from '../../components/scaletor/Layout';
 import Footer from '../../components/commons/Footer';
-
-const footer = {
-  project: {
-    label: `${pkg.name} v${JSON.stringify(pkg.version).replace('"', '').replace('"', '')} `,
-    url: 'https://github.com/fdrandolfi/composition-tools-frontend/blob/main/structures/scaletor/CHANGELOG.md',
-  },
-  back: {
-    label: 'Back to Composition Tools',
-    url: '/',
-  },
-};
 
 const Scaletor = () => (
   <>
@@ -32,8 +19,9 @@ const Scaletor = () => (
       </Header>
       <Layout />
       <Footer
-        project={footer.project}
-        back={footer.back}
+        back
+        like
+        project
       />
     </main>
   </>
