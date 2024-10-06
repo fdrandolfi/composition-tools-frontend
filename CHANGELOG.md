@@ -19,7 +19,7 @@ This file documents all notable changes made up to version 2.0.0 for each projec
 - Added common docs, favicons, and updated Scaletor.
 - Added main page and migrated Scaletor project to the new page.
 
-### Scaletor
+#### Scaletor
 - Added new tunings for guitars.
 - Added responsive design to all pages and components.
 - Added new templates for PRS and Dean guitars, updated responsive styles, and general improvements.
@@ -49,6 +49,6 @@ This file documents all notable changes made up to version 2.0.0 for each projec
 - Updated color palette for matrix styles.
 - Added unsupported component for resolutions above 1024px.
 
-### Quintor
+#### Quintor
 - Added responsive design to all pages and components.
 - Updated fifth value selection.
