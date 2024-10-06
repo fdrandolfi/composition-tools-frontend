@@ -110,6 +110,10 @@
 
     &__info {
       padding: $spacing-16 $spacing-20;
+
+      &-counter {
+        padding-left: $spacing-8;
+      }
     }
 
     &__tooltip {
