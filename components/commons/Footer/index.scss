@@ -102,6 +102,12 @@
       }
     }
 
+    &__right {
+      a {
+        padding: 0
+      }
+    }
+
     &__info {
       padding: $spacing-16 $spacing-20;
     }
