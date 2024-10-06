@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+### Changes
+- Add like button and API services to store on firebase [#23](https://github.com/fdrandolfi/composition-tools-frontend/pull/23)
+
 ## [1.8.0] - 2024-08-28
 ### Changes
 - Add new tunnings for guitars [#20](https://github.com/fdrandolfi/composition-tools-frontend/pull/20)

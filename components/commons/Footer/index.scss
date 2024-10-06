@@ -10,6 +10,7 @@
   &__center,
   &__right {
     position: relative;
+    z-index: 1;
   }
 
   &__left {
@@ -28,6 +29,11 @@
       transform: rotate(180deg);
     }
   }
+
+  &__right {
+    @include flex(flex-start, center, row);
+    padding: $spacing-20;
+  }
   
   &__links {
     font-size: $font-size-12;
@@ -44,11 +50,40 @@
   &__info {
     @include flex(center, center, row);
     box-sizing: border-box;
-    padding: $spacing-40;
+    padding: $spacing-20;
+    cursor: pointer;
+
+    &-counter {
+      span {
+        padding: $spacing-8 $spacing-12;
+        font-size: $font-size-14;
+        font-weight: $font-weight-bold;
+        background: rgba(255, 255, 255, 10%);
+        border-radius: $spacing-8;
+        color: $color-light;
+        margin: 0 $spacing-12;
+      }
+
+      svg {
+        path {
+          transition: $transition;
+        }
+      }
+
+      &:hover {
+        svg {
+          path {
+            fill: red;
+            transition: $transition;
+          }
+        }
+      }
+    }
   }
 
   &__tooltip {
     @include flex(center, flex-end, column);
+    margin-left: 10px;
   }
 }
 
