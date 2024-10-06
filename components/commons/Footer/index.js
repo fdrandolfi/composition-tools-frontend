@@ -115,6 +115,7 @@ const Footer = ({ back = false, like = false, project }) => {
           className='footer__tooltip'
           anchorSelect="#clickable"
           place="left"
+          openOnClick
           clickable
         >
           <a

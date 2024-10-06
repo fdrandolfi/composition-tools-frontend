@@ -61,7 +61,7 @@
         background: rgba(255, 255, 255, 10%);
         border-radius: $spacing-8;
         color: $color-light;
-        margin: 0 $spacing-12;
+        margin-right: $spacing-12;
       }
 
       svg {
@@ -110,6 +110,10 @@
 
     &__info {
       padding: $spacing-16 $spacing-20;
+    }
+
+    &__tooltip {
+      margin-left: 0;
     }
 
     svg {
