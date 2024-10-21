@@ -31,6 +31,7 @@ const Matrix = ({
                 { 'matrix__tunning--five': strings === 5 },
                 { 'matrix__tunning--six': strings === 6 },
                 { 'matrix__tunning--seven': strings === 7 },
+                { 'matrix__tunning--eight': strings === 8 },
                 { 'matrix__tunning-note--available': availableScaleNotes.includes(stringNotes[0]) },
                 { 'matrix__tunning-note--tonic': getLabelByNote(scale.noteId) === stringNotes[0] },
               )}
@@ -52,6 +53,7 @@ const Matrix = ({
               { 'matrix__string--five': strings === 5 },
               { 'matrix__string--six': strings === 6 },
               { 'matrix__string--seven': strings === 7 },
+              { 'matrix__string--eight': strings === 8 },
               `matrix__string-${i + 1}`,
             )}
             >
