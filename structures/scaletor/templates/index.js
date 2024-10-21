@@ -63,6 +63,18 @@ const templates = {
       steps: 24,
       imgSrc: 'templates/G-SOLAR-TAB-7.png',
     },
+    'G-ABASI-LARADA-J-7': {
+      label: 'Abasi Larada J Series 7',
+      strings: 7,
+      steps: 24,
+      imgSrc: 'templates/G-ABASI-LARADA-J-7.png',
+    },
+    'G-ABASI-LARADA-J-8': {
+      label: 'Abasi Larada J Series 8',
+      strings: 8,
+      steps: 24,
+      imgSrc: 'templates/G-ABASI-LARADA-J-8.png',
+    },
   },
   basses: {
     'B-SQUIER-VM-JAZZ-5': {

@@ -105,6 +105,11 @@
     &--seven {
       height: 14.2857%;
     }
+
+    // 8 string
+    &--eight {
+      height: 12.75%;
+    }
   }
 
   &__tunning {
@@ -162,6 +167,11 @@
     &--seven {
       height: 14.2857%;
     }
+
+    // 8 string
+    &--eight {
+      height: 12.47%;
+    }
   }
 
   // Templates
@@ -171,14 +181,14 @@
   &__G-DEAN-CADILLAC-1980-6,
   &__G-GIBSON-LP-STD-6 {
     height: 24%;
-    width: 82%;
+    width: 81.8%;
     padding-right: 10px;
     margin-top: -1px;
   }
 
   &__G-DEAN-CADILLAC-1980-6 {
     height: 18.75%;
-    width: 82%;
+    width: 81.8%;
     padding-right: 10px;
     margin-top: -1px;
   }
@@ -187,22 +197,30 @@
   &__G-FENDER-TELE-6,
   &__G-SIGMA-DME-6 {
     height: 20.6%;
-    width: 82%;
+    width: 81.8%;
     padding-right: 13px;
     margin-top: -1px;
   }
 
   &__G-SB-BODEN-7,
-  &__G-SOLAR-TAB-7 {
+  &__G-SOLAR-TAB-7,
+  &__G-ABASI-LARADA-J-7 {
     height: 24.5%;
-    width: 82%;
+    width: 81.8%;
+    padding-right: 10px;
+    margin-top: 0;
+  }
+
+  &__G-ABASI-LARADA-J-8 {
+    height: 27.5%;
+    width: 81.8%;
     padding-right: 10px;
     margin-top: 0;
   }
 
   &__B-SQUIER-VM-JAZZ-5 {
     height: 20.6%;
-    width: 82%;
+    width: 81.8%;
     padding-right: 13px;
     margin-top: -2px;
   }
