@@ -6,6 +6,11 @@ This file documents all notable changes made up to version 2.0.0 for each projec
 ## Unreleased
 - Add ABASI 7-8 string templates and tunnings for 6-7-8 strings.
 
+## [2.1.0] - 2024-10-21
+### Changes
+#### Scaletor
+- Add ABASI 7-8 string templates and tunnings for 6-7-8 strings.
+
 ## [2.0.2] - 2024-10-05
 ### Changes
 #### General
