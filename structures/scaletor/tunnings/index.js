@@ -7,12 +7,17 @@ import drop_c_6 from './six/drop_c';
 import drop_c_sharp_6 from './six/drop_c_sharp';
 import drop_b_6 from './six/drop_b';
 import drop_b_e_standard_6 from './six/drop_b_e_standard';
+import drop_a_6 from './six/drop_a';
 import drop_f_sharp_6 from './six/drop_f_sharp';
 // 7 Strings
 import standard_7 from './seven/standard';
 import drop_a_7 from './seven/drop_a';
 import drop_g_sharp_7 from './seven/drop_g_sharp';
 import drop_f_sharp_7 from './seven/drop_f_sharp';
+// 8 Strings
+import standard_8 from './eight/standard';
+import drop_e_8 from './eight/drop_e';
+import standard_d_sharp_8 from './eight/standard_d_sharp';
 
 // Bass
 // 4 Strings
@@ -44,6 +49,7 @@ const tunnings = {
     'drop_c#': drop_c_sharp_6,
     drop_b: drop_b_6,
     'drop_b_&_e_standard': drop_b_e_standard_6,
+    drop_a: drop_a_6,
     'drop_f#': drop_f_sharp_6,
   },
   7: {
@@ -51,6 +57,11 @@ const tunnings = {
     drop_a: drop_a_7,
     'drop_g#': drop_g_sharp_7,
     'drop_f#': drop_f_sharp_7,
+  },
+  8: {
+    standard: standard_8,
+    'drop_e': drop_e_8,
+    'standard_d#': standard_d_sharp_8,
   },
 };
 
