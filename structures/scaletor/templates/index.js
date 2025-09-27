@@ -83,6 +83,12 @@ const templates = {
       steps: 20,
       imgSrc: 'templates/B-SQUIER-VM-JAZZ-5.png',
     },
+    'B-IBANEZ-STANDARD-SR300E-4': {
+      label: 'Ibanez Standard SR300E',
+      strings: 4,
+      steps: 24,
+      imgSrc: 'templates/B-IBANEZ-STANDARD-SR300E-4.png',
+    },
   },
   midi_controllers: {
     'M-ARTURIA-MINILAB-1': {

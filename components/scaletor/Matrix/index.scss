@@ -91,6 +91,11 @@
       height: 100%;
     }
 
+    // 4 string
+    &--four {
+      height: 25%;
+    }
+
     // 5 string
     &--five {
       height: 20%;
@@ -151,6 +156,11 @@
     // 1 string
     &--one {
       height: 100%;
+    }
+
+    // 5 string
+    &--four {
+      height: 25%;
     }
 
     // 5 string
@@ -223,6 +233,13 @@
     width: 81.8%;
     padding-right: 13px;
     margin-top: -2px;
+  }
+
+  &__B-IBANEZ-STANDARD-SR300E-4 {
+    height: 16.8%;
+    width: 81.8%;
+    padding-right: 13px;
+    margin-top: -3px;
   }
 
   &__M-ARTURIA-MINILAB-1 {

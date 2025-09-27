@@ -22,6 +22,8 @@ import standard_d_sharp_8 from './eight/standard_d_sharp';
 // Bass
 // 4 Strings
 import standard_4 from './four/standard';
+import drop_c_4 from './four/drop_c';
+import drop_d_4 from './four/drop_d';
 // 5 Strings
 import standard_5 from './five/standard';
 
@@ -37,6 +39,8 @@ const tunnings = {
   },
   4: {
     standard: standard_4,
+    drop_c: drop_c_4,
+    drop_d: drop_d_4,
   },
   5: {
     standard: standard_5,
