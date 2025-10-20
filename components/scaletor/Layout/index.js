@@ -254,7 +254,7 @@ const Layout = () => {
           />
         </div>
         <div className="layout-scaletor__column-3">
-          <Selector
+          <SelectorDoubleTemplate
             id="template"
             title="Template"
             options={[
@@ -272,17 +272,9 @@ const Layout = () => {
               },
             ]}
             onChange={handleTemplateChange}
-            value={initialTemplate}
-            isSearchable={false}
-            isMobile={isMobile}
-          />
-        </div>
-        <div className="layout-scaletor__column-3">
-          <SelectorDoubleTemplate
-            id="template-switch"
-            title="Template Mode"
             onChangeTemplateSwitch={handleTemplateSwitchChange}
             checkedTemplateSwitch={templateSwitch}
+            value={initialTemplate}
             isMobile={isMobile}
           />
         </div>
