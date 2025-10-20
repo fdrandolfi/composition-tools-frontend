@@ -1,6 +1,6 @@
 @import "../../../styles/variables";
 
-.selector-double {
+.selector-double-template {
   position: relative;
   width: 90%;
   max-width: 320px;
@@ -42,10 +42,19 @@
       @include flex(space-between, center, row);
     }
   }
+
+  &__label {
+    position: absolute;
+    bottom: -36px;
+    font-size: $font-size-10;
+    padding: $spacing-12 0;
+    color: $color-light-200;
+    // transform: translateY(-36px);
+  }
 }
 
 @include media($media-size-mobile) {
-  .selector-double {
+  .selector-double-template {
     width: 100%;
     max-width: none;
     padding: $spacing-12 0 0;

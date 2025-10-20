@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 This file documents all notable changes made up to version 2.0.0 for each project.
 
 ## Unreleased
-- Add Ibanez 4 string template and tunnings for 4 strings.
+- Add selector for handed template mode.
 
 ## [2.2.2] - 2025-09-27
 - Update tunning for 4 strings.
