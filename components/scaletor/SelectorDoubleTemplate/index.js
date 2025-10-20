@@ -14,19 +14,20 @@ const SelectorDoubleTemplate = ({
   isMobile,
 }) => (
   <div className={classnames(
-    'selector-double',
-    `selector-double--${id}`,
+    'selector-double-template',
+    `selector-double-template--${id}`,
   )}
   >
-    <div className="selector-double__content--switch">
-      <p className="selector-double__title">
+    <div className="selector-double-template__content--switch">
+      <p className="selector-double-template__title">
         {title}
       </p>
       <Switch
         onChange={onChangeTemplateSwitch}
         checked={checkedTemplateSwitch}
-        className="selector-double__switch"
+        className="selector-double-template__switch"
         onColor="#420e9e"
+        offColor="#420e9e"
         handleDiameter={24}
         uncheckedIcon={false}
         checkedIcon={false}
@@ -34,11 +35,11 @@ const SelectorDoubleTemplate = ({
         width={40}
       />
     </div>
-    <div className="selector-double__content">
+    <div className="selector-double-template__content">
       <Select
         className={classnames(
-          'selector-double__select',
-          'selector-double__select--template',
+          'selector-double-template__select',
+          'selector-double-template__select--template',
         )}
         options={options}
         onChange={onChange}
@@ -48,6 +49,13 @@ const SelectorDoubleTemplate = ({
         menuPlacement={isMobile ? 'top' : 'bottom'}
       />
     </div>
+    {
+      !isMobile && (
+        <span className='selector-double-template__label'>
+          The selector defines the direction of the hand.
+        </span>
+      )
+    }
   </div>
 );
 

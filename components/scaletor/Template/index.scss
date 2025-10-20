@@ -13,4 +13,10 @@
     -webkit-user-drag: none; /* Previene el arrastre de la imagen en navegadores WebKit */
     pointer-events: none;
   }
+
+  &__template-right {
+    .template__image {
+      transform: scaleX(-1);
+    }
+  }
 }

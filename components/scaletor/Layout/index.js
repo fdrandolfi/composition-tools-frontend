@@ -290,7 +290,10 @@ const Layout = () => {
           withoutScale={!scaleSwitch}
           templateMode={templateSwitch}
         />
-        <Template id={template} />
+        <Template
+          id={template} 
+          templateMode={templateSwitch}
+        />
       </div>
       <div className="layout-scaletor__bottom">
         <NotesHistory />

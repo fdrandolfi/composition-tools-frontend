@@ -17,7 +17,7 @@ const Matrix = ({
       'matrix',
       `matrix__${templateId}`,
       withoutScale && 'matrix__without-scale',
-      templateMode && 'matrix__template-mode',
+      templateMode && 'matrix__template-right',
     )}
     >
       <div className="matrix__tunning">

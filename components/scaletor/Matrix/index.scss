@@ -192,14 +192,12 @@
   &__G-GIBSON-LP-STD-6 {
     height: 24%;
     width: 81.8%;
-    padding-right: 10px;
     margin-top: -1px;
   }
 
   &__G-DEAN-CADILLAC-1980-6 {
     height: 18.75%;
     width: 81.8%;
-    padding-right: 10px;
     margin-top: -1px;
   }
 
@@ -217,14 +215,12 @@
   &__G-ABASI-LARADA-J-7 {
     height: 24.5%;
     width: 81.8%;
-    padding-right: 10px;
     margin-top: 0;
   }
 
   &__G-ABASI-LARADA-J-8 {
     height: 27.5%;
     width: 81.8%;
-    padding-right: 10px;
     margin-top: 0;
   }
 
@@ -272,6 +268,31 @@
             opacity: 1;
           }
         }
+      }
+    }
+  }
+
+  &__template-right {
+    padding-right: unset;
+    padding-left: 10px;
+
+    .matrix {
+      &__tunning {
+        left: unset;
+        right: -1.2%;
+      }
+
+      &__string {
+        flex-direction: row-reverse;
+      }
+
+      &__G-FENDER-STRATO-6,
+      &__G-FENDER-TELE-6,
+      &__G-SIGMA-DME-6,
+      &__B-SQUIER-VM-JAZZ-5,
+      &__B-IBANEZ-STANDARD-SR300E-4 {
+        padding-right: unset;
+        padding-left: 13px
       }
     }
   }
