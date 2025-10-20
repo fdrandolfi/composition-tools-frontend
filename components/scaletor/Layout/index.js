@@ -11,6 +11,7 @@ import Matrix from '../Matrix';
 import Template from '../Template';
 import Selector from '../Selector';
 import SelectorDouble from '../SelectorDouble';
+import SelectorDoubleTemplate from '../SelectorDoubleTemplate';
 import NotesHistory from '../NotesHistory';
 
 const Layout = () => {
@@ -48,6 +49,10 @@ const Layout = () => {
   // Switch Hooks
   const defaultScaleSwitch = true;
   const [scaleSwitch, setScaleSwitch] = useState(defaultScaleSwitch);
+  const handedDirectionSwitch = false;
+  const [handedDirection, setHandedDirection] = useState(handedDirectionSwitch);
+  const defaultTemplateSwitch = false;
+  const [templateSwitch, setTemplateSwitch] = useState(defaultTemplateSwitch);
 
   // Initial values from QueryParams
   const [initialTemplate, setInitialTemplate] = useState(templateGuitarsList[0]);
@@ -109,11 +114,10 @@ const Layout = () => {
     setScale(event.value);
   };
 
-  const handleSwitchChange = (check) => {
+  const handleScaleSwitchChange = (check) => {
     setScaleSwitch(check);
 
     setLastScale(scale);
-
     setLastNote(note);
 
     if (!check) {
@@ -122,6 +126,24 @@ const Layout = () => {
       setScale(lastScale);
       setNote(lastNote);
     }
+  };
+
+  const handleHandedDirectionSwitchChange = (check) => {
+    setHandedDirection(check);
+
+    setLastScale(scale);
+    setLastNote(note);
+
+    if (!check) {
+      setScale(withoutScale);
+    } else {
+      setScale(lastScale);
+      setNote(lastNote);
+    }
+  };
+
+  const handleTemplateSwitchChange = (check) => {
+    setTemplateSwitch(check);
   };
 
   /**
@@ -224,7 +246,7 @@ const Layout = () => {
             optionsScaleModes={scaleModesList}
             onChangeNote={handleNoteChange}
             onChangeScale={handleScaleChange}
-            onChangeScaleSwitch={handleSwitchChange}
+            onChangeScaleSwitch={handleScaleSwitchChange}
             checkedScaleSwitch={scaleSwitch}
             valueNote={initialScaleNote}
             valueScale={initialScaleName}
@@ -255,6 +277,15 @@ const Layout = () => {
             isMobile={isMobile}
           />
         </div>
+        <div className="layout-scaletor__column-3">
+          <SelectorDoubleTemplate
+            id="template-switch"
+            title="Template Mode"
+            onChangeTemplateSwitch={handleTemplateSwitchChange}
+            checkedTemplateSwitch={templateSwitch}
+            isMobile={isMobile}
+          />
+        </div>
       </div>
       <div className="layout-scaletor__center">
         <Matrix
@@ -265,6 +296,7 @@ const Layout = () => {
             scaleId: scale,
           }}
           withoutScale={!scaleSwitch}
+          templateMode={templateSwitch}
         />
         <Template id={template} />
       </div>
