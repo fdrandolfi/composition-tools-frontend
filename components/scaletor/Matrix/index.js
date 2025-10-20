@@ -7,7 +7,7 @@ import { getScale } from '../../../structures/scaletor/scales';
 import { getLabelByNote } from '../../../structures/scaletor/notes';
 
 const Matrix = ({
-  templateId, tunning, scale, withoutScale,
+  templateId, tunning, scale, withoutScale, templateMode,
 }) => {
   const { strings } = allTemplates[templateId];
   const { steps } = allTemplates[templateId];
@@ -17,6 +17,7 @@ const Matrix = ({
       'matrix',
       `matrix__${templateId}`,
       withoutScale && 'matrix__without-scale',
+      templateMode && 'matrix__template-right',
     )}
     >
       <div className="matrix__tunning">
