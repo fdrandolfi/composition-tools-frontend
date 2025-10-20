@@ -45,6 +45,12 @@ const templates = {
       steps: 22,
       imgSrc: 'templates/G-FENDER-STRATO-6.png',
     },
+    'G-IBANEZ-RG350EX-6': {
+      label: 'Ibanez RG350EX',
+      strings: 6,
+      steps: 24,
+      imgSrc: 'templates/G-IBANEZ-RG350EX-6.png',
+    },
     'G-SIGMA-DME-6': {
       label: 'Sigma SE DME',
       strings: 6,
