@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file.
 This file documents all notable changes made up to version 2.0.0 for each project.
 
 ## Unreleased
-- Add Ibanez 6 string template.
-- Add selector for handed template mode.
+
+## [2.4.0] - 2025-12-29
+- Add Strandberg Boden 6 string template.
 
 ## [2.3.0] - 2025-10-20
 - Add Ibanez 6 string template.
