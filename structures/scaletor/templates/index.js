@@ -51,6 +51,12 @@ const templates = {
       steps: 24,
       imgSrc: 'templates/G-IBANEZ-RG350EX-6.png',
     },
+    'G-SB-BODEN-6': {
+      label: 'Strandberg Boden N2.6 Standard',
+      strings: 6,
+      steps: 24,
+      imgSrc: 'templates/G-SB-BODEN-6.png',
+    },
     'G-SIGMA-DME-6': {
       label: 'Sigma SE DME',
       strings: 6,
