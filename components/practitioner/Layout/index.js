@@ -263,10 +263,13 @@ const Layout = () => {
         }
 
         const note = notes[currentIndex];
-        // Convert string (1-6, where 1=high, 6=low) to array index (0-5, where 0=low, 5=high)
-        // tunning array: index 0 = string 6 (low), index 5 = string 1 (high)
-        const stringIndex = 6 - note.string; // string 6 -> index 0, string 1 -> index 5
-        const stringTuning = tunning[stringIndex];
+        // Since user inverted octaves manually in tuning files, the string mapping is inverted
+        // For tunning array access: string 6 -> index 5, string 1 -> index 0
+        const stringIndexForTunning = note.string - 1; // Inverted mapping for audio
+        const stringTuning = tunning[stringIndexForTunning];
+        
+        // For Matrix visualization: use same mapping as Matrix (strings - position.string)
+        const stringIndexForMatrix = templateStrings - note.string; // string 6 -> index 0, string 1 -> index 5
         
         const midiNote = getMIDINoteFromPosition(stringTuning, note.fret);
         if (midiNote !== null && synth) {
@@ -275,8 +278,8 @@ const Layout = () => {
           synth.triggerAttackRelease(frequency, noteDurationMs / 1000);
         }
 
-        // Set active position for Matrix visualization
-        const positionKey = `${stringIndex}-${note.fret - 1}`;
+        // Set active position for Matrix visualization (use Matrix's stringIndex mapping)
+        const positionKey = `${stringIndexForMatrix}-${note.fret - 1}`;
         setActiveNotePosition(positionKey);
 
         currentIndex += 1;
