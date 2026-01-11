@@ -85,14 +85,14 @@
 
       &--exercise {
         span {
-          background-color: $color-violet-dark;
+          background-color: $color-red-dark;
           opacity: 1;
           color: $color-light-100;
         }
 
         &:hover {
           span {
-            background-color: $color-violet-light;
+            background-color: $color-red-light;
             opacity: 1;
           }
         }

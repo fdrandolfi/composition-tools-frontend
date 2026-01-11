@@ -266,6 +266,7 @@ const Layout = () => {
             checkedTemplateSwitch={templateSwitch}
             value={initialTemplate}
             isMobile={isMobile}
+            switchColor="#960A00"
           />
         </div>
       </div>
