@@ -3,6 +3,7 @@ import Head from 'next/head';
 
 import Header from '../../components/commons/Header';
 import PractitionerLogotype from '../../components/practitioner/Logotype';
+import Layout from '../../components/practitioner/Layout';
 import Footer from '../../components/commons/Footer';
 
 const Practitioner = () => (
@@ -16,6 +17,7 @@ const Practitioner = () => (
       <Header>
         <PractitionerLogotype className="header__logo" />
       </Header>
+      <Layout />
       <Footer
         back
         like

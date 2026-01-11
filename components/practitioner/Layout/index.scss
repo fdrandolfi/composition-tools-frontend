@@ -1,0 +1,81 @@
+@import "../../../styles/variables";
+
+.layout-practitioner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  top: 8%;
+  @include flex(center, center, row);
+
+  &__top {
+    position: absolute;
+    width: 100%;
+    height: 20%;
+    @include flex(center, center, row);
+    z-index: 100;
+    top: 50%;
+    transform: translateY(-182%);
+  }
+
+  &__center {
+    position: relative;
+    width: 100%;
+    height: auto;
+    @include flex(center, center, row);
+    z-index: 1;
+  }
+
+  &__column-3 {
+    position: relative;
+    width: 30%;
+    height: 100%;
+    @include flex(center, flex-end, row);
+    box-sizing: border-box;
+    padding: 16px;
+    opacity: 1;
+    transition: $transition;
+  }
+
+  &__with-opacity {
+    opacity: 0.5;
+    transition: $transition;
+  }
+}
+
+@include media($media-size-mobile) {
+  .layout-practitioner {
+    top: 100px;
+    height: calc(100% - 200px);
+    display: block;
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    &__top {
+      position: fixed;
+      top: auto;
+      bottom: 60px; // footer height
+      height: 180px;
+      transform: none;
+      @include flex(center, center, column);
+      border-top: $border-line;
+      border-bottom: $border-line;
+      box-sizing: border-box;
+      padding: $spacing-20;
+      background-color: $color-dark;
+    }
+
+    &__center {
+      width: 350%;
+      top: 50%;
+      transform: translateY(-50%);
+      margin-left: -90px;
+    }
+
+    &__column-3 {
+      position: relative;
+      width: 100%;
+      height: auto;
+      padding: 0;
+    }
+  }
+}
