@@ -83,6 +83,21 @@
         }
       }
 
+      &--exercise {
+        span {
+          background-color: $color-violet-dark;
+          opacity: 1;
+          color: $color-light-100;
+        }
+
+        &:hover {
+          span {
+            background-color: $color-violet-light;
+            opacity: 1;
+          }
+        }
+      }
+
       @include steps-childs;
     }
 

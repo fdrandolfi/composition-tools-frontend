@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { allTemplates, getTemplateLabelById, getTemplateList } from '../../../structures/commons/templates';
 import { getTunning, getTunningIdByPattern, getTunningLabelByPattern, getTunningList } from '../../../structures/commons/tunnings';
-import { getExerciseList, getExerciseLabel } from '../../../structures/practitioner/exercises';
+import { getExerciseList, getExerciseLabel, getExercise } from '../../../structures/practitioner/exercises';
 
 import Matrix from '../../commons/Matrix';
 import Template from '../../commons/Template';
@@ -21,7 +21,6 @@ const Layout = () => {
   const templateGuitarsList = getTemplateList('guitars');
   const templateBassesList = getTemplateList('basses');
   const templateMIDIList = getTemplateList('midi_controllers');
-  const exerciseList = getExerciseList();
 
   // Template Hooks
   const defaultTemplate = templateGuitarsList[0].value;
@@ -33,9 +32,12 @@ const Layout = () => {
   const defaultTunning = getTunning(tunningOptions[0].value, templateStrings);
   const [tunning, setTunning] = useState(defaultTunning);
 
-  // Exercise Hooks
+  // Exercise Hooks - Get exercise list based on template strings
+  const exerciseList = getExerciseList(templateStrings);
   const defaultBPM = 120;
-  const defaultExercise = exerciseList.length > 0 ? exerciseList[0].value : null;
+  const defaultExercise = exerciseList.length > 0 && exerciseList[0].options.length > 0 
+    ? exerciseList[0].options[0].value 
+    : null;
   const [bpm, setBPM] = useState(defaultBPM);
   const [exercise, setExercise] = useState(defaultExercise);
 
@@ -55,7 +57,11 @@ const Layout = () => {
     label: defaultBPM.toString(),
     value: defaultBPM,
   });
-  const [initialExercise, setInitialExercise] = useState(exerciseList.length > 0 ? exerciseList[0] : null);
+  const [initialExercise, setInitialExercise] = useState(
+    exerciseList.length > 0 && exerciseList[0].options.length > 0 
+      ? exerciseList[0].options[0] 
+      : null
+  );
 
   /**
    * Handle Value Changes
@@ -165,6 +171,20 @@ const Layout = () => {
   }, [bpm]);
 
   useEffect(() => {
+    // Update exercise list when template changes
+    const updateTemplateStrings = allTemplates[template].strings;
+    const updatedExerciseList = getExerciseList(updateTemplateStrings);
+    if (updatedExerciseList.length > 0 && updatedExerciseList[0].options.length > 0) {
+      const firstExercise = updatedExerciseList[0].options[0].value;
+      setExercise(firstExercise);
+      setInitialExercise(updatedExerciseList[0].options[0]);
+    } else {
+      setExercise(null);
+      setInitialExercise(null);
+    }
+  }, [template]);
+
+  useEffect(() => {
     if (exercise) {
       setInitialExercise({
         label: getExerciseLabel(exercise),
@@ -213,7 +233,7 @@ const Layout = () => {
           <SelectorExercises
             id="exercise"
             title="Exercises"
-            optionsExercises={exerciseList}
+            optionsExercises={getExerciseList(templateStrings)}
             onChangeBPM={handleBPMChange}
             onChangeExercise={handleExerciseChange}
             onChangeExerciseSwitch={handleExerciseSwitchChange}
@@ -253,12 +273,10 @@ const Layout = () => {
         <Matrix
           templateId={template}
           tunning={tunning}
-          scale={{
-            noteId: 1,
-            scaleId: 'without',
-          }}
+          scale={null}
           withoutScale={!exerciseSwitch}
           templateMode={templateSwitch}
+          exercise={exerciseSwitch && exercise ? getExercise(exercise, templateStrings) : null}
         />
         <Template
           id={template} 

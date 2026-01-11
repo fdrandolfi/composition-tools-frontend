@@ -408,8 +408,8 @@ const Logotype = ({ className }) => (
         gradientUnits='userSpaceOnUse'
       >
         <stop stopColor='#960A00'></stop>
-        <stop offset='1' stopColor='#BC5810'></stop>
-      </linearGradient>
+        <stop offset='1' stopColor='#CC4B00'></stop>
+      </linearGradient>CC4B00
     </defs>
   </svg>
 );

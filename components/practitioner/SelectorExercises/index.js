@@ -69,12 +69,7 @@ const SelectorExercises = ({
             'selector-exercises__select',
             'selector-exercises__select--exercise',
           )}
-          options={[
-            {
-              label: 'Exercises',
-              options: optionsExercises,
-            },
-          ]}
+          options={optionsExercises}
           onChange={onChangeExercise}
           value={valueExercise}
           isDisabled={!checkedExerciseSwitch}

@@ -9,7 +9,7 @@
   &__image {
     width: 100%;
     height: auto;
-    user-select: none; /* Previene la selección de texto e imágenes */
+    user-select: none; /* Prevents text and image selection */
     -webkit-user-drag: none; /* Previene el arrastre de la imagen en navegadores WebKit */
     pointer-events: none;
   }
