@@ -3,6 +3,7 @@ import classnames from 'classnames';
 
 import { allTemplates } from '../../../structures/commons/templates';
 import getStringNotes from '../../../structures/scaletor/utils/getStringNotes';
+import getStringNotesFromTuning from '../../../structures/scaletor/utils/getStringNotesFromTuning';
 import { getScale } from '../../../structures/scaletor/scales';
 import { getLabelByNote } from '../../../structures/commons/notes';
 
@@ -54,8 +55,25 @@ const Matrix = ({
       <div className="matrix__tunning">
         {
           tunning.length > 1 && tunning.map((stringTuning, stringIndex) => {
-            const string = typeof stringTuning === 'object' ? stringTuning.noteId : stringTuning;
-            const stringNotes = getStringNotes(string, steps, 10);
+            // Get the open string note (cuerda abierta) directly from tuning
+            const hasOctave = typeof stringTuning === 'object' && typeof stringTuning.octave !== 'undefined';
+            let openStringNote;
+            
+            if (hasOctave) {
+              // Use getLabelByNote to get the note name from noteId
+              const noteId = stringTuning.noteId;
+              openStringNote = getLabelByNote(noteId);
+            } else {
+              // Fallback for old format
+              const noteId = typeof stringTuning === 'object' ? stringTuning.noteId : stringTuning;
+              openStringNote = getLabelByNote(noteId);
+            }
+            
+            // Get string notes for the fretboard (for highlighting, but we use openStringNote for display)
+            const stringNotes = hasOctave 
+              ? getStringNotesFromTuning(stringTuning, steps)
+              : getStringNotes(typeof stringTuning === 'object' ? stringTuning.noteId : stringTuning, steps, 10);
+            
             return (
               <div className={classnames(
                 'matrix__tunning-note',
@@ -65,11 +83,11 @@ const Matrix = ({
                 { 'matrix__tunning--six': strings === 6 },
                 { 'matrix__tunning--seven': strings === 7 },
                 { 'matrix__tunning--eight': strings === 8 },
-                { 'matrix__tunning-note--available': availableScaleNotes && availableScaleNotes.includes(stringNotes[0]) },
-                { 'matrix__tunning-note--tonic': scale && getLabelByNote(scale.noteId) === stringNotes[0] },
+                { 'matrix__tunning-note--available': availableScaleNotes && availableScaleNotes.includes(openStringNote) },
+                { 'matrix__tunning-note--tonic': scale && getLabelByNote(scale.noteId) === openStringNote },
               )}
               >
-                <span>{stringNotes[0]}</span>
+                <span>{openStringNote}</span>
               </div>
             );
           })
@@ -78,8 +96,11 @@ const Matrix = ({
       {
         reversedTunning.map((stringTuning, reversedIndex) => {
           const stringIndex = tunning.length - 1 - reversedIndex;
-          const string = typeof stringTuning === 'object' ? stringTuning.noteId : stringTuning;
-          const stringNotes = getStringNotes(string, steps, tunning.length === 1 ? 10 : 11);
+          // Use the new function if tuning has octave, otherwise use old function for backward compatibility
+          const hasOctave = typeof stringTuning === 'object' && typeof stringTuning.octave !== 'undefined';
+          const stringNotes = hasOctave
+            ? getStringNotesFromTuning(stringTuning, steps)
+            : getStringNotes(typeof stringTuning === 'object' ? stringTuning.noteId : stringTuning, steps, tunning.length === 1 ? 10 : 11);
           return (
             <div className={classnames(
               'matrix__string',

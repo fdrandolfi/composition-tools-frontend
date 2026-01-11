@@ -1,10 +1,11 @@
 /**
  * Gets the MIDI note number for a specific string and fret position
  * Uses the octave from the tuning data
+ * Each string starts from its tuning octave and can extend up to 2 more octaves (24 frets max)
  * Simply adds semitones (fret offset) to the open string MIDI note
  *
  * @param {Object} stringTuning - The tuning data for the string { noteId: number, octave: number }
- * @param {Number} fret - The fret number (1-based: 1 = first fret)
+ * @param {Number} fret - The fret number (1-based: 1 = first fret, up to 24 = 24th fret)
  * @returns {Number} The MIDI note number
  */
 export const getMIDINoteFromPosition = (stringTuning, fret) => {
@@ -41,6 +42,10 @@ export const getMIDINoteFromPosition = (stringTuning, fret) => {
   const openNoteMIDI = 12 + (stringTuning.octave * 12) + openNoteSemitone;
 
   // Add fret offset (each fret = 1 semitone)
-  // Fret 1 = +0 semitones, Fret 2 = +1 semitone, Fret 3 = +2 semitones, etc.
-  return openNoteMIDI + (fret - 1);
+  // Fret 1 = first fret = +1 semitone from open string
+  // Fret 2 = second fret = +2 semitones from open string
+  // Fret 24 = 24th fret = +24 semitones from open string = +2 octaves from open string
+  // This ensures each fret produces the correct sound matching the note displayed on the fretboard
+  // fret 0 would be open string = +0 semitones, but exercises use fret 1 for first fret
+  return openNoteMIDI + fret;
 };

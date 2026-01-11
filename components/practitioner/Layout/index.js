@@ -270,9 +270,11 @@ const Layout = () => {
         }
 
         const note = notes[currentIndex];
-        // Since user inverted octaves manually in tuning files, the string mapping is inverted
-        // For tunning array access: string 6 -> index 5, string 1 -> index 0
-        const stringIndexForTunning = note.string - 1; // Inverted mapping for audio
+        // Tunning array is ordered: index 0 = string 6 (lowest), index 5 = string 1 (highest)
+        // Exercises use: string 6 = lowest, string 1 = highest
+        // So string 6 -> index 0, string 1 -> index 5
+        // Formula: string 6 -> index 0 = (6 - 6) = 0, string 1 -> index 5 = (6 - 1) = 5
+        const stringIndexForTunning = templateStrings - note.string; // string 6 -> index 0, string 1 -> index 5
         const stringTuning = tunning[stringIndexForTunning];
         
         // For Matrix visualization: use same mapping as Matrix (strings - position.string)
