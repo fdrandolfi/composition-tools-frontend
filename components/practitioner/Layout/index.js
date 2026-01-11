@@ -46,7 +46,7 @@ const Layout = () => {
   // Playback Hooks
   const defaultBPM = 120;
   const defaultTimeSignature = '4/4';
-  const defaultNoteType = 'negra';
+  const defaultNoteType = 'corchea';
   const [bpm, setBPM] = useState(defaultBPM);
   const [timeSignature, setTimeSignature] = useState(defaultTimeSignature);
   const [noteType, setNoteType] = useState(defaultNoteType);
@@ -79,7 +79,7 @@ const Layout = () => {
     value: defaultTimeSignature,
   });
   const [initialNoteType, setInitialNoteType] = useState({
-    label: 'Negra',
+    label: '♪',
     value: defaultNoteType,
   });
 
@@ -132,9 +132,13 @@ const Layout = () => {
   };
 
   const handleBPMChange = (event) => {
+    if (event.value === null) {
+      // Empty input, don't update state
+      return;
+    }
     setBPM(event.value);
     setInitialBPM({
-      label: event.value.toString(),
+      label: event.label || event.value.toString(),
       value: event.value,
     });
   };
@@ -226,26 +230,29 @@ const Layout = () => {
       synth = new Tone.Synth().toDestination();
       
       // Calculate note duration in milliseconds based on time signature and note type
-      // 4/4 time: negra = 1/4, corchea = 1/8, semicorchea = 1/16
-      // 3/4 time: negra = 1/3, corchea = 1/6, semicorchea = 1/12
-      const beatsPerMeasure = parseInt(timeSignature.split('/')[0], 10);
-      const noteValue = parseInt(timeSignature.split('/')[1], 10); // Usually 4, represents the note that gets the beat
+      // Time base is always 4/4
+      // 3/4 means each note duration is 3/4 of the 4/4 duration
+      // 4/4 time: negra = 1 beat, corchea = 1/2 beat, semicorchea = 1/4 beat
+      // 3/4 time: negra = 3/4 beat, corchea = 3/8 beat, semicorchea = 3/16 beat
       
-      // Calculate duration of one beat in milliseconds
+      // Calculate duration of one beat in milliseconds (base 4/4)
       const beatDurationMs = (60 / bpm) * 1000;
+      
+      // Determine the time signature multiplier (3/4 = 0.75, 4/4 = 1.0)
+      const timeSigMultiplier = timeSignature === '3/4' ? 0.75 : 1.0;
       
       let noteDurationMs;
       if (noteType === 'negra') {
-        // Negra = 1 beat = 1/beatsPerMeasure of the measure
-        noteDurationMs = beatDurationMs; // 1 beat
+        // Negra = 1 beat (in 4/4)
+        noteDurationMs = beatDurationMs * timeSigMultiplier;
       } else if (noteType === 'corchea') {
-        // Corchea = 1/2 beat = 1/(beatsPerMeasure * 2) of the measure
-        noteDurationMs = beatDurationMs / 2; // 1/2 beat
+        // Corchea = 1/2 beat (in 4/4)
+        noteDurationMs = (beatDurationMs / 2) * timeSigMultiplier;
       } else if (noteType === 'semicorchea') {
-        // Semicorchea = 1/4 beat = 1/(beatsPerMeasure * 4) of the measure
-        noteDurationMs = beatDurationMs / 4; // 1/4 beat
+        // Semicorchea = 1/4 beat (in 4/4)
+        noteDurationMs = (beatDurationMs / 4) * timeSigMultiplier;
       } else {
-        noteDurationMs = beatDurationMs; // Default to negra
+        noteDurationMs = beatDurationMs * timeSigMultiplier; // Default to negra
       }
       
       let currentIndex = 0;
@@ -434,23 +441,19 @@ const Layout = () => {
         />
       </div>
       <div className="layout-practitioner__bottom">
-        <div className="layout-practitioner__column-3" />
-        <div className="layout-practitioner__column-3">
-          <SelectorPlayback
-            id="playback"
-            title="Playback"
-            onChangeBPM={handleBPMChange}
-            onChangeTimeSignature={handleTimeSignatureChange}
-            onChangeNoteType={handleNoteTypeChange}
-            onChangePlayPause={handlePlayPauseChange}
-            valueBPM={initialBPM}
-            valueTimeSignature={initialTimeSignature}
-            valueNoteType={initialNoteType}
-            isPlaying={isPlaying}
-            isMobile={isMobile}
-          />
-        </div>
-        <div className="layout-practitioner__column-3" />
+        <SelectorPlayback
+          id="playback"
+          title="Playback"
+          onChangeBPM={handleBPMChange}
+          onChangeTimeSignature={handleTimeSignatureChange}
+          onChangeNoteType={handleNoteTypeChange}
+          onChangePlayPause={handlePlayPauseChange}
+          valueBPM={initialBPM}
+          valueTimeSignature={initialTimeSignature}
+          valueNoteType={initialNoteType}
+          isPlaying={isPlaying}
+          isMobile={isMobile}
+        />
       </div>
     </section>
   );

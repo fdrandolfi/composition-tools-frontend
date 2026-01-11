@@ -1,6 +1,11 @@
 import React from 'react';
-import Select from 'react-select';
 import classnames from 'classnames';
+
+import Play from '../../commons/Icon/icons/commons/Play';
+import Pause from '../../commons/Icon/icons/commons/Pause';
+import BlackNote from '../../commons/Icon/icons/commons/BlackNote';
+import CorcheaNote from '../../commons/Icon/icons/commons/CorcheaNote';
+import SemicorcheaNote from '../../commons/Icon/icons/commons/SemicorcheaNote';
 
 const SelectorPlayback = ({
   id,
@@ -21,23 +26,49 @@ const SelectorPlayback = ({
   ];
 
   const noteTypeOptions = [
-    { label: 'Negra', value: 'negra' },
-    { label: 'Corchea', value: 'corchea' },
-    { label: 'Semicorchea', value: 'semicorchea' },
+    { label: 'negra', value: 'negra', icon: BlackNote },
+    { label: 'corchea', value: 'corchea', icon: CorcheaNote },
+    { label: 'semicorchea', value: 'semicorchea', icon: SemicorcheaNote },
   ];
 
   const handleBPMChange = (event) => {
     const bpmValue = event.target.value;
-    if (bpmValue === '') {
+    // Only allow numbers, max 3 digits
+    const numericValue = bpmValue.replace(/[^0-9]/g, '').slice(0, 3);
+    
+    if (numericValue === '') {
+      // Allow empty input for editing
+      onChangeBPM({
+        label: '',
+        value: null,
+      });
       return;
     }
-    const bpm = parseInt(bpmValue, 10);
-    if (!isNaN(bpm) && bpm >= 80 && bpm <= 280) {
+    
+    const bpm = parseInt(numericValue, 10);
+    if (!isNaN(bpm)) {
+      // Always update the value so user can see what they're typing
+      // The range validation (80-360) can be applied when the value is used for playback
       onChangeBPM({
-        label: bpm.toString(),
+        label: numericValue,
         value: bpm,
       });
     }
+  };
+
+  const handleTimeSignatureClick = (timeSig) => {
+    onChangeTimeSignature({
+      label: timeSig,
+      value: timeSig,
+    });
+  };
+
+  const handleNoteTypeClick = (noteType) => {
+    const option = noteTypeOptions.find(opt => opt.value === noteType);
+    onChangeNoteType({
+      label: option?.label || noteType,
+      value: noteType,
+    });
   };
 
   return (
@@ -46,43 +77,10 @@ const SelectorPlayback = ({
       `selector-playback--${id}`,
     )}
     >
-      <p className="selector-playback__title">
-        {title}
-      </p>
-      <div className="selector-playback__content">
-        <div className="selector-playback__bpm-input-wrapper">
-          <label htmlFor={`bpm-input-${id}`} className="selector-playback__bpm-label">
-            BPM
-          </label>
-          <input
-            id={`bpm-input-${id}`}
-            type="number"
-            min="80"
-            max="280"
-            step="1"
-            value={valueBPM?.value || 120}
-            onChange={handleBPMChange}
-            className="selector-playback__bpm-input"
-          />
-        </div>
-        <Select
-          className="selector-playback__select"
-          options={timeSignatureOptions}
-          onChange={onChangeTimeSignature}
-          value={valueTimeSignature}
-          isDisabled={false}
-          isSearchable={false}
-          menuPlacement={isMobile ? 'top' : 'bottom'}
-        />
-        <Select
-          className="selector-playback__select"
-          options={noteTypeOptions}
-          onChange={onChangeNoteType}
-          value={valueNoteType}
-          isDisabled={false}
-          isSearchable={false}
-          menuPlacement={isMobile ? 'top' : 'bottom'}
-        />
+      <div className="selector-playback__header">
+        <p className="selector-playback__title">
+          {title}
+        </p>
         <button
           type="button"
           className={classnames(
@@ -91,8 +89,68 @@ const SelectorPlayback = ({
           )}
           onClick={onChangePlayPause}
         >
-          {isPlaying ? 'Pause' : 'Play'}
+          {isPlaying ? <Pause /> : <Play />}
         </button>
+      </div>
+      <div className="selector-playback__content">
+        <div className="selector-playback__row">
+          <div className="selector-playback__bpm-input-wrapper">
+            <label htmlFor={`bpm-input-${id}`} className="selector-playback__bpm-label">
+              BPM
+            </label>
+            <input
+              id={`bpm-input-${id}`}
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength="3"
+              value={valueBPM?.value !== null && valueBPM?.value !== undefined ? valueBPM.value : 120}
+              onChange={handleBPMChange}
+              className="selector-playback__bpm-input"
+            />
+          </div>
+          <div className="selector-playback__tabs-group">
+            <span className="selector-playback__tabs-label">Time</span>
+            <div className="selector-playback__tabs">
+              {timeSignatureOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  className={classnames(
+                    'selector-playback__tab',
+                    valueTimeSignature?.value === option.value && 'selector-playback__tab--active',
+                  )}
+                  onClick={() => handleTimeSignatureClick(option.value)}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="selector-playback__row">
+          <div className="selector-playback__tabs-group">
+            <span className="selector-playback__tabs-label">Note</span>
+            <div className="selector-playback__tabs">
+              {noteTypeOptions.map((option) => {
+                const IconComponent = option.icon;
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    className={classnames(
+                      'selector-playback__tab',
+                      valueNoteType?.value === option.value && 'selector-playback__tab--active',
+                    )}
+                    onClick={() => handleNoteTypeClick(option.value)}
+                  >
+                    <IconComponent />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
