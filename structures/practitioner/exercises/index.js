@@ -8,7 +8,7 @@ import little_finger_strength_6 from './figures/basic/six/little_finger_strength
  */
 const exercises = {
   6: {
-    basic: {
+    'warm-up': {
       spider: spider_6,
       little_finger_strength: little_finger_strength_6,
     },
@@ -86,8 +86,8 @@ const getExerciseList = (strings) => {
  */
 const normalizeCategoryLabel = (category) => {
   return category
-    .replace('_', ' ')
-    .replace('_', ' ')
+    .replace(/_/g, ' ')
+    .replace(/-/g, ' ')
     .toUpperCase();
 };
 
