@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import NOTES_EXTENDED from '../notes/notesExtended';
+import NOTES_EXTENDED from '../../commons/notes/notesExtended';
 
 /**
  * Returns an array of notes that complete the scale of a string

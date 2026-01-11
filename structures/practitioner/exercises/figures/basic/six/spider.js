@@ -1,0 +1,37 @@
+// const spider = [1, 1, 0, 1, 1, 0, 0, 0];
+const spider = {
+  bpm: 120,
+  figure: [
+    { q: 1, string: 6, fret: 1, note: null },
+    { q: 1, string: 6, fret: 2, note: null },
+    { q: 1, string: 6, fret: 3, note: null },
+    { q: 1, string: 6, fret: 4, note: null },
+    { q: 1, string: 4, fret: 1, note: null },
+    { q: 1, string: 5, fret: 2, note: null },
+    { q: 1, string: 5, fret: 3, note: null },
+    { q: 1, string: 5, fret: 4, note: null },
+    { q: 1, string: 4, fret: 1, note: null },
+    { q: 1, string: 4, fret: 2, note: null },
+    { q: 1, string: 4, fret: 3, note: null },
+    { q: 1, string: 4, fret: 4, note: null },
+    { q: 1, string: 3, fret: 1, note: null },
+    { q: 1, string: 3, fret: 2, note: null },
+    { q: 1, string: 3, fret: 3, note: null },
+    { q: 1, string: 3, fret: 4, note: null },
+    { q: 1, string: 2, fret: 1, note: null },
+    { q: 1, string: 2, fret: 2, note: null },
+    { q: 1, string: 2, fret: 3, note: null },
+    { q: 1, string: 2, fret: 4, note: null },
+    { q: 1, string: 2, fret: 1, note: null },
+    { q: 1, string: 2, fret: 2, note: null },
+    { q: 1, string: 2, fret: 3, note: null },
+    { q: 1, string: 2, fret: 4, note: null },
+    { q: 1, string: 1, fret: 1, note: null },
+    { q: 1, string: 1, fret: 2, note: null },
+    { q: 1, string: 1, fret: 3, note: null },
+    { q: 1, string: 1, fret: 4, note: null },
+  ],
+  repeat_inverse: true,
+};
+
+export default spider;

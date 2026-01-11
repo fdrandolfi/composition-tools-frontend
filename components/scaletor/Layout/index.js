@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 
-import { allTemplates, getTemplateLabelById, getTemplateList } from '../../../structures/scaletor/templates';
-import { getTunning, getTunningIdByPattern, getTunningLabelByPattern, getTunningList } from '../../../structures/scaletor/tunnings';
-import { getLabelByNote, getNoteList } from '../../../structures/scaletor/notes';
+import { allTemplates, getTemplateLabelById, getTemplateList } from '../../../structures/commons/templates';
+import { getTunning, getTunningIdByPattern, getTunningLabelByPattern, getTunningList } from '../../../structures/commons/tunnings';
+import { getLabelByNote, getNoteList } from '../../../structures/commons/notes';
 import { getScaleLabel, getScaleList, getScaleModesList } from '../../../structures/scaletor/scales';
 
 import Matrix from '../../commons/Matrix';
