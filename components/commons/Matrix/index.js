@@ -12,25 +12,15 @@ const Matrix = ({
   const { strings } = allTemplates[templateId];
   const { steps } = allTemplates[templateId];
   
-  // If there's an exercise, we work in tablature mode (practitioner)
-  // If there's a scale, we work in scales mode (scaletor)
   const isExerciseMode = !!exercise;
   const availableScaleNotes = scale && !isExerciseMode && scale.scaleId !== 'without' ? getScale(scale.noteId, scale.scaleId) : null;
   
-  // Create a map of active positions for exercises
-  // The exercise uses string 1-6 (1=high, 6=low) and fret 1-N (1=first fret)
-  // In Matrix, stringIndex 0 = highest string, stringIndex 5 = lowest string (for 6 strings) - inverted mapping
-  // fretIndex 0 = first fret (traste 1), fretIndex 1 = second fret (traste 2), etc.
   const exercisePositions = {};
-  const exerciseFingers = {}; // Map to store finger numbers for each position
+  const exerciseFingers = {};
   if (exercise && exercise.figure) {
     exercise.figure.forEach((position) => {
-      // position.string is 1-6 (1=high, 6=low)
-      // position.fret is 1-N (1=first fret)
-      // We need to convert to stringIndex and fretIndex
-      // Matrix tunning array: index 0 = string 6 (low), index 5 = string 1 (high)
-      const stringIndex = strings - position.string; // string 6 -> index 0, string 1 -> index 5
-      const fretIndex = position.fret - 1; // fret 1 -> index 0, fret 2 -> index 1, etc.
+      const stringIndex = strings - position.string;
+      const fretIndex = position.fret - 1;
       const key = `${stringIndex}-${fretIndex}`;
       exercisePositions[key] = true;
       if (position.finger !== undefined) {
@@ -39,11 +29,7 @@ const Matrix = ({
     });
   }
 
-  // Orden de cuerdas:
-  // - Array tunning: index 0 = cuerda más gorda (string 6), index N-1 = cuerda más fina (string 1)
-  // - Scaletor: mostrar más fina arriba, más gorda abajo (NO invertir, ya está en orden visual correcto)
-  // - Practitioner: mostrar más gorda arriba, más fina abajo (invertir para visualización)
-  const displayTunning = isExerciseMode ? [...tunning].reverse() : tunning;
+  const displayTunning = tunning;
 
   return (
     <div className={classnames(
@@ -57,18 +43,9 @@ const Matrix = ({
       <div className="matrix__tunning">
         {
           displayTunning.length > 1 && displayTunning.map((stringTuning, displayIndex) => {
-            // Get the open string note (cuerda abierta) directly from tuning
-            // Handle both old format (number) and new format ({noteId, octave})
             const noteId = typeof stringTuning === 'object' ? stringTuning.noteId : stringTuning;
             const openStringNote = getLabelByNote(noteId);
-            
-            // Get string notes for the fretboard using getStringNotes
             const stringNotes = getStringNotes(noteId, steps, 10);
-            
-            // Calcular el índice original en el array tunning
-            // Para scaletor (isExerciseMode = false): displayIndex es igual al índice original
-            // Para practitioner (isExerciseMode = true): displayIndex es el índice invertido
-            const originalIndex = isExerciseMode ? (tunning.length - 1 - displayIndex) : displayIndex;
             
             return (
               <div className={classnames(
@@ -91,17 +68,9 @@ const Matrix = ({
       </div>
       {
         displayTunning.map((stringTuning, displayIndex) => {
-          // Calcular el índice real en el array original para las posiciones
-          // Para scaletor (isExerciseMode = false): displayIndex es igual al índice original
-          //   - displayIndex 0 = cuerda más gorda (index 0, string 6)
-          //   - displayIndex N-1 = cuerda más fina (index N-1, string 1)
-          // Para practitioner (isExerciseMode = true): displayIndex es el índice invertido
-          //   - displayIndex 0 = cuerda más fina (última en array original = index N-1, string 1)
-          //   - displayIndex N-1 = cuerda más gorda (primera en array original = index 0, string 6)
-          const originalIndex = isExerciseMode ? (tunning.length - 1 - displayIndex) : displayIndex;
+          const originalIndex = displayIndex;
           const stringIndex = originalIndex;
           
-          // Handle both old format (number) and new format ({noteId, octave})
           const noteId = typeof stringTuning === 'object' ? stringTuning.noteId : stringTuning;
           const stringNotes = getStringNotes(noteId, steps, tunning.length === 1 ? 10 : 11);
           
@@ -119,7 +88,6 @@ const Matrix = ({
             >
               {
                 stringNotes.map((note, fretIndex) => {
-                  // fretIndex 0 = first fret (traste 1), fretIndex 1 = second fret (traste 2), etc.
                   const positionKey = `${stringIndex}-${fretIndex}`;
                   const isExercisePosition = isExerciseMode && exercisePositions[positionKey];
                   const isScaleNote = availableScaleNotes && availableScaleNotes.includes(note);
