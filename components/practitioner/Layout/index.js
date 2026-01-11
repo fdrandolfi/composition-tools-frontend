@@ -6,15 +6,12 @@ import { allTemplates, getTemplateLabelById, getTemplateList } from '../../../st
 import { getTunning, getTunningIdByPattern, getTunningLabelByPattern, getTunningList } from '../../../structures/commons/tunnings';
 import { getExerciseList, getExerciseLabel, getExercise } from '../../../structures/practitioner/exercises';
 
-import * as Tone from 'tone';
-
 import Matrix from '../../commons/Matrix';
 import Template from '../../commons/Template';
 import Selector from '../../scaletor/Selector';
 import SelectorExercises from '../SelectorExercises';
 import SelectorPlayback from '../SelectorPlayback';
 import SelectorDoubleTemplate from '../../scaletor/SelectorDoubleTemplate';
-import { getMIDINoteFromPosition } from '../../../structures/practitioner/utils/getMIDINote';
 
 const Layout = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -43,7 +40,7 @@ const Layout = () => {
     : null;
   const [exercise, setExercise] = useState(defaultExercise);
 
-  // Playback Hooks
+  // Playback Hooks (mantener para UI, pero sin lógica de audio por ahora)
   const defaultBPM = 120;
   const defaultTimeSignature = '4/4';
   const defaultNoteType = 'corchea';
@@ -186,7 +183,7 @@ const Layout = () => {
 
   /**
    * Update Select Values by Query Params
-  */
+   */
   useEffect(() => {
     setInitialTemplate({
       label: getTemplateLabelById(template),
@@ -209,124 +206,65 @@ const Layout = () => {
     });
   }, [bpm]);
 
-  // Playback logic
+  // Playback logic - DESACTIVADO POR AHORA
+  // TODO: Re-activar cuando se implemente correctamente la lógica MIDI
   useEffect(() => {
     if (!isPlaying || !exercise) {
       setActiveNotePosition(null);
       return;
     }
 
+    // Por ahora solo actualizamos la visualización sin reproducir audio
     const currentExercise = getExercise(exercise, templateStrings);
     if (!currentExercise || !currentExercise.figure) {
       return;
     }
 
-    let synth = null;
-    let timeouts = [];
+    let currentIndex = 0;
+    const notes = currentExercise.figure;
+    const beatDurationMs = (60 / bpm) * 1000;
+    const timeSigMultiplier = timeSignature === '3/4' ? 0.75 : 1.0;
+    
+    let noteDurationMs;
+    if (noteType === 'negra') {
+      noteDurationMs = beatDurationMs * timeSigMultiplier;
+    } else if (noteType === 'corchea') {
+      noteDurationMs = (beatDurationMs / 2) * timeSigMultiplier;
+    } else if (noteType === 'semicorchea') {
+      noteDurationMs = (beatDurationMs / 4) * timeSigMultiplier;
+    } else {
+      noteDurationMs = beatDurationMs * timeSigMultiplier;
+    }
 
-    // Initialize Tone.js and start audio context
-    const startPlayback = async () => {
-      await Tone.start();
-      synth = new Tone.Synth().toDestination();
-      
-      // Calculate note duration in milliseconds based on time signature and note type
-      // Time base is always 4/4
-      // 3/4 means each note duration is 3/4 of the 4/4 duration
-      // 4/4 time: negra = 1 beat, corchea = 1/2 beat, semicorchea = 1/4 beat
-      // 3/4 time: negra = 3/4 beat, corchea = 3/8 beat, semicorchea = 3/16 beat
-      
-      // Calculate duration of one beat in milliseconds (base 4/4)
-      const beatDurationMs = (60 / bpm) * 1000;
-      
-      // Determine the time signature multiplier (3/4 = 0.75, 4/4 = 1.0)
-      const timeSigMultiplier = timeSignature === '3/4' ? 0.75 : 1.0;
-      
-      let noteDurationMs;
-      if (noteType === 'negra') {
-        // Negra = 1 beat (in 4/4)
-        noteDurationMs = beatDurationMs * timeSigMultiplier;
-      } else if (noteType === 'corchea') {
-        // Corchea = 1/2 beat (in 4/4)
-        noteDurationMs = (beatDurationMs / 2) * timeSigMultiplier;
-      } else if (noteType === 'semicorchea') {
-        // Semicorchea = 1/4 beat (in 4/4)
-        noteDurationMs = (beatDurationMs / 4) * timeSigMultiplier;
-      } else {
-        noteDurationMs = beatDurationMs * timeSigMultiplier; // Default to negra
+    const playNextNote = () => {
+      if (currentIndex >= notes.length) {
+        setIsPlaying(false);
+        setActiveNotePosition(null);
+        return;
       }
-      
-      let currentIndex = 0;
-      const notes = currentExercise.figure;
 
-      const playNextNote = () => {
-        if (currentIndex >= notes.length) {
+      const note = notes[currentIndex];
+      const stringIndexForMatrix = templateStrings - note.string;
+      const positionKey = `${stringIndexForMatrix}-${note.fret - 1}`;
+      setActiveNotePosition(positionKey);
+
+      currentIndex += 1;
+
+      const timeoutId = setTimeout(() => {
+        setActiveNotePosition(null);
+        if (currentIndex < notes.length) {
+          playNextNote();
+        } else {
           setIsPlaying(false);
           setActiveNotePosition(null);
-          if (synth) {
-            synth.dispose();
-            synth = null;
-          }
-          return;
         }
+      }, noteDurationMs);
 
-        const note = notes[currentIndex];
-        // Tunning array is ordered: index 0 = string 6 (lowest), index 5 = string 1 (highest)
-        // Exercises use: string 6 = lowest, string 1 = highest
-        // So string 6 -> index 0, string 1 -> index 5
-        // Formula: string 6 -> index 0 = (6 - 6) = 0, string 1 -> index 5 = (6 - 1) = 5
-        const stringIndexForTunning = templateStrings - note.string; // string 6 -> index 0, string 1 -> index 5
-        const stringTuning = tunning[stringIndexForTunning];
-        
-        // For Matrix visualization: use same mapping as Matrix (strings - position.string)
-        const stringIndexForMatrix = templateStrings - note.string; // string 6 -> index 0, string 1 -> index 5
-        
-        const midiNote = getMIDINoteFromPosition(stringTuning, note.fret);
-        if (midiNote !== null && synth) {
-          // Convert MIDI note to frequency
-          const frequency = Tone.Frequency(midiNote, 'midi').toFrequency();
-          synth.triggerAttackRelease(frequency, noteDurationMs / 1000);
-        }
-
-        // Set active position for Matrix visualization (use Matrix's stringIndex mapping)
-        const positionKey = `${stringIndexForMatrix}-${note.fret - 1}`;
-        setActiveNotePosition(positionKey);
-
-        currentIndex += 1;
-
-        // Schedule next note
-        const timeoutId = setTimeout(() => {
-          setActiveNotePosition(null);
-          if (currentIndex < notes.length) {
-            playNextNote();
-          } else {
-            setIsPlaying(false);
-            setActiveNotePosition(null);
-            if (synth) {
-              synth.dispose();
-              synth = null;
-            }
-          }
-        }, noteDurationMs);
-        
-        timeouts.push(timeoutId);
-      };
-
-      // Start playback
-      playNextNote();
+      return () => clearTimeout(timeoutId);
     };
 
-    startPlayback();
-
-    // Cleanup function
-    return () => {
-      timeouts.forEach(clearTimeout);
-      if (synth) {
-        synth.dispose();
-        synth = null;
-      }
-      setActiveNotePosition(null);
-    };
-  }, [isPlaying, exercise, templateStrings, tunning, bpm, timeSignature, noteType]);
+    playNextNote();
+  }, [isPlaying, exercise, templateStrings, bpm, timeSignature, noteType]);
 
   useEffect(() => {
     // Update exercise list when template changes
