@@ -1,0 +1,70 @@
+@import "../../../styles/variables";
+
+.selector-playback {
+  position: relative;
+  width: 90%;
+  max-width: 320px;
+  @include flex(center, flex-start, column);
+  z-index: 999;
+
+  &__title {
+    font-size: $font-size-24;
+  }
+
+  &__content {
+    width: 100%;
+    @include flex(center, center, row);
+    gap: $spacing-12;
+    margin-top: $spacing-24;
+  }
+
+  &__select {
+    position: relative;
+    height: auto;
+    width: auto;
+    min-width: 80px;
+    color: $color-dark-100;
+  }
+
+  &__button {
+    padding: $spacing-8 $spacing-16;
+    background-color: $color-red-dark;
+    color: $color-light-100;
+    border: none;
+    border-radius: 4px;
+    font-size: $font-size-14;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &--playing {
+      background-color: $color-red-light;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+}
+
+@include media($media-size-mobile) {
+  .selector-playback {
+    width: 100%;
+    max-width: none;
+    @include flex(flex-start, center, row);
+    
+    &__title {
+      font-size: $font-size-14;
+      width: 35% !important;
+    }
+
+    &__content {
+      width: 65%;
+      margin-top: 0;
+    }
+  }
+}

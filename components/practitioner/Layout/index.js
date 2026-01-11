@@ -6,11 +6,15 @@ import { allTemplates, getTemplateLabelById, getTemplateList } from '../../../st
 import { getTunning, getTunningIdByPattern, getTunningLabelByPattern, getTunningList } from '../../../structures/commons/tunnings';
 import { getExerciseList, getExerciseLabel, getExercise } from '../../../structures/practitioner/exercises';
 
+import * as Tone from 'tone';
+
 import Matrix from '../../commons/Matrix';
 import Template from '../../commons/Template';
 import Selector from '../../scaletor/Selector';
 import SelectorExercises from '../SelectorExercises';
+import SelectorPlayback from '../SelectorPlayback';
 import SelectorDoubleTemplate from '../../scaletor/SelectorDoubleTemplate';
+import { getMIDINoteFromPosition } from '../../../structures/practitioner/utils/getMIDINote';
 
 const Layout = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -39,6 +43,14 @@ const Layout = () => {
     : null;
   const [exercise, setExercise] = useState(defaultExercise);
 
+  // Playback Hooks
+  const defaultBPM = 120;
+  const defaultTimeSignature = '4/4';
+  const [bpm, setBPM] = useState(defaultBPM);
+  const [timeSignature, setTimeSignature] = useState(defaultTimeSignature);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [activeNotePosition, setActiveNotePosition] = useState(null);
+
   // Switch Hooks
   const defaultExerciseSwitch = false;
   const [exerciseSwitch, setExerciseSwitch] = useState(defaultExerciseSwitch);
@@ -56,6 +68,14 @@ const Layout = () => {
       ? exerciseList[0].options[0] 
       : null
   );
+  const [initialBPM, setInitialBPM] = useState({
+    label: defaultBPM.toString(),
+    value: defaultBPM,
+  });
+  const [initialTimeSignature, setInitialTimeSignature] = useState({
+    label: defaultTimeSignature,
+    value: defaultTimeSignature,
+  });
 
   /**
    * Handle Value Changes
@@ -105,6 +125,26 @@ const Layout = () => {
     setTemplateSwitch(check);
   };
 
+  const handleBPMChange = (event) => {
+    setBPM(event.value);
+    setInitialBPM({
+      label: event.value.toString(),
+      value: event.value,
+    });
+  };
+
+  const handleTimeSignatureChange = (event) => {
+    setTimeSignature(event.value);
+    setInitialTimeSignature({
+      label: event.value,
+      value: event.value,
+    });
+  };
+
+  const handlePlayPauseChange = () => {
+    setIsPlaying(!isPlaying);
+  };
+
   /**
    * Update Values by Query Params
    */
@@ -143,6 +183,105 @@ const Layout = () => {
       value: getTunningIdByPattern(tunning, updateTemplateStrings),
     });
   }, [template, tunning]);
+
+  useEffect(() => {
+    setInitialBPM({
+      label: bpm.toString(),
+      value: bpm,
+    });
+  }, [bpm]);
+
+  // Playback logic
+  useEffect(() => {
+    if (!isPlaying || !exercise) {
+      setActiveNotePosition(null);
+      return;
+    }
+
+    const currentExercise = getExercise(exercise, templateStrings);
+    if (!currentExercise || !currentExercise.figure) {
+      return;
+    }
+
+    let synth = null;
+    let timeouts = [];
+
+    // Initialize Tone.js and start audio context
+    const startPlayback = async () => {
+      await Tone.start();
+      synth = new Tone.Synth().toDestination();
+      
+      // Calculate note duration in milliseconds
+      // At 100 BPM, each quarter note = 600ms (60,000ms / 100 BPM)
+      const noteDurationMs = (60 / bpm) * 1000;
+      
+      let currentIndex = 0;
+      const notes = currentExercise.figure;
+
+      const playNextNote = () => {
+        if (currentIndex >= notes.length) {
+          setIsPlaying(false);
+          setActiveNotePosition(null);
+          if (synth) {
+            synth.dispose();
+            synth = null;
+          }
+          return;
+        }
+
+        const note = notes[currentIndex];
+        // Convert string (1-6, where 1=high, 6=low) to array index (0-5, where 0=low, 5=high)
+        // tunning array: index 0 = string 6 (low), index 5 = string 1 (high)
+        const stringIndex = 6 - note.string; // string 6 -> index 0, string 1 -> index 5
+        const stringTuning = tunning[stringIndex];
+        
+        const midiNote = getMIDINoteFromPosition(stringTuning, note.fret);
+        if (midiNote !== null && synth) {
+          // Convert MIDI note to frequency
+          const frequency = Tone.Frequency(midiNote, 'midi').toFrequency();
+          synth.triggerAttackRelease(frequency, noteDurationMs / 1000);
+        }
+
+        // Set active position for Matrix visualization
+        const positionKey = `${stringIndex}-${note.fret - 1}`;
+        setActiveNotePosition(positionKey);
+
+        currentIndex += 1;
+
+        // Schedule next note
+        const timeoutId = setTimeout(() => {
+          setActiveNotePosition(null);
+          if (currentIndex < notes.length) {
+            playNextNote();
+          } else {
+            setIsPlaying(false);
+            setActiveNotePosition(null);
+            if (synth) {
+              synth.dispose();
+              synth = null;
+            }
+          }
+        }, noteDurationMs);
+        
+        timeouts.push(timeoutId);
+      };
+
+      // Start playback
+      playNextNote();
+    };
+
+    startPlayback();
+
+    // Cleanup function
+    return () => {
+      timeouts.forEach(clearTimeout);
+      if (synth) {
+        synth.dispose();
+        synth = null;
+      }
+      setActiveNotePosition(null);
+    };
+  }, [isPlaying, exercise, templateStrings, tunning, bpm, timeSignature]);
 
   useEffect(() => {
     // Update exercise list when template changes
@@ -251,11 +390,29 @@ const Layout = () => {
           templateMode={templateSwitch}
           exercise={exercise ? getExercise(exercise, templateStrings) : null}
           exerciseSwitch={exerciseSwitch}
+          activeNotePosition={activeNotePosition}
         />
         <Template
           id={template} 
           templateMode={templateSwitch}
         />
+      </div>
+      <div className="layout-practitioner__bottom">
+        <div className="layout-practitioner__column-3" />
+        <div className="layout-practitioner__column-3">
+          <SelectorPlayback
+            id="playback"
+            title="Playback"
+            onChangeBPM={handleBPMChange}
+            onChangeTimeSignature={handleTimeSignatureChange}
+            onChangePlayPause={handlePlayPauseChange}
+            valueBPM={initialBPM}
+            valueTimeSignature={initialTimeSignature}
+            isPlaying={isPlaying}
+            isMobile={isMobile}
+          />
+        </div>
+        <div className="layout-practitioner__column-3" />
       </div>
     </section>
   );

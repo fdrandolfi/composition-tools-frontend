@@ -7,7 +7,7 @@ import { getScale } from '../../../structures/scaletor/scales';
 import { getLabelByNote } from '../../../structures/commons/notes';
 
 const Matrix = ({
-  templateId, tunning, scale, withoutScale, templateMode, exercise, exerciseSwitch,
+  templateId, tunning, scale, withoutScale, templateMode, exercise, exerciseSwitch, activeNotePosition,
 }) => {
   const { strings } = allTemplates[templateId];
   const { steps } = allTemplates[templateId];
@@ -19,7 +19,7 @@ const Matrix = ({
   
   // Create a map of active positions for exercises
   // The exercise uses string 1-6 (1=high, 6=low) and fret 1-N (1=first fret)
-  // In Matrix, stringIndex 0 = lowest string, stringIndex 5 = highest string (for 6 strings)
+  // In Matrix, stringIndex 0 = highest string, stringIndex 5 = lowest string (for 6 strings) - inverted mapping
   // fretIndex 0 = first fret (traste 1), fretIndex 1 = second fret (traste 2), etc.
   const exercisePositions = {};
   const exerciseFingers = {}; // Map to store finger numbers for each position
@@ -28,6 +28,7 @@ const Matrix = ({
       // position.string is 1-6 (1=high, 6=low)
       // position.fret is 1-N (1=first fret)
       // We need to convert to stringIndex and fretIndex
+      // Matrix tunning array: index 0 = string 6 (low), index 5 = string 1 (high)
       const stringIndex = strings - position.string; // string 6 -> index 0, string 1 -> index 5
       const fretIndex = position.fret - 1; // fret 1 -> index 0, fret 2 -> index 1, etc.
       const key = `${stringIndex}-${fretIndex}`;
@@ -49,7 +50,8 @@ const Matrix = ({
     >
       <div className="matrix__tunning">
         {
-          tunning.length > 1 && tunning.map((string, stringIndex) => {
+          tunning.length > 1 && tunning.map((stringTuning, stringIndex) => {
+            const string = typeof stringTuning === 'object' ? stringTuning.noteId : stringTuning;
             const stringNotes = getStringNotes(string, steps, 10);
             return (
               <div className={classnames(
@@ -71,7 +73,8 @@ const Matrix = ({
         }
       </div>
       {
-        tunning.map((string, stringIndex) => {
+        tunning.map((stringTuning, stringIndex) => {
+          const string = typeof stringTuning === 'object' ? stringTuning.noteId : stringTuning;
           const stringNotes = getStringNotes(string, steps, tunning.length === 1 ? 10 : 11);
           return (
             <div className={classnames(
@@ -92,6 +95,7 @@ const Matrix = ({
                   const isExercisePosition = isExerciseMode && exercisePositions[positionKey];
                   const isScaleNote = availableScaleNotes && availableScaleNotes.includes(note);
                   const isTonic = scale && availableScaleNotes && note === availableScaleNotes[0];
+                  const isActiveNote = activeNotePosition === positionKey;
 
                   return (
                     <div
@@ -102,6 +106,7 @@ const Matrix = ({
                         { 'matrix__string-note--available': isScaleNote && !isExerciseMode },
                         { 'matrix__string-note--tonic': isTonic && !isExerciseMode },
                         { 'matrix__string-note--exercise': isExercisePosition },
+                        { 'matrix__string-note--active': isActiveNote },
                       )}
                     >
                       <span>

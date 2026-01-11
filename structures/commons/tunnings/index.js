@@ -113,9 +113,19 @@ const getTunningList = (strings) => {
 };
 
 /**
+ * Normalizes a tuning value for comparison (handles both old format [number] and new format [{noteId, octave}])
+ *
+ * @param {Number|Object} value - The tuning value (number or object with noteId)
+ * @returns {Number} The noteId value
+ */
+const normalizeTunningValue = (value) => {
+  return typeof value === 'object' ? value.noteId : value;
+};
+
+/**
  * Returns a label of pattern
  *
- * @param {Array} pattern - The array pattern
+ * @param {Array} pattern - The array pattern (can be old format [number] or new format [{noteId, octave}])
  * @param {Number} strings - The strings value by template
  * @returns {String} The label of pattern
  */
@@ -124,9 +134,17 @@ const getTunningLabelByPattern = (pattern, strings) => {
 
   if (tuning) {
     // eslint-disable-next-line no-unused-vars
-    const entry = Object.entries(tuning).find(([label, values]) => Array.isArray(values)
-          && values.length === pattern.length
-          && values.every((value, index) => value === pattern[index]));
+    const entry = Object.entries(tuning).find(([label, values]) => {
+      if (!Array.isArray(values) || values.length !== pattern.length) {
+        return false;
+      }
+      // Compare normalized values (extract noteId from objects)
+      return values.every((value, index) => {
+        const normalizedValue = normalizeTunningValue(value);
+        const normalizedPattern = normalizeTunningValue(pattern[index]);
+        return normalizedValue === normalizedPattern;
+      });
+    });
 
     return entry ? normalizeTunningLabel(entry[0]) : null;
   }
@@ -137,7 +155,7 @@ const getTunningLabelByPattern = (pattern, strings) => {
 /**
  * Returns a tunning id of pattern
  *
- * @param {Array} pattern - The array pattern
+ * @param {Array} pattern - The array pattern (can be old format [number] or new format [{noteId, octave}])
  * @param {Number} strings - The strings value by template
  * @returns {String} The label of tunning id
  */
@@ -145,7 +163,17 @@ const getTunningIdByPattern = (pattern, strings) => {
   for (const id in tunnings) {
     if (parseInt(id) === strings) {
       for (const label in tunnings[id]) {
-        if (JSON.stringify(tunnings[id][label]) === JSON.stringify(pattern)) {
+        const values = tunnings[id][label];
+        if (!Array.isArray(values) || values.length !== pattern.length) {
+          continue;
+        }
+        // Compare normalized values (extract noteId from objects)
+        const matches = values.every((value, index) => {
+          const normalizedValue = normalizeTunningValue(value);
+          const normalizedPattern = normalizeTunningValue(pattern[index]);
+          return normalizedValue === normalizedPattern;
+        });
+        if (matches) {
           return label;
         }
       }

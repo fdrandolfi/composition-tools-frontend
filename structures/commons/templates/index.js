@@ -9,18 +9,6 @@ const templates = {
       steps: 24,
       imgSrc: 'templates/G-PRS-SE-C24-6.png',
     },
-    'G-PRS-C24-6': {
-      label: 'PRS Custom 24 Core',
-      strings: 6,
-      steps: 24,
-      imgSrc: 'templates/G-PRS-C24-6.png',
-    },
-    'G-PRS-C24-10T-6': {
-      label: 'PRS Custom 24 10-Top',
-      strings: 6,
-      steps: 24,
-      imgSrc: 'templates/G-PRS-C24-10T-6.png',
-    },
     'G-DEAN-CADILLAC-1980-6': {
       label: 'Dean Cadillac 1980',
       strings: 6,
@@ -34,19 +22,19 @@ const templates = {
       imgSrc: 'templates/G-GIBSON-LP-STD-6.png',
     },
     'G-FENDER-TELE-6': {
-      label: 'Fender American Pro II Telecaster',
+      label: 'Fender Telecaster American Pro II ',
       strings: 6,
       steps: 22,
       imgSrc: 'templates/G-FENDER-TELE-6.png',
     },
     'G-FENDER-STRATO-6': {
-      label: 'Fender Vintera 60s Stratocaster',
+      label: 'Fender Stratocaster American Vintage II 1971 ',
       strings: 6,
       steps: 22,
       imgSrc: 'templates/G-FENDER-STRATO-6.png',
     },
     'G-IBANEZ-RG350EX-6': {
-      label: 'Ibanez RG350EX',
+      label: 'Ibanez RG 350EX',
       strings: 6,
       steps: 24,
       imgSrc: 'templates/G-IBANEZ-RG350EX-6.png',
@@ -62,18 +50,6 @@ const templates = {
       strings: 6,
       steps: 20,
       imgSrc: 'templates/G-SIGMA-DME-6.png',
-    },
-    'G-SB-BODEN-7': {
-      label: 'Strandberg Boden 7',
-      strings: 7,
-      steps: 24,
-      imgSrc: 'templates/G-SB-BODEN-7.png',
-    },
-    'G-SOLAR-TAB-7': {
-      label: 'Solar Type AB 7',
-      strings: 7,
-      steps: 24,
-      imgSrc: 'templates/G-SOLAR-TAB-7.png',
     },
     'G-ABASI-LARADA-J-7': {
       label: 'Abasi Larada J Series 7',
@@ -104,7 +80,7 @@ const templates = {
   },
   midi_controllers: {
     'M-ARTURIA-MINILAB-1': {
-      label: 'Arturia MiniLab MKII White',
+      label: 'Arturia MiniLab MKII',
       strings: 1,
       steps: 25,
       imgSrc: 'templates/M-ARTURIA-MINILAB-1.png',
