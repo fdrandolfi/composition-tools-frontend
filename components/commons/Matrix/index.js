@@ -39,6 +39,9 @@ const Matrix = ({
     });
   }
 
+  // Reverse the tunning array for visual display (only for string rendering, not tuning notes)
+  const reversedTunning = [...tunning].reverse();
+
   return (
     <div className={classnames(
       'matrix',
@@ -73,7 +76,8 @@ const Matrix = ({
         }
       </div>
       {
-        tunning.map((stringTuning, stringIndex) => {
+        reversedTunning.map((stringTuning, reversedIndex) => {
+          const stringIndex = tunning.length - 1 - reversedIndex;
           const string = typeof stringTuning === 'object' ? stringTuning.noteId : stringTuning;
           const stringNotes = getStringNotes(string, steps, tunning.length === 1 ? 10 : 11);
           return (

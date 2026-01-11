@@ -7,26 +7,38 @@ const SelectorPlayback = ({
   title,
   onChangeBPM,
   onChangeTimeSignature,
+  onChangeNoteType,
   onChangePlayPause,
   valueBPM,
   valueTimeSignature,
+  valueNoteType,
   isPlaying,
   isMobile,
 }) => {
-  // Generate BPM options (60 to 280)
-  const bpmOptions = [];
-  for (let i = 60; i <= 280; i++) {
-    bpmOptions.push({
-      label: i.toString(),
-      value: i,
-    });
-  }
-
-  // Time signature options
   const timeSignatureOptions = [
     { label: '3/4', value: '3/4' },
     { label: '4/4', value: '4/4' },
   ];
+
+  const noteTypeOptions = [
+    { label: 'Negra', value: 'negra' },
+    { label: 'Corchea', value: 'corchea' },
+    { label: 'Semicorchea', value: 'semicorchea' },
+  ];
+
+  const handleBPMChange = (event) => {
+    const bpmValue = event.target.value;
+    if (bpmValue === '') {
+      return;
+    }
+    const bpm = parseInt(bpmValue, 10);
+    if (!isNaN(bpm) && bpm >= 80 && bpm <= 280) {
+      onChangeBPM({
+        label: bpm.toString(),
+        value: bpm,
+      });
+    }
+  };
 
   return (
     <div className={classnames(
@@ -38,25 +50,35 @@ const SelectorPlayback = ({
         {title}
       </p>
       <div className="selector-playback__content">
+        <div className="selector-playback__bpm-input-wrapper">
+          <label htmlFor={`bpm-input-${id}`} className="selector-playback__bpm-label">
+            BPM
+          </label>
+          <input
+            id={`bpm-input-${id}`}
+            type="number"
+            min="80"
+            max="280"
+            step="1"
+            value={valueBPM?.value || 120}
+            onChange={handleBPMChange}
+            className="selector-playback__bpm-input"
+          />
+        </div>
         <Select
           className="selector-playback__select"
-          options={[
-            {
-              label: 'BPM',
-              options: bpmOptions,
-            },
-          ]}
-          onChange={onChangeBPM}
-          value={valueBPM}
+          options={timeSignatureOptions}
+          onChange={onChangeTimeSignature}
+          value={valueTimeSignature}
           isDisabled={false}
           isSearchable={false}
           menuPlacement={isMobile ? 'top' : 'bottom'}
         />
         <Select
           className="selector-playback__select"
-          options={timeSignatureOptions}
-          onChange={onChangeTimeSignature}
-          value={valueTimeSignature}
+          options={noteTypeOptions}
+          onChange={onChangeNoteType}
+          value={valueNoteType}
           isDisabled={false}
           isSearchable={false}
           menuPlacement={isMobile ? 'top' : 'bottom'}

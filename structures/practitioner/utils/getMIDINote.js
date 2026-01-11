@@ -1,6 +1,7 @@
 /**
  * Gets the MIDI note number for a specific string and fret position
  * Uses the octave from the tuning data
+ * Simply adds semitones (fret offset) to the open string MIDI note
  *
  * @param {Object} stringTuning - The tuning data for the string { noteId: number, octave: number }
  * @param {Number} fret - The fret number (1-based: 1 = first fret)
@@ -34,11 +35,12 @@ export const getMIDINoteFromPosition = (stringTuning, fret) => {
     return null;
   }
 
-  // Calculate MIDI note number
+  // Calculate MIDI note number for the open string
   // MIDI standard: C0 = 12, C1 = 24, C2 = 36, etc.
   // Formula: MIDI = 12 + (octave * 12) + semitone
   const openNoteMIDI = 12 + (stringTuning.octave * 12) + openNoteSemitone;
 
   // Add fret offset (each fret = 1 semitone)
+  // Fret 1 = +0 semitones, Fret 2 = +1 semitone, Fret 3 = +2 semitones, etc.
   return openNoteMIDI + (fret - 1);
 };

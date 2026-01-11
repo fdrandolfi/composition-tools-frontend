@@ -22,13 +22,13 @@ const templates = {
       imgSrc: 'templates/G-GIBSON-LP-STD-6.png',
     },
     'G-FENDER-TELE-6': {
-      label: 'Fender Telecaster American Pro II ',
+      label: 'Fender Telecaster AP II ',
       strings: 6,
       steps: 22,
       imgSrc: 'templates/G-FENDER-TELE-6.png',
     },
     'G-FENDER-STRATO-6': {
-      label: 'Fender Stratocaster American Vintage II 1971 ',
+      label: 'Fender Stratocaster AV II 1971 ',
       strings: 6,
       steps: 22,
       imgSrc: 'templates/G-FENDER-STRATO-6.png',

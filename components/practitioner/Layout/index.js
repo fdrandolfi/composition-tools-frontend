@@ -46,8 +46,10 @@ const Layout = () => {
   // Playback Hooks
   const defaultBPM = 120;
   const defaultTimeSignature = '4/4';
+  const defaultNoteType = 'negra';
   const [bpm, setBPM] = useState(defaultBPM);
   const [timeSignature, setTimeSignature] = useState(defaultTimeSignature);
+  const [noteType, setNoteType] = useState(defaultNoteType);
   const [isPlaying, setIsPlaying] = useState(false);
   const [activeNotePosition, setActiveNotePosition] = useState(null);
 
@@ -75,6 +77,10 @@ const Layout = () => {
   const [initialTimeSignature, setInitialTimeSignature] = useState({
     label: defaultTimeSignature,
     value: defaultTimeSignature,
+  });
+  const [initialNoteType, setInitialNoteType] = useState({
+    label: 'Negra',
+    value: defaultNoteType,
   });
 
   /**
@@ -137,6 +143,14 @@ const Layout = () => {
     setTimeSignature(event.value);
     setInitialTimeSignature({
       label: event.value,
+      value: event.value,
+    });
+  };
+
+  const handleNoteTypeChange = (event) => {
+    setNoteType(event.value);
+    setInitialNoteType({
+      label: event.label,
       value: event.value,
     });
   };
@@ -211,9 +225,28 @@ const Layout = () => {
       await Tone.start();
       synth = new Tone.Synth().toDestination();
       
-      // Calculate note duration in milliseconds
-      // At 100 BPM, each quarter note = 600ms (60,000ms / 100 BPM)
-      const noteDurationMs = (60 / bpm) * 1000;
+      // Calculate note duration in milliseconds based on time signature and note type
+      // 4/4 time: negra = 1/4, corchea = 1/8, semicorchea = 1/16
+      // 3/4 time: negra = 1/3, corchea = 1/6, semicorchea = 1/12
+      const beatsPerMeasure = parseInt(timeSignature.split('/')[0], 10);
+      const noteValue = parseInt(timeSignature.split('/')[1], 10); // Usually 4, represents the note that gets the beat
+      
+      // Calculate duration of one beat in milliseconds
+      const beatDurationMs = (60 / bpm) * 1000;
+      
+      let noteDurationMs;
+      if (noteType === 'negra') {
+        // Negra = 1 beat = 1/beatsPerMeasure of the measure
+        noteDurationMs = beatDurationMs; // 1 beat
+      } else if (noteType === 'corchea') {
+        // Corchea = 1/2 beat = 1/(beatsPerMeasure * 2) of the measure
+        noteDurationMs = beatDurationMs / 2; // 1/2 beat
+      } else if (noteType === 'semicorchea') {
+        // Semicorchea = 1/4 beat = 1/(beatsPerMeasure * 4) of the measure
+        noteDurationMs = beatDurationMs / 4; // 1/4 beat
+      } else {
+        noteDurationMs = beatDurationMs; // Default to negra
+      }
       
       let currentIndex = 0;
       const notes = currentExercise.figure;
@@ -281,7 +314,7 @@ const Layout = () => {
       }
       setActiveNotePosition(null);
     };
-  }, [isPlaying, exercise, templateStrings, tunning, bpm, timeSignature]);
+  }, [isPlaying, exercise, templateStrings, tunning, bpm, timeSignature, noteType]);
 
   useEffect(() => {
     // Update exercise list when template changes
@@ -405,9 +438,11 @@ const Layout = () => {
             title="Playback"
             onChangeBPM={handleBPMChange}
             onChangeTimeSignature={handleTimeSignatureChange}
+            onChangeNoteType={handleNoteTypeChange}
             onChangePlayPause={handlePlayPauseChange}
             valueBPM={initialBPM}
             valueTimeSignature={initialTimeSignature}
+            valueNoteType={initialNoteType}
             isPlaying={isPlaying}
             isMobile={isMobile}
           />
