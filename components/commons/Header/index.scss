@@ -9,7 +9,7 @@
   z-index: 2;
 
   &__logo {
-    max-width: 480px;
+    max-width: 640px;
     height: auto;
     @include flex(center, center, row);
     z-index: 1;
