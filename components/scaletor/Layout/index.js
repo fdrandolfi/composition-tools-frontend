@@ -7,8 +7,8 @@ import { getTunning, getTunningIdByPattern, getTunningLabelByPattern, getTunning
 import { getLabelByNote, getNoteList } from '../../../structures/scaletor/notes';
 import { getScaleLabel, getScaleList, getScaleModesList } from '../../../structures/scaletor/scales';
 
-import Matrix from '../Matrix';
-import Template from '../Template';
+import Matrix from '../../commons/Matrix';
+import Template from '../../commons/Template';
 import Selector from '../Selector';
 import SelectorDouble from '../SelectorDouble';
 import SelectorDoubleTemplate from '../SelectorDoubleTemplate';
