@@ -7,7 +7,7 @@ import { getScale } from '../../../structures/scaletor/scales';
 import { getLabelByNote } from '../../../structures/commons/notes';
 
 const Matrix = ({
-  templateId, tunning, scale, withoutScale, templateMode, exercise,
+  templateId, tunning, scale, withoutScale, templateMode, exercise, exerciseSwitch,
 }) => {
   const { strings } = allTemplates[templateId];
   const { steps } = allTemplates[templateId];
@@ -20,17 +20,21 @@ const Matrix = ({
   // Create a map of active positions for exercises
   // The exercise uses string 1-6 (1=high, 6=low) and fret 1-N (1=first fret)
   // In Matrix, stringIndex 0 = lowest string, stringIndex 5 = highest string (for 6 strings)
-  // fretIndex 0 = open string, fretIndex 1 = first fret
+  // fretIndex 0 = first fret (traste 1), fretIndex 1 = second fret (traste 2), etc.
   const exercisePositions = {};
+  const exerciseFingers = {}; // Map to store finger numbers for each position
   if (exercise && exercise.figure) {
     exercise.figure.forEach((position) => {
       // position.string is 1-6 (1=high, 6=low)
       // position.fret is 1-N (1=first fret)
       // We need to convert to stringIndex and fretIndex
       const stringIndex = strings - position.string; // string 6 -> index 0, string 1 -> index 5
-      const fretIndex = position.fret; // fret 1 -> index 1, fret 0 would be open string (index 0)
+      const fretIndex = position.fret - 1; // fret 1 -> index 0, fret 2 -> index 1, etc.
       const key = `${stringIndex}-${fretIndex}`;
       exercisePositions[key] = true;
+      if (position.finger !== undefined) {
+        exerciseFingers[key] = position.finger;
+      }
     });
   }
 
@@ -83,7 +87,7 @@ const Matrix = ({
             >
               {
                 stringNotes.map((note, fretIndex) => {
-                  // fretIndex 0 = open string, fretIndex 1 = first fret, etc.
+                  // fretIndex 0 = first fret (traste 1), fretIndex 1 = second fret (traste 2), etc.
                   const positionKey = `${stringIndex}-${fretIndex}`;
                   const isExercisePosition = isExerciseMode && exercisePositions[positionKey];
                   const isScaleNote = availableScaleNotes && availableScaleNotes.includes(note);
@@ -100,7 +104,11 @@ const Matrix = ({
                         { 'matrix__string-note--exercise': isExercisePosition },
                       )}
                     >
-                      <span>{isExerciseMode && isExercisePosition ? fretIndex + 1 : note}</span>
+                      <span>
+                        {isExerciseMode && isExercisePosition
+                          ? (exerciseSwitch ? fretIndex + 1 : note)
+                          : note}
+                      </span>
                     </div>
                   );
                 })

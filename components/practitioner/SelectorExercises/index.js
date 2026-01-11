@@ -7,23 +7,12 @@ const SelectorExercises = ({
   id,
   title,
   optionsExercises,
-  onChangeBPM,
   onChangeExercise,
   onChangeExerciseSwitch,
   checkedExerciseSwitch,
-  valueBPM,
   valueExercise,
   isMobile,
 }) => {
-  // Generar opciones de BPM (80 a 240)
-  const bpmOptions = [];
-  for (let i = 80; i <= 240; i++) {
-    bpmOptions.push({
-      label: i.toString(),
-      value: i,
-    });
-  }
-
   return (
     <div className={classnames(
       'selector-exercises',
@@ -39,6 +28,7 @@ const SelectorExercises = ({
           checked={checkedExerciseSwitch}
           className="selector-exercises__switch"
           onColor="#960A00"
+          offColor="#960A00"
           handleDiameter={24}
           uncheckedIcon={false}
           checkedIcon={false}
@@ -50,33 +40,23 @@ const SelectorExercises = ({
         <Select
           className={classnames(
             'selector-exercises__select',
-            'selector-exercises__select--bpm',
-          )}
-          options={[
-            {
-              label: 'BPM',
-              options: bpmOptions,
-            },
-          ]}
-          onChange={onChangeBPM}
-          value={valueBPM}
-          isDisabled={!checkedExerciseSwitch}
-          isSearchable={false}
-          menuPlacement={isMobile ? 'top' : 'bottom'}
-        />
-        <Select
-          className={classnames(
-            'selector-exercises__select',
             'selector-exercises__select--exercise',
           )}
           options={optionsExercises}
           onChange={onChangeExercise}
           value={valueExercise}
-          isDisabled={!checkedExerciseSwitch}
+          isDisabled={false}
           isSearchable={false}
           menuPlacement={isMobile ? 'top' : 'bottom'}
         />
       </div>
+      {
+        !isMobile && (
+          <span className='selector-exercises__label'>
+            The switch toggles between note name and fret number.
+          </span>
+        )
+      }
     </div>
   );
 };

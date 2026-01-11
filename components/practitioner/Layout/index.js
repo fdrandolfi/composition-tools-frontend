@@ -34,15 +34,13 @@ const Layout = () => {
 
   // Exercise Hooks - Get exercise list based on template strings
   const exerciseList = getExerciseList(templateStrings);
-  const defaultBPM = 120;
   const defaultExercise = exerciseList.length > 0 && exerciseList[0].options.length > 0 
     ? exerciseList[0].options[0].value 
     : null;
-  const [bpm, setBPM] = useState(defaultBPM);
   const [exercise, setExercise] = useState(defaultExercise);
 
   // Switch Hooks
-  const defaultExerciseSwitch = true;
+  const defaultExerciseSwitch = false;
   const [exerciseSwitch, setExerciseSwitch] = useState(defaultExerciseSwitch);
   const defaultTemplateSwitch = false;
   const [templateSwitch, setTemplateSwitch] = useState(defaultTemplateSwitch);
@@ -52,10 +50,6 @@ const Layout = () => {
   const [initialTunning, setInitialTunning] = useState({
     label: getTunningLabelByPattern(defaultTunning, templateStrings),
     value: defaultTunning,
-  });
-  const [initialBPM, setInitialBPM] = useState({
-    label: defaultBPM.toString(),
-    value: defaultBPM,
   });
   const [initialExercise, setInitialExercise] = useState(
     exerciseList.length > 0 && exerciseList[0].options.length > 0 
@@ -90,17 +84,6 @@ const Layout = () => {
     const updateTemplateStrings = allTemplates[template].strings;
     const updatedTunning = getTunning(event.value, updateTemplateStrings);
     setTunning(updatedTunning);
-  };
-
-  const handleBPMChange = (event) => {
-    router.push({
-      pathname: router.pathname,
-      query: {
-        ...query,
-        bpm: event.value
-      },
-    }, undefined, { shallow: true });
-    setBPM(event.value);
   };
 
   const handleExerciseChange = (event) => {
@@ -140,8 +123,6 @@ const Layout = () => {
       }
     }
 
-    if (query.bpm) setBPM(Number(query.bpm));
-
     if (query.exercise) setExercise(query.exercise);
   }, [query]);
 
@@ -162,13 +143,6 @@ const Layout = () => {
       value: getTunningIdByPattern(tunning, updateTemplateStrings),
     });
   }, [template, tunning]);
-
-  useEffect(() => {
-    setInitialBPM({
-      label: bpm.toString(),
-      value: bpm,
-    });
-  }, [bpm]);
 
   useEffect(() => {
     // Update exercise list when template changes
@@ -234,11 +208,9 @@ const Layout = () => {
             id="exercise"
             title="Exercises"
             optionsExercises={getExerciseList(templateStrings)}
-            onChangeBPM={handleBPMChange}
             onChangeExercise={handleExerciseChange}
             onChangeExerciseSwitch={handleExerciseSwitchChange}
             checkedExerciseSwitch={exerciseSwitch}
-            valueBPM={initialBPM}
             valueExercise={initialExercise}
             isMobile={isMobile}
           />
@@ -277,7 +249,8 @@ const Layout = () => {
           scale={null}
           withoutScale={!exerciseSwitch}
           templateMode={templateSwitch}
-          exercise={exerciseSwitch && exercise ? getExercise(exercise, templateStrings) : null}
+          exercise={exercise ? getExercise(exercise, templateStrings) : null}
+          exerciseSwitch={exerciseSwitch}
         />
         <Template
           id={template} 
