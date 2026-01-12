@@ -45,7 +45,7 @@ const Layout = () => {
   // Playback Hooks (mantener para UI, pero sin lógica de audio por ahora)
   const defaultBPM = 120;
   const defaultTimeSignature = '4/4';
-  const defaultNoteType = 'corchea';
+  const defaultNoteType = 'negra';
   const [bpm, setBPM] = useState(defaultBPM);
   const [timeSignature, setTimeSignature] = useState(defaultTimeSignature);
   const [noteType, setNoteType] = useState(defaultNoteType);
@@ -135,6 +135,10 @@ const Layout = () => {
       // Empty input, don't update state
       return;
     }
+    // Stop playback if playing
+    if (isPlaying) {
+      setIsPlaying(false);
+    }
     setBPM(event.value);
     setInitialBPM({
       label: event.label || event.value.toString(),
@@ -143,6 +147,10 @@ const Layout = () => {
   };
 
   const handleTimeSignatureChange = (event) => {
+    // Stop playback if playing
+    if (isPlaying) {
+      setIsPlaying(false);
+    }
     setTimeSignature(event.value);
     setInitialTimeSignature({
       label: event.value,
@@ -151,6 +159,10 @@ const Layout = () => {
   };
 
   const handleNoteTypeChange = (event) => {
+    // Stop playback if playing
+    if (isPlaying) {
+      setIsPlaying(false);
+    }
     setNoteType(event.value);
     setInitialNoteType({
       label: event.label,
