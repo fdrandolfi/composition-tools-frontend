@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 
 import { allTemplates, getTemplateLabelById, getTemplateList } from '../../../structures/commons/templates';
 import { getTunning, getTunningIdByPattern, getTunningLabelByPattern, getTunningList } from '../../../structures/commons/tunnings';
 import { getExerciseList, getExerciseLabel, getExercise } from '../../../structures/practitioner/exercises';
+import getMidiIdFromStringAndFret from '../../../utils/getMidiIdFromStringAndFret';
+import playMidiNote from '../../../utils/playMidiNote';
 
 import Matrix from '../../commons/Matrix';
 import Template from '../../commons/Template';
@@ -210,21 +212,70 @@ const Layout = () => {
     });
   }, [bpm]);
 
-  // Playback logic - DESACTIVADO POR AHORA
-  // TODO: Re-activar cuando se implemente correctamente la lógica MIDI
+  // Playback logic with MIDI sound
+  const timeoutRef = useRef(null);
+  const currentIndexRef = useRef(0);
+  const isPlayingRef = useRef(isPlaying);
+  const audioContextRef = useRef(null);
+  const currentOscillatorRef = useRef(null);
+
+  // Keep ref in sync with state
   useEffect(() => {
+    isPlayingRef.current = isPlaying;
+  }, [isPlaying]);
+
+  // Initialize shared AudioContext once
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext)) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!audioContextRef.current) {
+        audioContextRef.current = new AudioContext();
+      }
+    }
+
+    // Cleanup on unmount
+    return () => {
+      // Stop current oscillator if playing
+      if (currentOscillatorRef.current) {
+        try {
+          currentOscillatorRef.current.stop();
+        } catch (e) {
+          // Ignore errors
+        }
+        currentOscillatorRef.current = null;
+      }
+      // Don't close audio context - keep it open for reuse
+    };
+  }, []);
+
+  useEffect(() => {
+    // Reset index when exercise or template changes (always start from beginning)
+    currentIndexRef.current = 0;
+
     if (!isPlaying || !exercise) {
+      // Clear any active timeouts when paused
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+      // Stop current note when paused
+      if (currentOscillatorRef.current) {
+        try {
+          currentOscillatorRef.current.stop();
+        } catch (e) {
+          // Ignore errors
+        }
+        currentOscillatorRef.current = null;
+      }
       setActiveNotePosition(null);
       return;
     }
 
-    // Por ahora solo actualizamos la visualización sin reproducir audio
     const currentExercise = getExercise(exercise, templateStrings);
     if (!currentExercise || !currentExercise.figure) {
       return;
     }
 
-    let currentIndex = 0;
     const notes = currentExercise.figure;
     const beatDurationMs = (60 / bpm) * 1000;
     const timeSigMultiplier = timeSignature === '3/4' ? 0.75 : 1.0;
@@ -241,34 +292,91 @@ const Layout = () => {
     }
 
     const playNextNote = () => {
-      if (currentIndex >= notes.length) {
+      // Check if still playing (in case user paused)
+      if (!isPlayingRef.current || currentIndexRef.current >= notes.length) {
         setIsPlaying(false);
         setActiveNotePosition(null);
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
         return;
       }
 
-      const note = notes[currentIndex];
-      const stringIndexForMatrix = note.string - 1;
-      const positionKey = `${stringIndexForMatrix}-${note.fret - 1}`;
+      const note = notes[currentIndexRef.current];
+      const stringIndexForMatrix = note.string - 1; // Convert to 0-based index for matrix
+      const fretIndexForMatrix = note.fret - 1; // Convert to 0-based index (fret 1 = index 0)
+      const positionKey = `${stringIndexForMatrix}-${fretIndexForMatrix}`;
+      
+      // Set visual position
       setActiveNotePosition(positionKey);
 
-      currentIndex += 1;
+      // Calculate and play MIDI note
+      // Get the string tuning from the tunning array
+      // Note: string numbers in exercise are 1-based (1-6), array indices are 0-based
+      const stringTuning = tunning[stringIndexForMatrix];
+      if (stringTuning && audioContextRef.current) {
+        // fretIndexForMatrix is already 0-based (fret 1 = index 0)
+        const midiId = getMidiIdFromStringAndFret(stringTuning, fretIndexForMatrix);
+        if (midiId !== null && midiId !== undefined) {
+          // Stop previous note before playing new one (ensure only one note plays at a time)
+          if (currentOscillatorRef.current) {
+            try {
+              currentOscillatorRef.current.stop();
+            } catch (e) {
+              // Ignore errors when stopping
+            }
+            currentOscillatorRef.current = null;
+          }
+          
+          // Play the note with duration matching the note type
+          // Use shorter duration so notes don't overlap (80% of note duration)
+          const noteDuration = noteDurationMs * 0.8;
+          const noteResult = playMidiNote(
+            midiId, 
+            noteDuration, 
+            127, 
+            audioContextRef.current, 
+            currentOscillatorRef
+          );
+          
+          // Store reference to stop if needed
+          if (noteResult && noteResult.oscillator) {
+            currentOscillatorRef.current = noteResult.oscillator;
+          }
+        }
+      }
 
-      const timeoutId = setTimeout(() => {
+      // Move to next note
+      currentIndexRef.current += 1;
+
+      // Schedule next note or finish
+      timeoutRef.current = setTimeout(() => {
         setActiveNotePosition(null);
-        if (currentIndex < notes.length) {
+        if (currentIndexRef.current < notes.length && isPlayingRef.current) {
           playNextNote();
         } else {
           setIsPlaying(false);
           setActiveNotePosition(null);
+          currentIndexRef.current = 0;
+          timeoutRef.current = null;
         }
       }, noteDurationMs);
-
-      return () => clearTimeout(timeoutId);
     };
 
+    // Always start playing from the beginning when play is triggered
+    // Reset index to ensure we start from the first note
+    currentIndexRef.current = 0;
     playNextNote();
-  }, [isPlaying, exercise, templateStrings, bpm, timeSignature, noteType]);
+
+    // Cleanup function: clear timeout when component unmounts or dependencies change
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+  }, [isPlaying, exercise, templateStrings, bpm, timeSignature, noteType, tunning]);
 
   useEffect(() => {
     // Update exercise list when template changes
