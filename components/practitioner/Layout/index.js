@@ -212,6 +212,18 @@ const Layout = () => {
     });
   }, [bpm]);
 
+  // Update BPM based on exercise
+  useEffect(() => {
+    if (exercise) {
+      const updateTemplateStrings = allTemplates[template].strings;
+      const currentExercise = getExercise(exercise, updateTemplateStrings);
+      if (currentExercise) {
+        const exerciseBPM = currentExercise.bpm || 120;
+        setBPM(exerciseBPM);
+      }
+    }
+  }, [exercise, template]);
+
   // Playback logic with MIDI sound
   const timeoutRef = useRef(null);
   const currentIndexRef = useRef(0);
