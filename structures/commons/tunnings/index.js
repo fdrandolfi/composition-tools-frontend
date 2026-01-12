@@ -14,6 +14,7 @@ import standard_7 from './seven/standard';
 import drop_a_7 from './seven/drop_a';
 import drop_g_sharp_7 from './seven/drop_g_sharp';
 import drop_f_sharp_7 from './seven/drop_f_sharp';
+import drop_g_7 from './seven/drop_g';
 // 8 Strings
 import standard_8 from './eight/standard';
 import drop_e_8 from './eight/drop_e';
@@ -26,6 +27,8 @@ import drop_c_4 from './four/drop_c';
 import drop_d_4 from './four/drop_d';
 // 5 Strings
 import standard_5 from './five/standard';
+import drop_c_5 from './five/drop_c';
+import drop_d_5 from './five/drop_d';
 
 // MIDI Controllers
 import standard_1 from './one/standard';
@@ -44,6 +47,8 @@ const tunnings = {
   },
   5: {
     standard: standard_5,
+    drop_c: drop_c_5,
+    drop_d: drop_d_5,
   },
   6: {
     standard: standard_6,
@@ -61,6 +66,7 @@ const tunnings = {
     drop_a: drop_a_7,
     'drop_g#': drop_g_sharp_7,
     'drop_f#': drop_f_sharp_7,
+    drop_g: drop_g_7,
   },
   8: {
     standard: standard_8,

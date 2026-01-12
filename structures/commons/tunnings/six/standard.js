@@ -1,6 +1,6 @@
 import { getNoteDataById } from '../../notes';
 
-// Original = [8, 3, 11, 6, 1, 8];
+// Standard = [8, 3, 11, 6, 1, 8];
 
 const standard = [
   getNoteDataById(44), // E4

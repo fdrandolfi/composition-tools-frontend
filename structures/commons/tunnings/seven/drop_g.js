@@ -1,14 +1,15 @@
 import { getNoteDataById } from '../../notes';
 
-// Drop B = [5, 12, 8, 3, 10, 3]
+// Drop G = []
 
-const drop_b = [
+const drop_g = [
   getNoteDataById(41), // C#4
   getNoteDataById(36), // G#3
   getNoteDataById(32), // E3
   getNoteDataById(27), // B2
   getNoteDataById(22), // F#2
-  getNoteDataById(15), // B1
+  getNoteDataById(17), // C#2
+  getNoteDataById(10), // F#1
 ];
 
-export default drop_b;
+export default drop_g;
