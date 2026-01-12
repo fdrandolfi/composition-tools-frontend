@@ -60,7 +60,7 @@ const Layout = () => {
   const [initialTemplate, setInitialTemplate] = useState(templateGuitarsList[0]);
   const [initialTunning, setInitialTunning] = useState({
     label: getTunningLabelByPattern(defaultTunning, templateStrings),
-    value: defaultTunning,
+    value: getTunningIdByPattern(defaultTunning, templateStrings) || tunningOptions[0].value,
   });
   const [initialExercise, setInitialExercise] = useState(
     exerciseList.length > 0 && exerciseList[0].options.length > 0 
@@ -193,9 +193,13 @@ const Layout = () => {
 
   useEffect(() => {
     const updateTemplateStrings = allTemplates[template].strings;
+    const tunningId = getTunningIdByPattern(tunning, updateTemplateStrings);
+    const tunningLabel = getTunningLabelByPattern(tunning, updateTemplateStrings);
+    const availableTunnings = getTunningList(updateTemplateStrings);
+    
     setInitialTunning({
-      label: getTunningLabelByPattern(tunning, updateTemplateStrings),
-      value: getTunningIdByPattern(tunning, updateTemplateStrings),
+      label: tunningLabel || (availableTunnings.length > 0 ? availableTunnings[0].label : ''),
+      value: tunningId || (availableTunnings.length > 0 ? availableTunnings[0].value : 'standard'),
     });
   }, [template, tunning]);
 

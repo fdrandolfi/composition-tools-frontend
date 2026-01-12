@@ -82,11 +82,13 @@ const tunnings = {
  * @returns {string} The label string
  */
 const normalizeTunningLabel = (tunningLabel) => {
+  if (!tunningLabel) {
+    return '';
+  }
   return tunningLabel
-    .replace('_', ' ')
-    .replace('_', ' ')
-    .replace('_', ' ')
-    .replace('_', ' ')
+    .replace(/_/g, ' ')
+    .replace(/#/g, '#')
+    .replace(/&/g, '&')
     .toUpperCase();
 }
 
@@ -119,74 +121,122 @@ const getTunningList = (strings) => {
 };
 
 /**
- * Normalizes a tuning value for comparison (handles both old format [number] and new format [{noteId, octave}])
+ * Normalizes a tuning value for comparison (handles both old format [number] and new format [{id, octave}])
  *
- * @param {Number|Object} value - The tuning value (number or object with noteId)
- * @returns {Number} The noteId value
+ * @param {Number|Object} value - The tuning value (number or object with id)
+ * @returns {Number} The id value
  */
 const normalizeTunningValue = (value) => {
-  return typeof value === 'object' ? value.noteId : value;
+  if (value === null || value === undefined) {
+    return null;
+  }
+  return typeof value === 'object' ? (value.id || value.noteId) : value;
+};
+
+/**
+ * Compares two tuning arrays to check if they match (normalizes both old and new formats)
+ * Ignores the first value as it corresponds to the open string tuning (fret 0)
+ *
+ * @param {Array} values - Array of tuning values (can be old format [number] or new format [{id, octave}])
+ * @param {Array} pattern - Array of pattern values (can be old format [number] or new format [{id, octave}])
+ * @returns {Boolean} True if the arrays match (ignoring first element)
+ */
+const compareTunningArrays = (values, pattern) => {
+  if (!Array.isArray(values) || !Array.isArray(pattern)) {
+    return false;
+  }
+  
+  // For single string tunings (MIDI), compare all values
+  if (values.length === 1 && pattern.length === 1) {
+    const normalizedValue = normalizeTunningValue(values[0]);
+    const normalizedPattern = normalizeTunningValue(pattern[0]);
+    return normalizedValue !== null && normalizedPattern !== null && normalizedValue === normalizedPattern;
+  }
+  
+  // Both arrays should have the same length (number of strings)
+  if (values.length !== pattern.length) {
+    return false;
+  }
+  
+  // When comparing tuning patterns, we need to skip the first element because:
+  // - In the tuning array (values): each element is the open string tuning (fret 0)
+  // - In the pattern array: if it comes from generated notes, index 0 = fret 0, index 1 = fret 1
+  // - But we want to compare starting from fret 1 (space 1), not fret 0 (space 0)
+  // - So we compare values starting from index 1 (second string) with pattern from index 1 (fret 1 of each string)
+  // - Actually, we compare each tuning value with the note at fret 1 of the corresponding string
+  // - So values[0] (first string open) should match the note at fret 1 of first string (pattern might need to be adjusted)
+  
+  // Actually, if pattern is generated from string notes where pattern[i][0] = fret 0 and pattern[i][1] = fret 1
+  // But if pattern is just an array like tuning, then we skip first element
+  // Let's assume pattern has the same structure as values (array of notes, one per string)
+  // but we skip the first string's fret 0 note and compare from fret 1
+  
+  // Skip the first element (fret 0 / space 0) and compare from index 1 (fret 1 / space 1)
+  const valuesToCompare = values.slice(1);
+  const patternToCompare = pattern.slice(1);
+  
+  if (valuesToCompare.length === 0 || patternToCompare.length === 0) {
+    return false;
+  }
+  
+  if (valuesToCompare.length !== patternToCompare.length) {
+    return false;
+  }
+  
+  return valuesToCompare.every((value, index) => {
+    const normalizedValue = normalizeTunningValue(value);
+    const normalizedPattern = normalizeTunningValue(patternToCompare[index]);
+    return normalizedValue !== null && normalizedPattern !== null && normalizedValue === normalizedPattern;
+  });
+};
+
+/**
+ * Finds a tuning entry that matches the given pattern
+ *
+ * @param {Array} pattern - The array pattern (can be old format [number] or new format [{id, octave}])
+ * @param {Number} strings - The strings value by template
+ * @returns {Object|null} The matching entry [label, values] or null
+ */
+const findTunningByPattern = (pattern, strings) => {
+  if (!pattern || !Array.isArray(pattern) || pattern.length === 0) {
+    return null;
+  }
+
+  const tuning = tunnings[strings];
+  if (!tuning) {
+    return null;
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  const entry = Object.entries(tuning).find(([label, values]) => {
+    return compareTunningArrays(values, pattern);
+  });
+
+  return entry || null;
 };
 
 /**
  * Returns a label of pattern
  *
- * @param {Array} pattern - The array pattern (can be old format [number] or new format [{noteId, octave}])
+ * @param {Array} pattern - The array pattern (can be old format [number] or new format [{id, octave}])
  * @param {Number} strings - The strings value by template
  * @returns {String} The label of pattern
  */
 const getTunningLabelByPattern = (pattern, strings) => {
-  const tuning = tunnings[strings];
-
-  if (tuning) {
-    // eslint-disable-next-line no-unused-vars
-    const entry = Object.entries(tuning).find(([label, values]) => {
-      if (!Array.isArray(values) || values.length !== pattern.length) {
-        return false;
-      }
-      // Compare normalized values (extract noteId from objects)
-      return values.every((value, index) => {
-        const normalizedValue = normalizeTunningValue(value);
-        const normalizedPattern = normalizeTunningValue(pattern[index]);
-        return normalizedValue === normalizedPattern;
-      });
-    });
-
-    return entry ? normalizeTunningLabel(entry[0]) : null;
-  }
-
-  return null;
+  const entry = findTunningByPattern(pattern, strings);
+  return entry ? normalizeTunningLabel(entry[0]) : null;
 };
 
 /**
  * Returns a tunning id of pattern
  *
- * @param {Array} pattern - The array pattern (can be old format [number] or new format [{noteId, octave}])
+ * @param {Array} pattern - The array pattern (can be old format [number] or new format [{id, octave}])
  * @param {Number} strings - The strings value by template
  * @returns {String} The label of tunning id
  */
 const getTunningIdByPattern = (pattern, strings) => {
-  for (const id in tunnings) {
-    if (parseInt(id) === strings) {
-      for (const label in tunnings[id]) {
-        const values = tunnings[id][label];
-        if (!Array.isArray(values) || values.length !== pattern.length) {
-          continue;
-        }
-        // Compare normalized values (extract noteId from objects)
-        const matches = values.every((value, index) => {
-          const normalizedValue = normalizeTunningValue(value);
-          const normalizedPattern = normalizeTunningValue(pattern[index]);
-          return normalizedValue === normalizedPattern;
-        });
-        if (matches) {
-          return label;
-        }
-      }
-    }
-  }
-
-  return null;
+  const entry = findTunningByPattern(pattern, strings);
+  return entry ? entry[0] : null;
 };
 
 export {
