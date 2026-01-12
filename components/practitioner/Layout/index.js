@@ -327,7 +327,12 @@ const Layout = () => {
     }
 
     const beatDurationMs = (60 / bpm) * 1000;
-    const timeSigMultiplier = timeSignature === '3/4' ? 0.75 : 1.0;
+    let timeSigMultiplier = 1.0;
+    if (timeSignature === '3/4') {
+      timeSigMultiplier = 0.75;
+    } else if (timeSignature === '5/4') {
+      timeSigMultiplier = 1.25;
+    }
     
     let noteDurationMs;
     if (noteType === 'negra') {

@@ -23,6 +23,7 @@ const SelectorPlayback = ({
   const timeSignatureOptions = [
     { label: '3/4', value: '3/4' },
     { label: '4/4', value: '4/4' },
+    { label: '5/4', value: '5/4' },
   ];
 
   const noteTypeOptions = [
@@ -93,62 +94,58 @@ const SelectorPlayback = ({
         </button>
       </div>
       <div className="selector-playback__content">
-        <div className="selector-playback__row">
-          <div className="selector-playback__bpm-input-wrapper">
-            <label htmlFor={`bpm-input-${id}`} className="selector-playback__bpm-label">
-              BPM
-            </label>
-            <input
-              id={`bpm-input-${id}`}
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              maxLength="3"
-              value={valueBPM?.value !== null && valueBPM?.value !== undefined ? valueBPM.value : 120}
-              onChange={handleBPMChange}
-              className="selector-playback__bpm-input"
-            />
+        <div className="selector-playback__bpm-input-wrapper">
+          <label htmlFor={`bpm-input-${id}`} className="selector-playback__bpm-label">
+            BPM
+          </label>
+          <input
+            id={`bpm-input-${id}`}
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength="3"
+            value={valueBPM?.value !== null && valueBPM?.value !== undefined ? valueBPM.value : 120}
+            onChange={handleBPMChange}
+            className="selector-playback__bpm-input"
+          />
+        </div>
+        <div className="selector-playback__tabs-group">
+          <span className="selector-playback__tabs-label">Time</span>
+          <div className="selector-playback__tabs">
+            {timeSignatureOptions.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                className={classnames(
+                  'selector-playback__tab',
+                  valueTimeSignature?.value === option.value && 'selector-playback__tab--active',
+                )}
+                onClick={() => handleTimeSignatureClick(option.value)}
+              >
+                {option.label}
+              </button>
+            ))}
           </div>
-          <div className="selector-playback__tabs-group">
-            <span className="selector-playback__tabs-label">Time</span>
-            <div className="selector-playback__tabs">
-              {timeSignatureOptions.map((option) => (
+        </div>
+        <div className="selector-playback__tabs-group">
+          <span className="selector-playback__tabs-label">Note</span>
+          <div className="selector-playback__tabs">
+            {noteTypeOptions.map((option) => {
+              const IconComponent = option.icon;
+              return (
                 <button
                   key={option.value}
                   type="button"
                   className={classnames(
                     'selector-playback__tab',
-                    valueTimeSignature?.value === option.value && 'selector-playback__tab--active',
+                    valueNoteType?.value === option.value && 'selector-playback__tab--active',
                   )}
-                  onClick={() => handleTimeSignatureClick(option.value)}
+                  onClick={() => handleNoteTypeClick(option.value)}
                 >
-                  {option.label}
+                  <IconComponent />
                 </button>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="selector-playback__row">
-          <div className="selector-playback__tabs-group">
-            <span className="selector-playback__tabs-label">Note Velocity</span>
-            <div className="selector-playback__tabs">
-              {noteTypeOptions.map((option) => {
-                const IconComponent = option.icon;
-                return (
-                  <button
-                    key={option.value}
-                    type="button"
-                    className={classnames(
-                      'selector-playback__tab',
-                      valueNoteType?.value === option.value && 'selector-playback__tab--active',
-                    )}
-                    onClick={() => handleNoteTypeClick(option.value)}
-                  >
-                    <IconComponent />
-                  </button>
-                );
-              })}
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>
