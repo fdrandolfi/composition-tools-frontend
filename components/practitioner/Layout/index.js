@@ -244,7 +244,7 @@ const Layout = () => {
       }
 
       const note = notes[currentIndex];
-      const stringIndexForMatrix = templateStrings - note.string;
+      const stringIndexForMatrix = note.string - 1;
       const positionKey = `${stringIndexForMatrix}-${note.fret - 1}`;
       setActiveNotePosition(positionKey);
 

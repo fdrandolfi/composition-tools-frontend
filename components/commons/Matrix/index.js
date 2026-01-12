@@ -19,7 +19,7 @@ const Matrix = ({
   const exerciseFingers = {};
   if (exercise && exercise.figure) {
     exercise.figure.forEach((position) => {
-      const stringIndex = strings - position.string;
+      const stringIndex = position.string - 1;
       const fretIndex = position.fret - 1;
       const key = `${stringIndex}-${fretIndex}`;
       exercisePositions[key] = true;
