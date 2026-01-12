@@ -218,6 +218,10 @@ const Layout = () => {
   const isPlayingRef = useRef(isPlaying);
   const audioContextRef = useRef(null);
   const currentOscillatorRef = useRef(null);
+  const currentNotesRef = useRef(null); // Current notes array
+  const playbackRunningRef = useRef(false); // Track if playback is actively running
+  const previousExerciseRef = useRef(exercise);
+  const previousTemplateStringsRef = useRef(templateStrings);
 
   // Keep ref in sync with state
   useEffect(() => {
@@ -249,8 +253,12 @@ const Layout = () => {
   }, []);
 
   useEffect(() => {
-    // Reset index when exercise or template changes (always start from beginning)
-    currentIndexRef.current = 0;
+    const exerciseChanged = previousExerciseRef.current !== exercise;
+    const templateChanged = previousTemplateStringsRef.current !== templateStrings;
+    
+    // Update refs for next comparison
+    previousExerciseRef.current = exercise;
+    previousTemplateStringsRef.current = templateStrings;
 
     if (!isPlaying || !exercise) {
       // Clear any active timeouts when paused
@@ -268,6 +276,12 @@ const Layout = () => {
         currentOscillatorRef.current = null;
       }
       setActiveNotePosition(null);
+      playbackRunningRef.current = false;
+      
+      if (!isPlaying) {
+        currentIndexRef.current = 0;
+        currentNotesRef.current = null;
+      }
       return;
     }
 
@@ -276,7 +290,18 @@ const Layout = () => {
       return;
     }
 
-    const notes = currentExercise.figure;
+    // Get notes array
+    const originalNotes = currentExercise.figure;
+    
+    // Only reset and start playback if:
+    // 1. Not already running
+    // 2. Exercise or template changed (force restart)
+    if (!playbackRunningRef.current || exerciseChanged || templateChanged) {
+      currentIndexRef.current = 0;
+      currentNotesRef.current = [...originalNotes];
+      playbackRunningRef.current = true;
+    }
+
     const beatDurationMs = (60 / bpm) * 1000;
     const timeSigMultiplier = timeSignature === '3/4' ? 0.75 : 1.0;
     
@@ -292,8 +317,9 @@ const Layout = () => {
     }
 
     const playNextNote = () => {
-      // Check if still playing (in case user paused)
-      if (!isPlayingRef.current || currentIndexRef.current >= notes.length) {
+      // Check if still playing (in case user paused) - check this first
+      if (!isPlayingRef.current || !playbackRunningRef.current) {
+        playbackRunningRef.current = false;
         setIsPlaying(false);
         setActiveNotePosition(null);
         if (timeoutRef.current) {
@@ -302,6 +328,23 @@ const Layout = () => {
         }
         return;
       }
+
+      // Check if we've reached the end of current sequence
+      if (currentIndexRef.current >= currentNotesRef.current.length) {
+        // Stop after one complete cycle
+        playbackRunningRef.current = false;
+        setIsPlaying(false);
+        setActiveNotePosition(null);
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
+        // Reset for next time
+        currentNotesRef.current = [...originalNotes];
+        return;
+      }
+
+      const notes = currentNotesRef.current;
 
       const note = notes[currentIndexRef.current];
       const stringIndexForMatrix = note.string - 1; // Convert to 0-based index for matrix
@@ -353,9 +396,10 @@ const Layout = () => {
       // Schedule next note or finish
       timeoutRef.current = setTimeout(() => {
         setActiveNotePosition(null);
-        if (currentIndexRef.current < notes.length && isPlayingRef.current) {
+        if (isPlayingRef.current && playbackRunningRef.current) {
           playNextNote();
         } else {
+          playbackRunningRef.current = false;
           setIsPlaying(false);
           setActiveNotePosition(null);
           currentIndexRef.current = 0;
@@ -364,16 +408,32 @@ const Layout = () => {
       }, noteDurationMs);
     };
 
-    // Always start playing from the beginning when play is triggered
-    // Reset index to ensure we start from the first note
-    currentIndexRef.current = 0;
-    playNextNote();
+    // Only start playing if we're not already in a playback cycle
+    // This prevents restarting when useEffect re-runs due to dependency changes
+    if (!timeoutRef.current && playbackRunningRef.current) {
+      playNextNote();
+    }
 
     // Cleanup function: clear timeout when component unmounts or dependencies change
+    // BUT: Don't clear if playback is actively running
+    // Capture values in closure for cleanup
+    const cleanupExerciseChanged = exerciseChanged;
+    const cleanupTemplateChanged = templateChanged;
+    const cleanupIsPlaying = isPlaying;
+    
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
+      // Only cleanup if we're actually stopping playback or changing exercise/template
+      // Do NOT cleanup if playback is running and only other dependencies (bpm, timeSignature, noteType, tunning) changed
+      // If playback is running, only cleanup if exercise/template changed or playback stopped
+      if (!cleanupIsPlaying || cleanupExerciseChanged || cleanupTemplateChanged) {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
+        // Only set playbackRunningRef to false if playback actually stopped
+        if (!cleanupIsPlaying) {
+          playbackRunningRef.current = false;
+        }
       }
     };
   }, [isPlaying, exercise, templateStrings, bpm, timeSignature, noteType, tunning]);

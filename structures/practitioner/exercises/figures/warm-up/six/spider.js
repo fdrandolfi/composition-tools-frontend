@@ -1,6 +1,5 @@
 const spider = {
-  bpm: 120,
-  repeat_inverse: true,
+  bpm: 180,
   figure: [
     { string: 6, fret: 1, finger: 1 },
     { string: 6, fret: 2, finger: 2 },
