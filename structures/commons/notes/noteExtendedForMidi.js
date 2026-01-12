@@ -1,7 +1,9 @@
 const NOTES_EXTENDED_FOR_MIDI = [
+    // Octave 0
     { id: 1, name: 'A', octave: 0, midiId: 21 },
     { id: 2, name: 'A#', octave: 0, midiId: 22 },
     { id: 3, name: 'B', octave: 0, midiId: 23 },
+    // Octave 1
     { id: 4, name: 'C', octave: 1, midiId: 24 },
     { id: 5, name: 'C#', octave: 1, midiId: 25 },
     { id: 6, name: 'D', octave: 1, midiId: 26 },
@@ -14,6 +16,7 @@ const NOTES_EXTENDED_FOR_MIDI = [
     { id: 13, name: 'A', octave: 1, midiId: 33 },
     { id: 14, name: 'A#', octave: 1, midiId: 34 },
     { id: 15, name: 'B', octave: 1, midiId: 35 },
+    // Octave 2
     { id: 16, name: 'C', octave: 2, midiId: 36 },
     { id: 17, name: 'C#', octave: 2, midiId: 37 },
     { id: 18, name: 'D', octave: 2, midiId: 38 },
@@ -26,6 +29,7 @@ const NOTES_EXTENDED_FOR_MIDI = [
     { id: 25, name: 'A', octave: 2, midiId: 45 },
     { id: 26, name: 'A#', octave: 2, midiId: 46 },
     { id: 27, name: 'B', octave: 2, midiId: 47 },
+    // Octave 3
     { id: 28, name: 'C', octave: 3, midiId: 48 },
     { id: 29, name: 'C#', octave: 3, midiId: 49 },
     { id: 30, name: 'D', octave: 3, midiId: 50 },
@@ -38,6 +42,7 @@ const NOTES_EXTENDED_FOR_MIDI = [
     { id: 37, name: 'A', octave: 3, midiId: 57 },
     { id: 38, name: 'A#', octave: 3, midiId: 58 },
     { id: 39, name: 'B', octave: 3, midiId: 59 },
+    // Octave 4
     { id: 40, name: 'C', octave: 4, midiId: 60 },
     { id: 41, name: 'C#', octave: 4, midiId: 61 },
     { id: 42, name: 'D', octave: 4, midiId: 62 },
@@ -50,6 +55,7 @@ const NOTES_EXTENDED_FOR_MIDI = [
     { id: 49, name: 'A', octave: 4, midiId: 69 },
     { id: 50, name: 'A#', octave: 4, midiId: 70 },
     { id: 51, name: 'B', octave: 4, midiId: 71 },
+    // Octave 5
     { id: 52, name: 'C', octave: 5, midiId: 72 },
     { id: 53, name: 'C#', octave: 5, midiId: 73 },
     { id: 54, name: 'D', octave: 5, midiId: 74 },
@@ -62,6 +68,7 @@ const NOTES_EXTENDED_FOR_MIDI = [
     { id: 61, name: 'A', octave: 5, midiId: 81 },
     { id: 62, name: 'A#', octave: 5, midiId: 82 },
     { id: 63, name: 'B', octave: 5, midiId: 83 },
+    // Octave 6
     { id: 64, name: 'C', octave: 6, midiId: 84 },
     { id: 65, name: 'C#', octave: 6, midiId: 85 },
     { id: 66, name: 'D', octave: 6, midiId: 86 },
@@ -74,6 +81,7 @@ const NOTES_EXTENDED_FOR_MIDI = [
     { id: 73, name: 'A', octave: 6, midiId: 93 },
     { id: 74, name: 'A#', octave: 6, midiId: 94 },
     { id: 75, name: 'B', octave: 6, midiId: 95 },
+    // Octave 7
     { id: 76, name: 'C', octave: 7, midiId: 96 },
     { id: 77, name: 'C#', octave: 7, midiId: 97 },
     { id: 78, name: 'D', octave: 7, midiId: 98 },
@@ -86,6 +94,7 @@ const NOTES_EXTENDED_FOR_MIDI = [
     { id: 85, name: 'A', octave: 7, midiId: 105 },
     { id: 86, name: 'A#', octave: 7, midiId: 106 },
     { id: 87, name: 'B', octave: 7, midiId: 107 },
+    // Octave 8
     { id: 88, name: 'C', octave: 8, midiId: 108 },
     { id: 89, name: 'C#', octave: 8, midiId: 109 },
     { id: 90, name: 'D', octave: 8, midiId: 110 },

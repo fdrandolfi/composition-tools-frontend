@@ -3,6 +3,7 @@ import classnames from 'classnames';
 
 import { allTemplates } from '../../../structures/commons/templates';
 import getStringNotes from '../../../structures/scaletor/utils/getStringNotes';
+import getStringNotesForMidi from '../../../structures/scaletor/utils/getStringNotesForMidi';
 import { getScale } from '../../../structures/scaletor/scales';
 import { getLabelByNote } from '../../../structures/commons/notes';
 
@@ -43,9 +44,10 @@ const Matrix = ({
       <div className="matrix__tunning">
         {
           displayTunning.length > 1 && displayTunning.map((stringTuning, displayIndex) => {
-            const noteId = typeof stringTuning === 'object' ? stringTuning.noteId : stringTuning;
+            const noteId = typeof stringTuning === 'object' ? (stringTuning.noteId || stringTuning.id) : stringTuning;
             const openStringNote = getLabelByNote(noteId);
-            const stringNotes = getStringNotes(noteId, steps, 10);
+            const hasMidiData = typeof stringTuning === 'object' && (stringTuning.octave !== undefined || stringTuning.midiId !== undefined);
+            const stringNotes = hasMidiData ? getStringNotesForMidi(stringTuning, steps) : getStringNotes(noteId, steps, 10);
             
             return (
               <div className={classnames(
@@ -71,8 +73,9 @@ const Matrix = ({
           const originalIndex = displayIndex;
           const stringIndex = originalIndex;
           
-          const noteId = typeof stringTuning === 'object' ? stringTuning.noteId : stringTuning;
-          const stringNotes = getStringNotes(noteId, steps, tunning.length === 1 ? 10 : 11);
+          const noteId = typeof stringTuning === 'object' ? (stringTuning.noteId || stringTuning.id) : stringTuning;
+          const hasMidiData = typeof stringTuning === 'object' && (stringTuning.octave !== undefined || stringTuning.midiId !== undefined);
+          const stringNotes = hasMidiData ? getStringNotesForMidi(stringTuning, steps) : getStringNotes(noteId, steps, tunning.length === 1 ? 10 : 11);
           
           return (
             <div className={classnames(
