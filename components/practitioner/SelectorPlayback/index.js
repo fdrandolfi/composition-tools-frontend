@@ -130,7 +130,7 @@ const SelectorPlayback = ({
         </div>
         <div className="selector-playback__row">
           <div className="selector-playback__tabs-group">
-            <span className="selector-playback__tabs-label">Note</span>
+            <span className="selector-playback__tabs-label">Note Velocity</span>
             <div className="selector-playback__tabs">
               {noteTypeOptions.map((option) => {
                 const IconComponent = option.icon;
