@@ -1,13 +1,17 @@
 // Basic exercises
 // 6 Strings
-import spider_6 from './figures/basic/six/spider';
-import little_finger_strength_6 from './figures/basic/six/little_finger_strength';
+import all_6 from './figures/tests/six/all';
+import spider_6 from './figures/warm-up/six/spider';
+import little_finger_strength_6 from './figures/warm-up/six/little_finger_strength';
 
 /**
  * Exercises organized by strings and category
  */
 const exercises = {
   6: {
+    tests: {
+      all: all_6,
+    },
     'warm-up': {
       spider: spider_6,
       little_finger_strength: little_finger_strength_6,
