@@ -1,8 +1,16 @@
-// Basic exercises
+// Warmp Up Exercises
 // 6 Strings
 import all_6 from './figures/tests/six/all';
 import spider_6 from './figures/warm-up/six/spider';
 import little_finger_strength_6 from './figures/warm-up/six/little_finger_strength';
+
+// Licks Exercises
+// 6 Strings
+import shred_b_neoclassical_minor from './figures/licks/six/shred_b_neoclassical_minor';
+import shred_b_neoclassical_minor_I_grade_phrase from './figures/licks/six/shred_b_neoclassical_minor_I_grade_phrase';
+import shred_b_neoclassical_minor_II_grade_phrase from './figures/licks/six/shred_b_neoclassical_minor_II_grade_phrase';
+import shred_b_neoclassical_minor_bIV_grade_phrase from './figures/licks/six/shred_b_neoclassical_minor_bIV_grade_phrase';
+import shred_b_neoclassical_minor_VI_grade_phrase from './figures/licks/six/shred_b_neoclassical_minor_VI_grade_phrase';
 
 /**
  * Exercises organized by strings and category
@@ -16,6 +24,13 @@ const exercises = {
       spider: spider_6,
       little_finger_strength: little_finger_strength_6,
     },
+    licks: {
+      b_neoclassical_minor: shred_b_neoclassical_minor,
+      b_neoclassical_minor_I_phrase: shred_b_neoclassical_minor_I_grade_phrase,
+      b_neoclassical_minor_II_phrase: shred_b_neoclassical_minor_II_grade_phrase,
+      b_neoclassical_minor_bIV_phrase: shred_b_neoclassical_minor_bIV_grade_phrase,
+      b_neoclassical_minor_VI_phrase: shred_b_neoclassical_minor_VI_grade_phrase,
+    }
   },
 };
 
