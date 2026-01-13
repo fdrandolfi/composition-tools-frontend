@@ -1,5 +1,9 @@
 const little_finger_strength = {
   bpm: 120,
+  tunning: null,
+  key: null,
+  scale: null,
+  feel: null,
   figure: [
     { string: 6, fret: 2, finger: 3 },
     { string: 6, fret: 3, finger: 4 },

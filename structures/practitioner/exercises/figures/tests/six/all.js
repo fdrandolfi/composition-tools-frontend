@@ -1,5 +1,9 @@
 const all = {
   bpm: 120,
+  tunning: null,
+  key: null,
+  scale: null,
+  feel: null,
   figure: [
     { string: 6, fret: 1, finger: 1 },
     { string: 6, fret: 2, finger: 2 },
