@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { allTemplates, getTemplateLabelById, getTemplateList } from '../../../structures/commons/templates';
 import { getTunning, getTunningIdByPattern, getTunningLabelByPattern, getTunningList } from '../../../structures/commons/tunnings';
-import { getExerciseList, getExerciseLabel, getExercise } from '../../../structures/practitioner/exercises';
+import { getExerciseList, getExerciseLabel, getExercise, getTunningListForExercises, extractTunningIdFromExercise, hasExercisesForStrings } from '../../../structures/practitioner/exercises';
 import getMidiIdFromStringAndFret from '../../../utils/getMidiIdFromStringAndFret';
 import playMidiNote from '../../../utils/playMidiNote';
 
@@ -20,19 +20,54 @@ const Layout = () => {
   const router = useRouter();
   const { query } = router;
 
-  // Lists
-  const templateGuitarsList = getTemplateList('guitars');
-  const templateBassesList = getTemplateList('basses');
-  const templateMIDIList = getTemplateList('midi_controllers');
+  // Lists - Filter templates to only show those with exercises available
+  const allTemplateGuitarsList = getTemplateList('guitars');
+  const allTemplateBassesList = getTemplateList('basses');
+  const allTemplateMIDIList = getTemplateList('midi_controllers');
+  
+  // Filter templates that have exercises for their string count
+  const templateGuitarsList = allTemplateGuitarsList.filter(template => {
+    const templateStrings = allTemplates[template.value].strings;
+    return hasExercisesForStrings(templateStrings);
+  });
+  
+  const templateBassesList = allTemplateBassesList.filter(template => {
+    const templateStrings = allTemplates[template.value].strings;
+    return hasExercisesForStrings(templateStrings);
+  });
+  
+  const templateMIDIList = allTemplateMIDIList.filter(template => {
+    const templateStrings = allTemplates[template.value].strings;
+    return hasExercisesForStrings(templateStrings);
+  });
 
-  // Template Hooks
-  const defaultTemplate = templateGuitarsList[0].value;
+  // Template Hooks - Use first available template with exercises
+  const defaultTemplate = templateGuitarsList.length > 0 
+    ? templateGuitarsList[0].value 
+    : (templateBassesList.length > 0 
+      ? templateBassesList[0].value 
+      : (templateMIDIList.length > 0 ? templateMIDIList[0].value : null));
   const [template, setTemplate] = useState(defaultTemplate);
 
   // Initial Tunning
-  const templateStrings = allTemplates[template].strings;
-  const tunningOptions = getTunningList(templateStrings);
-  const defaultTunning = getTunning(tunningOptions[0].value, templateStrings);
+  const templateStrings = template && allTemplates[template] ? allTemplates[template].strings : 6;
+  // Get all available tunnings
+  const allTunningOptions = getTunningList(templateStrings);
+  // Get tunnings that have exercises assigned
+  const tunningIdsForExercises = getTunningListForExercises(templateStrings);
+  // Filter tunning options to only show those with exercises
+  const tunningOptions = allTunningOptions.filter(option => 
+    tunningIdsForExercises.includes(option.value)
+  );
+  // If no tunnings with exercises, use all tunnings (fallback)
+  const availableTunningOptions = tunningOptions.length > 0 ? tunningOptions : allTunningOptions;
+  // Disable tunning selector when exercises have specific tunning
+  // The tunning will be assigned automatically based on the selected exercise
+  // User should not be able to manually change it when exercises have specific tunning
+  const isTunningDisabled = tunningIdsForExercises.length > 0;
+  const defaultTunning = availableTunningOptions.length > 0 
+    ? getTunning(availableTunningOptions[0].value, templateStrings)
+    : null;
   const [tunning, setTunning] = useState(defaultTunning);
 
   // Exercise Hooks - Get exercise list based on template strings
@@ -59,10 +94,16 @@ const Layout = () => {
   const [templateSwitch, setTemplateSwitch] = useState(defaultTemplateSwitch);
 
   // Initial values from QueryParams
-  const [initialTemplate, setInitialTemplate] = useState(templateGuitarsList[0]);
+  const [initialTemplate, setInitialTemplate] = useState(
+    templateGuitarsList.length > 0 
+      ? templateGuitarsList[0] 
+      : (templateBassesList.length > 0 
+        ? templateBassesList[0] 
+        : (templateMIDIList.length > 0 ? templateMIDIList[0] : null))
+  );
   const [initialTunning, setInitialTunning] = useState({
     label: getTunningLabelByPattern(defaultTunning, templateStrings),
-    value: getTunningIdByPattern(defaultTunning, templateStrings) || tunningOptions[0].value,
+    value: getTunningIdByPattern(defaultTunning, templateStrings) || availableTunningOptions[0].value,
   });
   const [initialExercise, setInitialExercise] = useState(
     exerciseList.length > 0 && exerciseList[0].options.length > 0 
@@ -86,15 +127,22 @@ const Layout = () => {
    * Handle Value Changes
    */
   const handleTemplateChange = (event) => {
+    // Remove exercise from query to reset exercises when template changes
+    const newQuery = { ...query };
+    delete newQuery.exercise;
+    
     router.replace({
       pathname: router.pathname,
       query: {
-        ...query,
+        ...newQuery,
         template: event.value,
         tunning: 'standard',
       },
     }, undefined, { shallow: true });
     setTemplate(event.value);
+    // Reset exercise state
+    setExercise(null);
+    setInitialExercise(null);
   };
 
   const handleTunningChange = (event) => {
@@ -112,11 +160,43 @@ const Layout = () => {
   };
 
   const handleExerciseChange = (event) => {
+    const updateTemplateStrings = allTemplates[template].strings;
+    const selectedExercise = getExercise(event.value, updateTemplateStrings);
+    
+    // Get available tunning options (filtered by exercises)
+    const tunningIdsForExercises = getTunningListForExercises(updateTemplateStrings);
+    const allTunnings = getTunningList(updateTemplateStrings);
+    const filteredTunnings = allTunnings.filter(option => 
+      tunningIdsForExercises.includes(option.value)
+    );
+    const availableTunnings = filteredTunnings.length > 0 ? filteredTunnings : allTunnings;
+    
+    // Determine which tunning to use
+    let tunningToUse = availableTunnings[0].value; // Default tunning (first available)
+    
+    if (selectedExercise && selectedExercise.tunning !== null && selectedExercise.tunning !== undefined) {
+      // Extract tunning id from exercise tunning value (e.g., "standard_6" -> "standard")
+      const exerciseTunningId = extractTunningIdFromExercise(selectedExercise.tunning, updateTemplateStrings);
+      if (exerciseTunningId) {
+        // Verify that the tunning exists in the available tunnings
+        const tunningExists = allTunnings.some(option => option.value === exerciseTunningId);
+        if (tunningExists) {
+          tunningToUse = exerciseTunningId;
+        }
+      }
+    }
+    // If exercise has tunning: null or tunning doesn't exist, use default tunning (already set above)
+    
+    // Update tunning state
+    const updatedTunning = getTunning(tunningToUse, updateTemplateStrings);
+    setTunning(updatedTunning);
+    
     router.push({
       pathname: router.pathname,
       query: {
         ...query,
-        exercise: event.value
+        exercise: event.value,
+        tunning: tunningToUse,
       },
     }, undefined, { shallow: true });
     setExercise(event.value);
@@ -192,7 +272,15 @@ const Layout = () => {
       }
     }
 
-    if (query.exercise) setExercise(query.exercise);
+    // Handle exercise from query params
+    // If exercise is not in query, reset it (e.g., when template changes)
+    if (query.exercise) {
+      setExercise(query.exercise);
+    } else {
+      // Reset exercise when it's removed from query (e.g., template change)
+      setExercise(null);
+      setInitialExercise(null);
+    }
   }, [query]);
 
   /**
@@ -209,11 +297,18 @@ const Layout = () => {
     const updateTemplateStrings = allTemplates[template].strings;
     const tunningId = getTunningIdByPattern(tunning, updateTemplateStrings);
     const tunningLabel = getTunningLabelByPattern(tunning, updateTemplateStrings);
-    const availableTunnings = getTunningList(updateTemplateStrings);
+    // Get filtered tunnings for exercises
+    const tunningIdsForExercises = getTunningListForExercises(updateTemplateStrings);
+    const allTunnings = getTunningList(updateTemplateStrings);
+    const availableTunnings = allTunnings.filter(option => 
+      tunningIdsForExercises.includes(option.value)
+    );
+    // If no tunnings with exercises, use all tunnings (fallback)
+    const finalTunnings = availableTunnings.length > 0 ? availableTunnings : allTunnings;
     
     setInitialTunning({
-      label: tunningLabel || (availableTunnings.length > 0 ? availableTunnings[0].label : ''),
-      value: tunningId || (availableTunnings.length > 0 ? availableTunnings[0].value : 'standard'),
+      label: tunningLabel || (finalTunnings.length > 0 ? finalTunnings[0].label : ''),
+      value: tunningId || (finalTunnings.length > 0 ? finalTunnings[0].value : 'standard'),
     });
   }, [template, tunning]);
 
@@ -469,17 +564,47 @@ const Layout = () => {
 
   useEffect(() => {
     // Update exercise list when template changes
-    const updateTemplateStrings = allTemplates[template].strings;
-    const updatedExerciseList = getExerciseList(updateTemplateStrings);
-    if (updatedExerciseList.length > 0 && updatedExerciseList[0].options.length > 0) {
-      const firstExercise = updatedExerciseList[0].options[0].value;
-      setExercise(firstExercise);
-      setInitialExercise(updatedExerciseList[0].options[0]);
-    } else {
-      setExercise(null);
-      setInitialExercise(null);
+    // Only reset if exercise is not in query (i.e., was removed by handleTemplateChange)
+    if (!query.exercise) {
+      const updateTemplateStrings = allTemplates[template].strings;
+      const updatedExerciseList = getExerciseList(updateTemplateStrings);
+      if (updatedExerciseList.length > 0 && updatedExerciseList[0].options.length > 0) {
+        const firstExercise = updatedExerciseList[0].options[0].value;
+        setExercise(firstExercise);
+        setInitialExercise(updatedExerciseList[0].options[0]);
+        
+        // Set default tunning when template changes
+        const selectedExercise = getExercise(firstExercise, updateTemplateStrings);
+        const tunningIdsForExercises = getTunningListForExercises(updateTemplateStrings);
+        const allTunnings = getTunningList(updateTemplateStrings);
+        const filteredTunnings = allTunnings.filter(option => 
+          tunningIdsForExercises.includes(option.value)
+        );
+        const availableTunnings = filteredTunnings.length > 0 ? filteredTunnings : allTunnings;
+        
+        let tunningToUse = availableTunnings[0].value; // Default tunning (first available)
+        
+        if (selectedExercise && selectedExercise.tunning !== null && selectedExercise.tunning !== undefined) {
+          // Extract tunning id from exercise tunning value
+          const exerciseTunningId = extractTunningIdFromExercise(selectedExercise.tunning, updateTemplateStrings);
+          if (exerciseTunningId) {
+            // Verify that the tunning exists in the available tunnings
+            const tunningExists = allTunnings.some(option => option.value === exerciseTunningId);
+            if (tunningExists) {
+              tunningToUse = exerciseTunningId;
+            }
+          }
+        }
+        // If exercise has tunning: null or tunning doesn't exist, use default tunning (already set above)
+        
+        const updatedTunning = getTunning(tunningToUse, updateTemplateStrings);
+        setTunning(updatedTunning);
+      } else {
+        setExercise(null);
+        setInitialExercise(null);
+      }
     }
-  }, [template]);
+  }, [template, query.exercise]);
 
   useEffect(() => {
     if (exercise) {
@@ -514,16 +639,17 @@ const Layout = () => {
       <div className="layout-practitioner__top">
         <div className={classNames(
           'layout-practitioner__column-3',
-          tunningOptions.length <= 1 && 'layout-practitioner__with-opacity',
+          availableTunningOptions.length <= 1 && 'layout-practitioner__with-opacity',
         )}
         >
           <Selector
             id="tunning"
             title="Tunning"
-            options={tunningOptions}
+            options={availableTunningOptions}
             onChange={handleTunningChange}
             value={initialTunning}
             isMobile={isMobile}
+            isDisabled={isTunningDisabled}
           />
         </div>
         <div className="layout-practitioner__column-3">
@@ -543,18 +669,18 @@ const Layout = () => {
             id="template"
             title="Template"
             options={[
-              {
+              ...(templateGuitarsList.length > 0 ? [{
                 label: 'Guitars',
                 options: templateGuitarsList,
-              },
-              {
+              }] : []),
+              ...(templateBassesList.length > 0 ? [{
                 label: 'Basses',
                 options: templateBassesList,
-              },
-              {
+              }] : []),
+              ...(templateMIDIList.length > 0 ? [{
                 label: 'MIDI Controllers',
                 options: templateMIDIList,
-              },
+              }] : []),
             ]}
             onChange={handleTemplateChange}
             onChangeTemplateSwitch={handleTemplateSwitchChange}

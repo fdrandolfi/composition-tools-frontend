@@ -112,6 +112,7 @@ const normalizeCategoryLabel = (category) => {
 
 /**
  * Normalizes exercise label (capitalized, first letter uppercase)
+ * Words with 3 letters or less are displayed in uppercase
  *
  * @param {String} exerciseId - The exercise id
  * @returns {String} The normalized label (capitalized)
@@ -119,7 +120,14 @@ const normalizeCategoryLabel = (category) => {
 const normalizeExerciseLabel = (exerciseId) => {
   return exerciseId
     .split('_')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .map((word) => {
+      // If word has 3 letters or less, display in uppercase
+      if (word.length <= 3) {
+        return word.toUpperCase();
+      }
+      // Otherwise, capitalize first letter and lowercase the rest
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
     .join(' ');
 };
 
@@ -138,7 +146,14 @@ const getExerciseLabel = (exerciseValue) => {
     // Capitalize if there's no category
     return exerciseValue
       .split('_')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .map((word) => {
+        // If word has 3 letters or less, display in uppercase
+        if (word.length <= 3) {
+          return word.toUpperCase();
+        }
+        // Otherwise, capitalize first letter and lowercase the rest
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      })
       .join(' ');
   }
   
@@ -146,8 +161,74 @@ const getExerciseLabel = (exerciseValue) => {
   return normalizeExerciseLabel(exerciseId);
 };
 
+/**
+ * Extracts tunning id from exercise tunning value
+ * Converts format like "standard_6" to "standard" (removes the strings suffix)
+ *
+ * @param {String} exerciseTunning - The tunning value from exercise (format: 'tunningName_strings')
+ * @param {Number} strings - The strings number from template
+ * @returns {String|null} The tunning id or null
+ */
+const extractTunningIdFromExercise = (exerciseTunning, strings) => {
+  if (!exerciseTunning || exerciseTunning === null) {
+    return null;
+  }
+  
+  // Format is "tunningName_strings" (e.g., "standard_6")
+  // Remove the "_strings" suffix to get the tunning id
+  const suffix = `_${strings}`;
+  if (exerciseTunning.endsWith(suffix)) {
+    return exerciseTunning.slice(0, -suffix.length);
+  }
+  
+  return exerciseTunning;
+};
+
+/**
+ * Returns a list of tunning ids that have exercises assigned (tunning !== null)
+ *
+ * @param {Number} strings - The strings number from template
+ * @returns {Array} The list of unique tunning ids that have exercises
+ */
+const getTunningListForExercises = (strings) => {
+  if (!exercises[strings]) {
+    return [];
+  }
+
+  const tunningSet = new Set();
+  
+  // Iterate over all categories and exercises
+  Object.keys(exercises[strings]).forEach((category) => {
+    Object.keys(exercises[strings][category]).forEach((exerciseId) => {
+      const exercise = exercises[strings][category][exerciseId];
+      if (exercise && exercise.tunning !== null && exercise.tunning !== undefined) {
+        const tunningId = extractTunningIdFromExercise(exercise.tunning, strings);
+        if (tunningId) {
+          tunningSet.add(tunningId);
+        }
+      }
+    });
+  });
+
+  return Array.from(tunningSet);
+};
+
+/**
+ * Checks if there are exercises available for a given number of strings
+ *
+ * @param {Number} strings - The strings number
+ * @returns {Boolean} True if there are exercises available, false otherwise
+ */
+const hasExercisesForStrings = (strings) => {
+  return exercises[strings] !== undefined && 
+         Object.keys(exercises[strings]).length > 0;
+};
+
 export {
   getExercise,
   getExerciseList,
   getExerciseLabel,
+  getTunningListForExercises,
+  extractTunningIdFromExercise,
+  hasExercisesForStrings,
 };
