@@ -2,6 +2,7 @@ import without from './patterns/without';
 
 import major from './patterns/major';
 import minor from './patterns/minor';
+import melodic_minor from './patterns/melodic_minor';
 import harmonic_major from './patterns/harmonic_major';
 import harmonic_minor from './patterns/harmonic_minor';
 import pentatonic_major from './patterns/pentatonic_major';
@@ -29,6 +30,7 @@ import getScaleNotesByPattern from '../utils/getScaleNotesByPattern';
 const scalePatterns = {
   major,
   minor,
+  melodic_minor,
   harmonic_major,
   harmonic_minor,
   pentatonic_major,

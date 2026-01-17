@@ -28,3 +28,11 @@
     }
   }
 }
+
+@include media($media-size-mobile) {
+  .tools {
+    &__items {
+      height: 140px;
+    }
+  }
+}

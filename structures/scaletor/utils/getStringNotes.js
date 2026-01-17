@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import NOTES_EXTENDED from '../notes/notesExtended';
+import NOTES_EXTENDED from '../../commons/notes/notesExtended';
 
 /**
  * Returns an array of notes that complete the scale of a string
@@ -13,7 +13,9 @@ const getStringNotes = (noteId, stepsNumber, scaleNoteAdjust = 12) => {
   const firstNote = NOTES_EXTENDED[noteId + scaleNoteAdjust];
   const stringNotes = [];
 
-  for (let i = firstNote.id; i < firstNote.id + stepsNumber; i++) {
+  // Start from index 1 (fret 1), not index 0 (fret 0 / open string tuning)
+  // The open string tuning (fret 0) is already shown separately in the matrix__tunning section
+  for (let i = firstNote.id + 1; i <= firstNote.id + stepsNumber; i++) {
     stringNotes.push(NOTES_EXTENDED[i].name);
   }
 

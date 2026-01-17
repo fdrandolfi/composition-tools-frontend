@@ -1,6 +1,7 @@
 import React from 'react';
 import ScaletorLogotype from '../../scaletor/Logotype';
 import QuintorLogotype from '../../quintor/Logotype';
+import PractitionerLogotype from '../../practitioner/Logotype';
 
 const items = [
   {
@@ -10,6 +11,14 @@ const items = [
       url: '/scaletor',
     },
     image: <ScaletorLogotype className="tools__items-image" />,
+  },
+  {
+    id: 'item-practitioner',
+    link: {
+      label: 'Practitioner',
+      url: '/practitioner',
+    },
+    image: <PractitionerLogotype className="tools__items-image" />,
   },
   {
     id: 'item-quintor',

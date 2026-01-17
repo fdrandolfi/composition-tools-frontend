@@ -1,0 +1,218 @@
+@import "../../../styles/variables";
+
+.selector-playback {
+  position: relative;
+  width: 90%;
+  max-width: 480px;
+  @include flex(center, flex-start, column);
+  z-index: 999;
+
+  &__header {
+    width: 100%;
+    @include flex(space-between, center, row);
+    margin-bottom: $spacing-24;
+  }
+
+  &__title {
+    font-size: $font-size-24;
+    margin: 0;
+  }
+
+  &__content {
+    width: 100%;
+    @include flex(flex-start, flex-start, row);
+    gap: $spacing-16;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+  }
+
+  &__bpm-input-wrapper {
+    @include flex(flex-start, center, column);
+    gap: $spacing-8;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__bpm-label {
+    font-size: $font-size-12;
+    font-weight: $font-weight-bold;
+    color: $color-light-100;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+  }
+
+  &__bpm-input {
+    width: 100%;
+    padding: $spacing-8 $spacing-12;
+    background-color: $color-dark-400;
+    color: $color-light-100;
+    border: 1px solid $color-dark-300;
+    border-radius: 4px;
+    font-size: $font-size-14;
+    font-weight: $font-weight-semibold;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    box-sizing: border-box;
+    height: 40px;
+
+    &:focus {
+      border-color: $color-red-dark;
+      background-color: $color-dark-300;
+    }
+  }
+
+  &__tabs-group {
+    @include flex(flex-start, center, column);
+    gap: $spacing-8;
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+  }
+
+  &__tabs-label {
+    font-size: $font-size-12;
+    font-weight: $font-weight-bold;
+    color: $color-light-100;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: left;
+    width: 100%;
+  }
+
+  &__tabs {
+    @include flex(center, center, row);
+    gap: $spacing-4;
+    background-color: $color-dark-400;
+    border-radius: 4px;
+    padding: 2px;
+    width: 100%;
+    height: 40px;
+    min-height: 40px;
+  }
+
+  &__tab {
+    padding: 0;
+    height: 40px;
+    width: calc(33.333% - 2.67px);
+    background-color: transparent;
+    color: $color-light-200;
+    border: none;
+    border-radius: 3px;
+    font-size: $font-size-14;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+    @include flex(center, center, row);
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    &:hover {
+      background-color: $color-dark-300;
+      color: $color-light-100;
+    }
+
+    &--active {
+      background-color: $color-red-dark;
+      color: $color-light-100;
+
+      &:hover {
+        background-color: $color-red-light;
+      }
+    }
+  }
+
+  &__button {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    background-color: $color-light-100;
+    color: $color-red-dark;
+    border: none;
+    border-radius: 50%;
+    font-size: $font-size-14;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    @include flex(center, center, row);
+    box-sizing: border-box;
+    flex-shrink: 0;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &--playing {
+      background-color: $color-light-200;
+      color: $color-red-dark;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+}
+
+@include media($media-size-mobile) {
+  .selector-playback {
+    width: 100%;
+    max-width: none;
+    @include flex(flex-start, center, column);
+    
+    &__header {
+      margin-bottom: $spacing-16;
+    }
+
+    &__title {
+      font-size: $font-size-14;
+    }
+
+    &__content {
+      gap: $spacing-8;
+    }
+
+    &__row {
+      gap: $spacing-8;
+    }
+
+    &__bpm-input-wrapper {
+      flex: 1;
+      min-width: 0;
+    }
+
+    &__bpm-label {
+      font-size: $font-size-10;
+    }
+
+    &__bpm-input {
+      padding: $spacing-8 $spacing-8;
+      font-size: $font-size-12;
+      height: 40px;
+    }
+
+    &__tabs-group {
+      flex: 1;
+      min-width: 0;
+    }
+
+    &__tabs-label {
+      font-size: $font-size-10;
+    }
+
+    &__tabs {
+      min-height: 36px;
+    }
+
+    &__tab {
+      padding: 0;
+      height: 40px;
+      font-size: $font-size-10;
+    }
+  }
+}
