@@ -5,6 +5,11 @@ This file documents all notable changes made up to version 2.0.0 for each projec
 
 ## Unreleased
 
+## [2.5.0] - 2026-01-17
+- Add Practitioner Page and Logic.
+- Update all templates.
+- Add new scales and exercises.
+
 ## [2.4.0] - 2025-12-29
 - Add Strandberg Boden 6 string template.
 
