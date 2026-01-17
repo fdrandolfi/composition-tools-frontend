@@ -1,0 +1,22 @@
+@import "../../../styles/variables";
+
+.template {
+  width: 100%;
+  height: auto;
+  @include flex(center, center, row);
+  z-index: 1;
+
+  &__image {
+    width: 100%;
+    height: auto;
+    user-select: none; /* Prevents text and image selection */
+    -webkit-user-drag: none; /* Previene el arrastre de la imagen en navegadores WebKit */
+    pointer-events: none;
+  }
+
+  &__template-right {
+    .template__image {
+      transform: scaleX(-1);
+    }
+  }
+}

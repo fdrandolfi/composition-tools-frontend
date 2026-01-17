@@ -3,7 +3,7 @@ import Select from 'react-select';
 import classnames from 'classnames';
 
 const Selector = ({
-  id, title, options, onChange, defaultValue, value, isMobile
+  id, title, options, onChange, defaultValue, value, isMobile, isDisabled
 }) => (
   <div className={classnames(
     'selector',
@@ -18,7 +18,7 @@ const Selector = ({
       options={options}
       onChange={onChange}
       value={value}
-      isDisabled={options.length === 1}
+      isDisabled={isDisabled !== undefined ? isDisabled : options.length === 1}
       isSearchable={false}
       menuPlacement={isMobile ? 'top' : 'bottom'}
     />

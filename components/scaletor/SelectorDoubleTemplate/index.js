@@ -12,6 +12,7 @@ const SelectorDoubleTemplate = ({
   checkedTemplateSwitch,
   value,
   isMobile,
+  switchColor = "#420e9e",
 }) => (
   <div className={classnames(
     'selector-double-template',
@@ -26,8 +27,8 @@ const SelectorDoubleTemplate = ({
         onChange={onChangeTemplateSwitch}
         checked={checkedTemplateSwitch}
         className="selector-double-template__switch"
-        onColor="#420e9e"
-        offColor="#420e9e"
+        onColor={switchColor}
+        offColor={switchColor}
         handleDiameter={24}
         uncheckedIcon={false}
         checkedIcon={false}

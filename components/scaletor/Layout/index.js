@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 
-import { allTemplates, getTemplateLabelById, getTemplateList } from '../../../structures/scaletor/templates';
-import { getTunning, getTunningIdByPattern, getTunningLabelByPattern, getTunningList } from '../../../structures/scaletor/tunnings';
-import { getLabelByNote, getNoteList } from '../../../structures/scaletor/notes';
+import { allTemplates, getTemplateLabelById, getTemplateList } from '../../../structures/commons/templates';
+import { getTunning, getTunningIdByPattern, getTunningLabelByPattern, getTunningList } from '../../../structures/commons/tunnings';
+import { getLabelByNote, getNoteList } from '../../../structures/commons/notes';
 import { getScaleLabel, getScaleList, getScaleModesList } from '../../../structures/scaletor/scales';
 
-import Matrix from '../Matrix';
-import Template from '../Template';
+import Matrix from '../../commons/Matrix';
+import Template from '../../commons/Template';
 import Selector from '../Selector';
 import SelectorDouble from '../SelectorDouble';
 import SelectorDoubleTemplate from '../SelectorDoubleTemplate';
@@ -58,7 +58,7 @@ const Layout = () => {
   const [initialTemplate, setInitialTemplate] = useState(templateGuitarsList[0]);
   const [initialTunning, setInitialTunning] = useState({
     label: getTunningLabelByPattern(defaultTunning, templateStrings),
-    value: defaultTunning,
+    value: getTunningIdByPattern(defaultTunning, templateStrings) || tunningOptions[0].value,
   });
   const [initialScaleNote, setInitialScaleNote] = useState(noteList[0]);
   const [initialScaleName, setInitialScaleName] = useState(scaleList[0]);
@@ -181,9 +181,13 @@ const Layout = () => {
 
   useEffect(() => {
     const updateTemplateStrings = allTemplates[template].strings;
+    const tunningId = getTunningIdByPattern(tunning, updateTemplateStrings);
+    const tunningLabel = getTunningLabelByPattern(tunning, updateTemplateStrings);
+    const availableTunnings = getTunningList(updateTemplateStrings);
+    
     setInitialTunning({
-      label: getTunningLabelByPattern(tunning, updateTemplateStrings),
-      value: getTunningIdByPattern(tunning, updateTemplateStrings),
+      label: tunningLabel || (availableTunnings.length > 0 ? availableTunnings[0].label : ''),
+      value: tunningId || (availableTunnings.length > 0 ? availableTunnings[0].value : 'standard'),
     });
   }, [template, tunning]);
 

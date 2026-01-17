@@ -1,0 +1,78 @@
+@import "../../../styles/variables";
+
+.selector-exercises {
+  position: relative;
+  width: 90%;
+  max-width: 320px;
+  @include flex(center, flex-start, column);
+  z-index: 999;
+
+  &__title {
+    font-size: $font-size-24;
+  }
+
+  &__switch {
+    margin-left: $spacing-12;
+    margin-bottom: -3px;
+  }
+
+  &__select {
+    position: relative;
+    height: auto;
+    width: 100%;
+    margin-top: $spacing-24;
+    color: $color-dark-100;
+
+    &--exercise {
+      width: 100%;
+    }
+  }
+
+  &__content {
+    width: 100%;
+    @include flex(center, center, row);
+
+    &--switch {
+      width: 100%;
+      @include flex(space-between, center, row);
+    }
+  }
+
+  &__label {
+    position: absolute;
+    bottom: -36px;
+    font-size: $font-size-10;
+    padding: $spacing-12 0;
+    color: $color-light-200;
+  }
+}
+
+@include media($media-size-mobile) {
+  .selector-exercises {
+    width: 100%;
+    max-width: none;
+    padding: $spacing-12 0 0;
+    @include flex(space-between, center, row);
+    
+    &__title {
+      font-size: $font-size-14;
+    }
+
+    &__select {
+      margin-top: 0;
+
+      &--exercise {
+        width: 100%;
+      }
+    }
+
+    &__content {
+      width: 65%;
+
+      &--switch {
+        width: 30%;
+        margin-right: 5%;
+      }
+    }
+  }
+}

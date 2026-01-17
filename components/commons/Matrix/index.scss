@@ -1,0 +1,393 @@
+@import "../../../styles/variables";
+@import "./_mixins";
+
+.matrix {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  z-index: 2;
+
+  // Min.
+  height: 24%;
+  width: 82%;
+  padding-right: 10px;
+  margin-top: -1px;
+
+  @include flex(center, center, column);
+
+  &__string {
+    position: relative;
+    width: 100%;
+    @include flex(flex-start, center, row);
+
+    &-note {
+      height: 100%;
+      cursor: pointer;
+      @include flex(center, center, row);
+
+      span {
+        position: relative;
+        width: 26px;
+        height: 26px;
+        @include flex(center, center, row);
+        border-radius: 50%;
+        font-size: 12px;
+        font-weight: $font-weight-bold;
+        box-shadow: 0 0 0 2px rgba($color-dark-200, 0.5);
+        opacity: 0;
+        transition: $fast-transition;
+      }
+
+      &:hover {        
+        span {
+          background-color: $color-dark-400;
+          opacity: 1;
+          transition: $fast-transition;
+        }
+      }
+
+      &--available {
+        span {
+          background-color: $color-violet-dark;
+          opacity: 0.66;
+        }
+
+        &:nth-child(-n+4) {
+          span {
+            opacity: 1;
+          }
+        }
+
+        &:hover {
+          span {
+            background-color: $color-violet-light;
+            opacity: 1;
+          }
+        }
+      }
+
+      &--tonic {
+        span {
+          color: $color-dark;
+          background-color: $color-light-200;
+          opacity: 0.66;
+        }
+
+        &:hover {
+          span {
+            background-color: $color-light-100;
+            opacity: 1;
+          }
+        }
+      }
+
+      &--exercise {
+        span {
+          background-color: $color-red-dark;
+          opacity: 0.5;
+          color: $color-light-100;
+        }
+
+        &:hover {
+          span {
+            background-color: $color-red-light;
+            opacity: 1;
+          }
+        }
+      }
+
+      &--active {
+        span {
+          background-color: $color-red-light;
+          opacity: 1;
+        }
+      }
+
+      @include steps-childs;
+    }
+
+    // 1 string
+    &--one {
+      height: 100%;
+    }
+
+    // 4 string
+    &--four {
+      height: 25%;
+    }
+
+    // 5 string
+    &--five {
+      height: 20%;
+    }
+
+    // 6 string
+    &--six {
+      height: 16.6666%;
+    }
+
+    // 7 string
+    &--seven {
+      height: 14.2857%;
+    }
+
+    // 8 string
+    &--eight {
+      height: 12.75%;
+    }
+  }
+
+  &__tunning {
+    position: absolute;
+    left: -1.2%;
+    height: 100%;
+
+    &-note {
+      cursor: pointer;
+      @include flex(center, center, row);
+
+      span {
+        position: relative;
+        width: 26px;
+        height: 26px;
+        @include flex(center, center, row);
+        border-radius: 50%;
+        font-size: 12px;
+        font-weight: $font-weight-bold;
+        color: $color-light-100;
+        background-color: $color-dark-400;
+        box-shadow: 0 0 0 2px rgba($color-dark-200, 0.5);
+      }
+
+      &--available {
+        span {
+          background-color: $color-violet-light;
+        }
+      }
+
+      &--tonic {
+        span {
+          color: $color-dark;
+          background-color: $color-light-200;
+        }
+      }
+    }
+
+    // 1 string
+    &--one {
+      height: 100%;
+    }
+
+    // 5 string
+    &--four {
+      height: 25%;
+    }
+
+    // 5 string
+    &--five {
+      height: 20%;
+    }
+
+    // 6 string
+    &--six {
+      height: 16.6666%;
+    }
+
+    // 7 string
+    &--seven {
+      height: 14.2857%;
+    }
+
+    // 8 string
+    &--eight {
+      height: 12.47%;
+    }
+  }
+
+  // Templates
+  &__G-PRS-SE-C24-6,
+  &__G-PRS-C24-6,
+  &__G-PRS-C24-10T-6,
+  &__G-DEAN-CADILLAC-1980-6,
+  &__G-GIBSON-LP-STD-6 {
+    height: 24%;
+    width: 81.8%;
+    margin-top: -1px;
+  }
+
+  &__G-IBANEZ-RG350EX-6 {
+    height: 22.5%;
+    width: 81.8%;
+    margin-top: -3px;
+  }
+
+  &__G-SB-BODEN-6 {
+    height: 21%;
+    width: 81.8%;
+    margin-top: 0px;
+  }
+
+  &__G-DEAN-CADILLAC-1980-6 {
+    height: 18.75%;
+    width: 81.8%;
+    margin-top: -1px;
+  }
+
+  &__G-FENDER-STRATO-6,
+  &__G-FENDER-TELE-6,
+  &__G-SIGMA-DME-6 {
+    height: 20.6%;
+    width: 81.8%;
+    padding-right: 13px;
+    margin-top: -1px;
+  }
+
+  &__G-SB-BODEN-7,
+  &__G-SOLAR-TAB-7,
+  &__G-ABASI-LARADA-J-7 {
+    height: 24.5%;
+    width: 81.8%;
+    margin-top: 0;
+  }
+
+  &__G-ABASI-LARADA-J-8 {
+    height: 27.5%;
+    width: 81.8%;
+    margin-top: 0;
+  }
+
+  &__B-SQUIER-VM-JAZZ-5 {
+    height: 20.6%;
+    width: 81.8%;
+    padding-right: 13px;
+    margin-top: -2px;
+  }
+
+  &__B-IBANEZ-STANDARD-SR300E-4 {
+    height: 16.8%;
+    width: 81.8%;
+    padding-right: 13px;
+    margin-top: -3px;
+  }
+
+  &__M-ARTURIA-MINILAB-1 {
+    top: 57%;
+    left: 50%;
+    height: 10%;
+    width: 51%;
+    padding-right: 0;
+    margin-top: 0;
+
+    .matrix__string-note {
+      @include steps-controller-childs;
+    }
+  }
+
+  &__without-scale {
+    .matrix__string-note,
+    .matrix__tunning-note {
+      &--available,
+      &--tonic {
+        span {
+          color: $color-dark;
+          background-color: $color-light-300;
+          opacity: 1;
+        }
+
+        &:hover {
+          span {
+            background-color: $color-light-100;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  &__template-right {
+    padding-right: unset;
+    padding-left: 10px;
+
+    .matrix {
+      &__tunning {
+        left: unset;
+        right: -1.2%;
+      }
+
+      &__string {
+        flex-direction: row-reverse;
+      }
+
+      &__G-FENDER-STRATO-6,
+      &__G-FENDER-TELE-6,
+      &__G-SIGMA-DME-6,
+      &__B-SQUIER-VM-JAZZ-5,
+      &__B-IBANEZ-STANDARD-SR300E-4 {
+        padding-right: unset;
+        padding-left: 13px
+      }
+    }
+  }
+}
+
+@include media($media-size-mobile-large) {
+  .matrix {
+    &__tunning,
+    &__string {
+      &-note {
+        span {
+          font-size: $font-size-10;
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+}
+
+@include media-between($media-size-mobile-large, $media-size-mobile) {
+  .matrix {
+    &__tunning,
+    &__string {
+      &-note {
+        span {
+          font-size: $font-size-12;
+          width: 28px;
+          height: 28px;
+        }
+      }
+    }
+  }
+}
+
+@include media-between($media-size-mobile, $media-size-desktop-medium) {
+  .matrix {
+    &__tunning,
+    &__string {
+      &-note {
+        span {
+          font-size: $font-size-10;
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+}
+
+@include media-between($media-size-desktop-medium, $media-size-desktop-large) {
+  .matrix {
+    &__tunning,
+    &__string {
+      &-note {
+        span {
+          font-size: $font-size-12;
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}

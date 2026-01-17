@@ -3,8 +3,8 @@ import React from 'react';
 const Logotype = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="920"
-    height="245"
+    width="1320"
+    height="240"
     fill="none"
     viewBox="0 0 920 245"
     className={className}
