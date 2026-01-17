@@ -56,7 +56,7 @@
     outline: none;
     transition: border-color 0.2s ease, background-color 0.2s ease;
     box-sizing: border-box;
-    min-height: 40px;
+    height: 40px;
 
     &:focus {
       border-color: $color-red-dark;
@@ -94,7 +94,9 @@
   }
 
   &__tab {
-    padding: $spacing-8 $spacing-12;
+    padding: 0;
+    height: 40px;
+    width: calc(33.333% - 2.67px);
     background-color: transparent;
     color: $color-light-200;
     border: none;
@@ -104,8 +106,6 @@
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
     white-space: nowrap;
-    flex: 1;
-    min-width: 0;
     @include flex(center, center, row);
 
     svg {
@@ -163,7 +163,7 @@
   .selector-playback {
     width: 100%;
     max-width: none;
-    @include flex(flex-start, center, row);
+    @include flex(flex-start, center, column);
     
     &__header {
       margin-bottom: $spacing-16;
@@ -193,7 +193,7 @@
     &__bpm-input {
       padding: $spacing-8 $spacing-8;
       font-size: $font-size-12;
-      min-height: 36px;
+      height: 40px;
     }
 
     &__tabs-group {
@@ -210,7 +210,8 @@
     }
 
     &__tab {
-      padding: $spacing-4 $spacing-8;
+      padding: 0;
+      height: 40px;
       font-size: $font-size-10;
     }
   }

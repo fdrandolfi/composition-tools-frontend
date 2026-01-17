@@ -74,6 +74,20 @@
       background-color: $color-dark;
     }
 
+    &__bottom {
+      position: fixed;
+      top: 100px;
+      height: 160px;
+      width: 100%;
+      transform: none;
+      @include flex(center, center, column);
+      border-top: $border-line;
+      border-bottom: $border-line;
+      box-sizing: border-box;
+      padding: $spacing-20;
+      background-color: $color-dark;
+    }
+
     &__center {
       width: 350%;
       top: 50%;
