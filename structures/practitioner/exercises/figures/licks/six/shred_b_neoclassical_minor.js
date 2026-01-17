@@ -1,7 +1,7 @@
 const shred_b_neoclassical_minor = {
   bpm: 180,
   tunning: "standard_6",
-  key: 3, // B
+  key: 3,
   scale: "harmonic_minor",
   feel: "neoclassical",
   figure: [

@@ -11,6 +11,11 @@ import shred_b_neoclassical_minor_I_grade_phrase from './figures/licks/six/shred
 import shred_b_neoclassical_minor_II_grade_phrase from './figures/licks/six/shred_b_neoclassical_minor_II_grade_phrase';
 import shred_b_neoclassical_minor_bIV_grade_phrase from './figures/licks/six/shred_b_neoclassical_minor_bIV_grade_phrase';
 import shred_b_neoclassical_minor_VI_grade_phrase from './figures/licks/six/shred_b_neoclassical_minor_VI_grade_phrase';
+import shred_c_modern_runner_outside from './figures/licks/six/shred_c_modern_runner_outside';
+import shred_c_runner_halfwhole_diminished from './figures/licks/six/shred_c_runner_halfwhole_diminished';
+import shred_c_modern_runner_mixolydian_b6 from './figures/licks/six/shred_c_modern_runner_mixolydian_b6';
+import shred_c_modern_pentatonic from './figures/licks/six/shred_c_modern_pentatonic';
+import shred_g_cascade_pentatonic_major from './figures/licks/six/shred_g_cascade_pentatonic_major';
 
 /**
  * Exercises organized by strings and category
@@ -26,11 +31,18 @@ const exercises = {
     },
     licks: {
       b_neoclassical_minor: shred_b_neoclassical_minor,
+      c_modern_runner_outside: shred_c_modern_runner_outside,
+      c_runner_halfwhole_diminished: shred_c_runner_halfwhole_diminished,
+      c_modern_runner_mixolydian_b6: shred_c_modern_runner_mixolydian_b6,
+      c_modern_pentatonic: shred_c_modern_pentatonic,
+      g_cascade_pentatonic_major: shred_g_cascade_pentatonic_major,
+    },
+    'licks-by-phrases': {
       b_neoclassical_minor_I_phrase: shred_b_neoclassical_minor_I_grade_phrase,
       b_neoclassical_minor_II_phrase: shred_b_neoclassical_minor_II_grade_phrase,
       b_neoclassical_minor_bIV_phrase: shred_b_neoclassical_minor_bIV_grade_phrase,
       b_neoclassical_minor_VI_phrase: shred_b_neoclassical_minor_VI_grade_phrase,
-    }
+    },
   },
 };
 
